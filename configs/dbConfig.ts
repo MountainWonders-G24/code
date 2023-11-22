@@ -1,12 +1,12 @@
+import { message } from "antd";
 import mongoose from "mongoose";
-
 export const connectDB = async () => {
     try {
-        await mongoose.connect(process.env.mongo_url!);
+        let uri = "mongodb+srv://giorgiasaccon:<password>@cluster0.e3bpual.mongodb.net/";
+        await mongoose.connect(uri);
         console.log("Mongo DB connected");
-
     } catch (error) {
-        console.log(error);
+        console.log("Errore URI:" + error);
     }
-
 };
+

@@ -1,13 +1,14 @@
 import type { Metadata } from 'next'
-//import { Inter } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import './globals.css'
 import ThemeProvider from './providers/ThemeProvider'
 
-//const inter = Inter({ subsets: ['latin'] })
+
+const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'My Shop',
-  description: 'My Shop app',
+  title: 'My first Next App',
+  description: 'Next App generation: shop online',
 }
 
 export default function RootLayout({
@@ -22,6 +23,7 @@ export default function RootLayout({
           {children}
         </ThemeProvider>
       </body>
+
     </html>
   )
 }

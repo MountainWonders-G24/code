@@ -1,10 +1,10 @@
+/*file used to add or modify the style of the application*/
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-*,
-html,
-body {
+*, hmtl, body{
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -21,3 +21,5 @@ input {
   height: 40px !important;
   padding: 0 10px !important;
 }
+  
+  

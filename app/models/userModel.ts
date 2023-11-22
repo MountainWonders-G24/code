@@ -1,5 +1,5 @@
+//schema di un user
 import mongoose from "mongoose";
-
 export const userSchema = new mongoose.Schema(
     {
         name: {
@@ -29,7 +29,6 @@ export const userSchema = new mongoose.Schema(
             default: false,
             required: false,
         },
-
     },
     {
         timestamps: true,
