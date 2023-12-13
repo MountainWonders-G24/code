@@ -1,8 +1,8 @@
 import { message } from "antd";
 import mongoose from "mongoose";
 export const connectDB = async () => {
+    let uri = process.env.ATLAS_URI || "";
     try {
-        let uri = "mongodb+srv://giorgiasaccon:<password>@cluster0.e3bpual.mongodb.net/";
         await mongoose.connect(uri);
         console.log("Mongo DB connected");
     } catch (error) {

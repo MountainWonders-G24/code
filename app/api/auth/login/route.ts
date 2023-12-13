@@ -23,12 +23,19 @@ export async function POST(request: NextRequest) {
             reqBody.password = hashedPassword;
             const newUser = new User(reqBody);
             await newUser.save();
+
             return NextResponse.json({
                 message: "User created successfully",
                 data: newUser,
             })
         }
     } catch (error) {
-        return "Errore nella risposta: " + NextResponse.error() + ". Riprova!";
+        return NextResponse.json({
+            message: "Errore nella risposta: " + NextResponse.error() + ". Riprova!"
+        },
+            {
+                status: 400
+            }
+        );
     }
 }

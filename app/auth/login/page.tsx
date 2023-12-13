@@ -14,9 +14,6 @@ function Login() {
     }
     return (
         <div>
-
-
-
             <div className='grid grid-cols-2 min-h-screen'>
                 <div className='h-full bg-black flex items-center justify-center'>
                     <h1 className='text-7xl font-bold text-red-500'>MY</h1>
