@@ -32,7 +32,7 @@ function Login() {
                         <Form.Item name="password" label="password" rules={getAntdFieldRequiredRule('Please input your password')}>
                             <input type='password' />
                         </Form.Item>
-                        <Button type='primary' htmlType='submit' block>
+                        <Button href="/" type='primary' htmlType='submit' block>
                             Login
                         </Button>
                     </Form>
