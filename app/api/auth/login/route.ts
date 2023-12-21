@@ -1,41 +1,43 @@
-
+import { connectDB } from "@/configs/dbConfig";
 import User from "@/app/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import { connectDB } from "@/configs/dbConfig";
+import jwt from "jsonwebtoken";
 
 connectDB();
+
 export async function POST(request: NextRequest) {
     try {
         const reqBody = await request.json();
-        //check if the user already exists
-        const userExists = await User.findOne({
-            email: reqBody.email
-        });
-        if (userExists) {
-            throw new Error("User doesn't exists");
-        } else {
-            // create new user
-            // random string
-            const salt = await bcrypt.genSalt(10);
-            // hashing the pwd
-            const hashedPassword = await bcrypt.hash(reqBody.password, salt);
-            reqBody.password = hashedPassword;
-            const newUser = new User(reqBody);
-            await newUser.save();
 
-            return NextResponse.json({
-                message: "User created successfully",
-                data: newUser,
-            })
+        const user = await User.findOne({ email: reqBody.email });
+        if (!user) {
+            throw new Error("User does not exist");
         }
-    } catch (error) {
+
+        const passwordMatch = await bcrypt.compare(reqBody.password, user.password);
+        if (!passwordMatch) {
+            throw new Error("Invalid credentials");
+        }
+
+        const token = jwt.sign({ id: user._id }, process.env.jwt_secret!, {
+            expiresIn: "7d",
+        });
+
+        const response = NextResponse.json({
+            message: "Login successful",
+        });
+
+        response.cookies.set("token", token, {
+            httpOnly: true,
+            path: "/",
+        });
+
+        return response;
+    } catch (error: any) {
         return NextResponse.json({
-            message: "Errore nella risposta: " + NextResponse.error() + ". Riprova!"
-        },
-            {
-                status: 400
-            }
-        );
+            message: error.message,
+            status: 400
+        });
     }
 }
