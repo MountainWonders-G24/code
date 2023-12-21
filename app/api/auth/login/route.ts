@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
 
         const response = NextResponse.json({
             message: "Login successful",
-            status: 201
+            status: 200
         });
 
         response.cookies.set("token", token, {
@@ -38,7 +38,7 @@ export async function POST(request: NextRequest) {
     } catch (error: any) {
         return NextResponse.json({
             message: error.message,
-            status: 400
+            status: 401
         });
     }
 }
