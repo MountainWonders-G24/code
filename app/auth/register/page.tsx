@@ -5,6 +5,7 @@ import Form from 'antd/es/form';
 import message from 'antd/es/message';
 import axios from 'axios';
 import React from 'react'
+import {useRouter} from "next/navigation";
 interface userType {
     name: string;
     email: string;
@@ -13,11 +14,20 @@ interface userType {
 
 function Register() {
     const [loading, setLoading] = React.useState(false);
+    const router = useRouter();
+
+
     const onRegister = async (values: userType) => {
         try {
             setLoading(true);
-            await axios.post("/api/auth/register", values);
-            message.success("Registration successful, please login to continue");
+            const {data} = await axios.post("/api/auth/register", values);
+
+            if (data.status == "201") {
+                message.success(data.message);
+                router.push("/")
+            } else {
+                message.error(data.message);
+            }
         } catch (error: any) {
             message.error(error.response.data.message);
         } finally {

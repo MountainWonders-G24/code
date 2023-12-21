@@ -19,9 +19,14 @@ function Login() {
     const onLogin = async (values: userType) => {
         try {
             setLoading(true);
-            await axios.post("/api/auth/login", values);
-            message.success("Login successful");
-            router.push("/");
+            const {data} = await axios.post("/api/auth/login", values);
+
+            if (data.status == "201") {
+                message.success(data.message);
+                router.push("/");
+            } else {
+                message.error(data.message)
+            }
         } catch (error: any) {
             message.error(error.response.data.message);
         } finally {
