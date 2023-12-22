@@ -6,6 +6,7 @@ import React from 'react'
 import axios from "axios";
 import message from 'antd/es/message';
 import {useRouter} from "next/navigation";
+import Script from 'next/script';
 
 interface userType {
     email: string;
@@ -36,31 +37,39 @@ function Login() {
 
     return (
         <div>
-            <div className='grid grid-cols-2 min-h-screen'>
-                <div className='h-full bg-black flex items-center justify-center'>
-                    <h1 className='text-7xl font-bold text-red-500'>MY</h1>
-                    <h1 className='text-7xl font-bold text-gray-500'>-</h1>
-                    <h1 className='text-7xl font-bold text-yellow-700'>SHOP</h1>
-                </div>
-                <div>
-                    <Form className='w-[500px] gap-5' layout='vertical'
-                        onFinish={onLogin} >
-                        <h1 className='text-2x1 font-bold'>Login</h1>
-                        <hr />
-                        <br />
-                        <Form.Item name="email" label="Email" rules = {getAntdFieldRequiredRule('Please input your email')}>
-                            <input type='email' />
-                        </Form.Item>
-                        <Form.Item name="password" label="password" rules={getAntdFieldRequiredRule('Please input your password')}>
-                            <input type='password' />
-                        </Form.Item>
-                        <Button type='primary' htmlType='submit' block loading={loading}>
-                            Login
-                        </Button>
-                    </Form>
-                </div>
-            </div>
+        <div className="topnav">
+        <a href="homepage.html">Home</a>
+        <div className="topnav-right">
+            <a href="#search">Supporto</a>
+            <a href="#profile">Profile</a>
         </div>
+    </div>
+        
+    <div className="center-page">
+    <div className="login-form">
+        <h1 className="form-title">Login</h1>
+        <div className="form">
+        <Form className='' layout='vertical'
+            onFinish={onLogin} >
+            <Form.Item name="email"  label="email" rules={getAntdFieldRequiredRule('Please input your password')}>
+                <input type='email'id='email-input' name='login_email' placeholder='' />
+            </Form.Item>
+            <Form.Item name="password" label="password" rules={getAntdFieldRequiredRule('Please input your password')}>
+                <input type='password' id='pass-input'/>
+            </Form.Item>
+            <Button className='sumbit-form-button' type='primary' htmlType='submit' block loading={loading}>
+                Login
+            </Button>
+        </Form>        
+        <div id="link-register">
+            <a href="">Non hai un account? Registati</a>
+        </div>
+    </div>
+    </div>
+</div>
+
+
+</div>
     )
 }
 
