@@ -7,10 +7,12 @@ import jwt from "jsonwebtoken";
 connectDB();
 
 export async function POST(request: NextRequest) {
+    
     try {
         const reqBody = await request.json();
 
         const user = await User.findOne({ email: reqBody.email });
+        
         if (!user) {
             throw new Error("User does not exist");
         }

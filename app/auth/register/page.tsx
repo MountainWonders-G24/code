@@ -63,10 +63,26 @@ function nextPrev(n: number): boolean {
 
     
     // Exit the function if any field in the current tab is invalid:
-    if (n == 1 && !validateForm()) {
+    if (currentTab >= x.length-1) {
+        //...the form gets submitted:
         
+        if(!validateForm()){
+            console.log("form not valid");
+        }else{
+            console.log("submitting form");
+            (document.getElementById("register-form") as HTMLFormElement).submit();
+            window.location.href = "../auth/login/";
+        }
+        
+
         return false;
-        
+    }
+
+
+
+
+    if (n == 1 && !validateForm()) {
+        return false;
     }
     x[currentTab].style.display = "none";  
     
@@ -79,6 +95,7 @@ function nextPrev(n: number): boolean {
     // If you have reached the end of the form... :
     if (currentTab >= x.length) {
         //...the form gets submitted:
+        console.log("submitting form");
         if(!validateForm()){
             (document.getElementById("register-form") as HTMLFormElement).submit();
         }else{

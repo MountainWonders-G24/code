@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
 
         const newUser = new User(reqBody);
         await newUser.save();
-
+        console.log("prova");
         return NextResponse.json({
             message: "User created successfully",
             data: newUser,
