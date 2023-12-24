@@ -7,7 +7,7 @@ import axios from "axios";
 import message from 'antd/es/message';
 import { useRouter } from "next/navigation";
 import Script from 'next/script';
-import '../auth.css'
+import ''
 interface userType {
     email: string;
     password: string;

@@ -1,0 +1,140 @@
+
+  
+body{
+    background: url('images/login_bg.jpg'), lightgray 50% / cover no-repeat;
+    background-size: 100% ;
+  }
+  
+  .center-page{
+    overflow: hidden;
+  }
+  
+  .login-form{
+    width: 450px;
+    height: 480px;
+    background-color: #FFF;
+    box-shadow: 
+    0 2.8px 2.2px rgba(0, 0, 0, 0.054),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+    0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+    0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.12);
+    stroke-width: 1px;
+    stroke: #626061;
+    border-color: black;
+    border-radius: 3%;
+    margin: auto;
+    margin-top: 3.25rem;
+    
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  }
+  
+  Form{
+    position: absolute;
+    top: 52%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 55%;
+  }
+  
+  .form-title{
+    text-align: center;
+  }
+  
+  
+  input{
+    border: none;
+    outline: none;
+    width: 100%;
+    border-bottom: 1px solid #000;
+    outline: none;
+  }
+  
+  
+  .field-holder{
+    position:relative;
+    margin-bottom: 2.25em;
+    
+  }
+  
+  label {
+    position:absolute;
+    top: 0;
+    left: 5px;
+    display: flex;
+    align-items: center;
+  }
+  
+  
+  input,label{
+    font-size: 1em;
+    width: 100%;
+    height: 35px;
+  }
+  
+  .form-title{
+    position: relative;
+    top: 1.25em;
+  }
+  
+  input:focus + label, 
+  input:valid + label,
+  input:not(:placeholder-shown) + label{
+    font-size: 0.75em;
+    pointer-events: none;
+    margin-top: -1.75em;
+    margin-left: -4px;
+    transition: .3s ease-in-out;
+  }
+  
+  .image-hide-pass{
+    position:absolute;
+    top: 0.5em;
+    right: 0.25em;
+    display: flex;
+    align-items: center;
+    width: 1.5em;
+  }
+  
+  
+  .form{
+    width: 100%;
+  }
+  
+  #last-field{
+    margin-bottom: 0em;
+  }
+  #link-reset-password a{
+    position: relative;
+    top:5px;
+  }
+  #link-reset-password a,
+  #link-register a {
+    text-decoration: none;
+    color: #0052CD;
+    font-size: small;
+  }
+  
+  #link-register{
+    position: absolute;
+    bottom: 6%;
+    left: 5%;
+  }
+  .sumbit-form-button{
+    position: relative;
+    
+    margin-top: 1.5em;
+    border-radius: 25px;
+    
+    width: 50%;
+  }
+
+  .tab {
+    display: none;
+  }
+
+
+.invalid{
+  border-bottom: 1px solid red;
+}

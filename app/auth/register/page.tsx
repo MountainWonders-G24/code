@@ -5,12 +5,139 @@ import Form from 'antd/es/form';
 import message from 'antd/es/message';
 import axios from 'axios';
 import React from 'react'
-import {useRouter} from "next/navigation";
+import '../auth.css'
+// import './register.js'
+
+import { useRouter } from "next/navigation";
 interface userType {
     name: string;
     email: string;
     password: string;
 }
+
+let currentTab: number = 0; // Current tab is set to be the first tab (0)
+
+
+
+// Set n to a number
+function showTab(n: number): void {
+    // This function will display the specified tab of the form...
+    const x = document.getElementsByClassName("tab") as HTMLCollectionOf<HTMLElement>;
+    // Check if the element at index n exists before accessing its style property
+    if (x[n]) {
+        x[n].style.display = "block";
+    }
+
+    // ... and fix the Previous/Next buttons:
+    const prevBtnElement = document.getElementById("prevBtn");
+    if (prevBtnElement){
+        if (n === 0) {
+            prevBtnElement.style.display = "none";
+        } else {
+            prevBtnElement.style.display = "inline";
+        }
+    }
+        
+
+    if (n === (x.length - 1)) {
+        const nextBtnElement = document.getElementById("nextBtn");
+        if (nextBtnElement){
+            nextBtnElement.innerHTML = "Submit";
+        }
+        
+    } else {
+        const nextBtnElement = document.getElementById("nextBtn");
+        if (nextBtnElement){
+            nextBtnElement.innerHTML = "Next";
+        }
+    }
+
+    // ... and run a function that displays the correct step indicator:
+    
+}
+
+function nextPrev(n: number): boolean {
+    // This function will figure out which tab to display
+    const x = document.getElementsByClassName("tab") as HTMLCollectionOf<HTMLElement>;
+
+    
+    // Exit the function if any field in the current tab is invalid:
+    if (n == 1 && !validateForm()) {
+        
+        return false;
+        
+    }
+    x[currentTab].style.display = "none";  
+    
+
+
+    
+    
+    
+
+    // If you have reached the end of the form... :
+    if (currentTab >= x.length) {
+        //...the form gets submitted:
+        if(!validateForm()){
+            (document.getElementById("register-form") as HTMLFormElement).submit();
+        }else{
+            window.location.href = "../main-pages/homepage.tsx"
+        }
+        
+
+        return false;
+    }
+    else if ((validateForm() && n==1) || n==-1) {
+        currentTab = currentTab + n;
+    }else{
+        ;
+    }
+
+    // Otherwise, display the correct tab:
+    showTab(currentTab);
+
+    return true;
+}
+
+
+
+function validateForm(): boolean {
+    // This function deals with validation of the form fields
+    let x: HTMLCollectionOf<HTMLElement>, y: HTMLCollectionOf<HTMLInputElement>, i: number, valid: boolean = true;
+    x = document.getElementsByClassName("tab") as HTMLCollectionOf<HTMLElement>;
+    y = x[currentTab].getElementsByTagName("input") as HTMLCollectionOf<HTMLInputElement>;
+    // A loop that checks every input field in the current tab:
+    for (i = 0; i < y.length; i++) {
+        // If a field is empty...
+        if (y[i].value === "" ) {
+            // add an "invalid" class to the field:
+            if(!y[i].className.endsWith("invalid")){
+                y[i].className += " invalid";
+            }
+            
+            
+            
+            
+            // and set the current valid status to false:
+            valid = false;
+        }
+    }
+
+    // If the valid status is true, mark the step as finished and valid:
+    // if (valid) {
+    //     (document.getElementsByClassName("step")[currentTab] as HTMLElement).className += " finish";
+    // }
+
+    return valid; // return the valid status
+}
+
+
+
+
+
+
+
+
 
 function Register() {
     const [loading, setLoading] = React.useState(false);
@@ -20,7 +147,7 @@ function Register() {
     const onRegister = async (values: userType) => {
         try {
             setLoading(true);
-            const {data} = await axios.post("/api/auth/register", values);
+            const { data } = await axios.post("/api/auth/register", values);
 
             if (data.status == "201") {
                 message.success(data.message);
@@ -36,37 +163,63 @@ function Register() {
     };
     return (
         <div>
-            <div className='grid grid-cols-2 min-h-screen'>
-                <div className='h-full bg-black flex items-center justify-center'>
-                    <h1 className='text-7xl font-bold text-red-500'>MY</h1>
-                    <h1 className='text-7xl font-bold text-gray-500'>-</h1>
-                    <h1 className='text-7xl font-bold text-yellow-700'>SHOP</h1>
-                </div>
-                <div>
-                    <Form className='w-[500px] gap-5' layout='vertical'
-                        onFinish={onRegister}>
-                        <h1 className='text-2x1 font-bold'>Register</h1>
-                        <hr />
-                        <br />
-                        <Form.Item name="name" label="Name"
-                            rules={getAntdFieldRequiredRule('Please input your name')}>
-                            <input type='text' />
-                        </Form.Item>
-                        <Form.Item name="email" label="Email"
-                            rules={getAntdFieldRequiredRule('Please input your email')}>
-                            <input type='email' />
-                        </Form.Item>
-                        <Form.Item name="password" label="password"
-                            rules={getAntdFieldRequiredRule('Please input your password')}>
-                            <input type='password' />
-                        </Form.Item>
-                        <Button type='primary' htmlType='submit' loading= {loading} block>
-                            Register
-                        </Button>
-                    </Form>
+            <div className="center-page">
+                <div className="login-form">
+                    <h1 className="form-title">Register</h1>
+                    <div className="form">
+                        <Form id='register-form' layout='vertical'
+                            onFinish={onRegister}>
+                            <div className='tab'>
+                                <Form.Item name="name" label="name" className='input' rules={[
+                                        {
+                                            required : true,
+                                            message : "Please input your name",
+                                        },
+                                        {
+                                            min: 3,
+                                            message : "name not valid"
+                                        }
+                                    ]}>
+                                    <input type='text' id='name-input' name='login_email' placeholder='' />
+                                </Form.Item>
+                                <Form.Item name="surname" label="surname" className='input' rules={[
+                                        {
+                                            required : true,
+                                            message : "Please input your surname",
+                                        },
+                                        {
+                                            min: 3,
+                                            message : "surname not valid"
+                                        }
+                                    ]}>
+                                    <input type='text' id='surname-input' />
+                                </Form.Item>
+                            </div>
+                            <div className='tab'>
+                                <Form.Item className = "input" name="email" label="email"  rules={getAntdFieldRequiredRule('Please input your password')}>
+                                    <input type='email' id='email-input' name='login_email' placeholder='' />
+                                </Form.Item>
+                                <Form.Item name="password" label="password" className='input' rules={getAntdFieldRequiredRule('Please input your password')}>
+                                    <input type='password' id='pass-input' />
+                                </Form.Item>
+                            </div>
+                            <Button onClick={() => nextPrev(-1)} id='prevBtn' className='sumbit-form-button' type='primary' htmlType='button' >
+                                Previous
+                            </Button>
+                            <Button onClick={() => nextPrev(1)} id='nextBtn' className='sumbit-form-button' type='primary' htmlType='button' >
+                                Next
+                            </Button>
+                            
+                        </Form>
+                    </div>
                 </div>
             </div>
         </div>
+
     )
 }
+
+window.onload = () => showTab(0);
+
+
 export default Register
