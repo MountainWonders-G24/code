@@ -1,7 +1,7 @@
 
   
 body{
-    background: url('../images/login_bg.jpg'), lightgray 50% / cover no-repeat;
+    background: url('./images/login_bg.jpg'), lightgray 50% / cover no-repeat;
     background-size: 100% ;
   }
   

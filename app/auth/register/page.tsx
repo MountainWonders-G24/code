@@ -11,6 +11,7 @@ import '../auth.css'
 import { useRouter } from "next/navigation";
 interface userType {
     name: string;
+    surname: string;
     email: string;
     password: string;
 }
@@ -144,7 +145,6 @@ function Register() {
     const router = useRouter();
 
     useEffect(() => {
-        
         showTab(0);
     }, []);
     const onRegister = async (values: userType) => {
