@@ -134,7 +134,7 @@ function validateForm(): boolean {
 
 
 
-
+import { useEffect } from 'react';
 
 
 
@@ -143,7 +143,10 @@ function Register() {
     const [loading, setLoading] = React.useState(false);
     const router = useRouter();
 
-
+    useEffect(() => {
+        
+        showTab(0);
+    }, []);
     const onRegister = async (values: userType) => {
         try {
             setLoading(true);
@@ -219,7 +222,7 @@ function Register() {
     )
 }
 
-window.onload = () => showTab(0);
+
 
 
 export default Register
