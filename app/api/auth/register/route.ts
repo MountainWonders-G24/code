@@ -31,6 +31,7 @@ export async function POST(request: NextRequest) {
             status: 201
         })
     } catch (error: any) {
+        console.log("PROVA");
         return NextResponse.json({
             message: error.message,
             status: 401

@@ -71,7 +71,7 @@ function nextPrev(n: number): boolean {
         }else{
             console.log("submitting form");
             (document.getElementById("register-form") as HTMLFormElement).submit();
-            window.location.href = "../auth/login/";
+            // window.location.href = "../auth/login/";
         }
         
 
