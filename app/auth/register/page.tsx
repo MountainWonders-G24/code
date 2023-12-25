@@ -167,7 +167,10 @@ function Register() {
     const onRegister = async (values: userType) => {
         try {
             setLoading(true);
+            console.log("userType: " + values);
+            console.log("salve: ");
             const { data } = await axios.post("/api/auth/register", values);
+            console.log("data: " + data);
 
             if (data.status == "201") {
                 message.success(data.message);
@@ -188,7 +191,7 @@ function Register() {
                     <h1 className="form-title">Register</h1>
                     <div className="form">
                         <Form id='register-form' layout='vertical'
-                            onFinish={onRegister}>
+                            onFinish={(values => onRegister(values))}>
                             <div className='tab'>
                                 <Form.Item name="name" label="name" className='input' rules={[
                                         {
