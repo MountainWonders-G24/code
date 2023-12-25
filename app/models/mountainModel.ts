@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 export const mountainSchema = new mongoose.Schema(
     {
         id: {
-            type: String,
+            type: Number,
             required: true,
         },
         name: {

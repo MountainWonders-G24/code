@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
-import {Double, Int32} from "bson";
+import {Decimal128} from "bson";
 
 export const refugeSchema = new mongoose.Schema(
     {
         id: {
-            type: Int32,
+            type: Number,
             required: true,
         },
         name: {
@@ -12,13 +12,13 @@ export const refugeSchema = new mongoose.Schema(
             required: true,
         },
         avgRating: {
-            type: Double,
+            type :mongoose.Types.Decimal128,
             required: true,
         },
         // Reviews
         // Position
         mountainId: {
-            type: Int32
+            type: Number
         }
     }
 );
