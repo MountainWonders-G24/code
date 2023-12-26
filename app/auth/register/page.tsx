@@ -60,23 +60,8 @@ function showTab(n: number): void {
 function nextPrev(n: number): boolean {
     // This function will figure out which tab to display
     const x = document.getElementsByClassName("tab") as HTMLCollectionOf<HTMLElement>;
-
-    
     // Exit the function if any field in the current tab is invalid:
-    if (currentTab >= x.length-1) {
-        //...the form gets submitted:
-        
-        if(!validateForm()){
-            console.log("form not valid");
-        }else{
-            console.log("submitting form");
-            (document.getElementById("register-form") as HTMLFormElement).submit();
-            // window.location.href = "../auth/login/";
-        }
-        
-
-        return false;
-    }
+    
 
 
 
@@ -93,13 +78,22 @@ function nextPrev(n: number): boolean {
     
 
     // If you have reached the end of the form... :
-    if (currentTab >= x.length) {
+    if (currentTab >= x.length-1) {
         //...the form gets submitted:
-        console.log("submitting form");
         if(!validateForm()){
-            (document.getElementById("register-form") as HTMLFormElement).submit();
+            console.log("form not valid");
         }else{
-            window.location.href = "../main-pages/homepage.tsx"
+            console.log("submitting form");
+            setTimeout(() => {
+                console.log(document.getElementById('name'));
+            }, 2000);
+           
+            setTimeout(() => {
+                (document.getElementById("register-form") as HTMLFormElement).submit();
+                
+            }, 2000);
+           
+            // window.location.href = "../auth/login/";
         }
         
 
@@ -108,7 +102,7 @@ function nextPrev(n: number): boolean {
     else if ((validateForm() && n==1) || n==-1) {
         currentTab = currentTab + n;
     }else{
-        ;
+        
     }
 
     // Otherwise, display the correct tab:
@@ -132,12 +126,10 @@ function validateForm(): boolean {
             if(!y[i].className.endsWith("invalid")){
                 y[i].className += " invalid";
             }
-            
-            
-            
-            
             // and set the current valid status to false:
             valid = false;
+        }else if (!y[i].className.endsWith("invalid")){
+            y[i].className.replace(" invalid", "");
         }
     }
 
@@ -190,7 +182,7 @@ function Register() {
                         <Form id='register-form' layout='vertical'
                             onFinish={onRegister}>
                             <div className='tab'>
-                                <Form.Item name="name" label="name" className='input' rules={[
+                                <Form.Item id='namePRIOVA' name="name" label="name" className='input' rules={[
                                         {
                                             required : true,
                                             message : "Please input your name",

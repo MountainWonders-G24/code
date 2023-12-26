@@ -8,7 +8,7 @@ connectDB();
 export async function POST(request: NextRequest) {
     try {
         const reqBody = await request.json();
-
+        
         const userExists = await User.findOne({
             email: reqBody.email
         });
@@ -25,13 +25,18 @@ export async function POST(request: NextRequest) {
         const newUser = new User(reqBody);
         await newUser.save();
         console.log("prova");
+        setTimeout(() => {
+            console.log(newUser);
+        }, 20000)
         return NextResponse.json({
             message: "User created successfully",
             data: newUser,
             status: 201
         })
     } catch (error: any) {
-        console.log("PROVA");
+        setTimeout(() => {
+            console.log(error);
+        }, 20000)
         return NextResponse.json({
             message: error.message,
             status: 401
