@@ -6,7 +6,6 @@ import message from 'antd/es/message';
 import axios from 'axios';
 import React from 'react'
 import '../auth.css'
-// import './register.js'
 
 import { useRouter } from "next/navigation";
 interface userType {
