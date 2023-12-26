@@ -138,3 +138,8 @@ body{
 .invalid{
   border-bottom: 1px solid red;
 }
+
+
+#nextBtn{
+  float: right;
+}

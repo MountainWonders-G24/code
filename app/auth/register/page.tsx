@@ -63,31 +63,22 @@ function nextPrev(n: number): boolean {
     // This function will figure out which tab to display
     const x = document.getElementsByClassName("tab") as HTMLCollectionOf<HTMLElement>;
     // Exit the function if any field in the current tab is invalid:
-    
-
-
-
-
-    if (n == 1 && !validateForm()) {
-        return false;
-    }
-    x[currentTab].style.display = "none";  
 
     // If you have reached the end of the form... :
-    if (currentTab >= x.length-1) {
+    if (currentTab >= x.length-1 && n==1) {
         //...the form gets submitted:
         if(!validateForm()){
             console.log("form not valid");
+            return false;
         }else{
             console.log("submitting form");
-                // window.location.href = "../auth/login/";
+            return true;
         }
-        return false;
+        
     }
     else if ((validateForm() && n==1) || n==-1) {
+        x[currentTab].style.display = "none"; 
         currentTab = currentTab + n;
-    }else{
-        
     }
 
     // Otherwise, display the correct tab:
@@ -118,11 +109,6 @@ function validateForm(): boolean {
         }
     }
 
-    // If the valid status is true, mark the step as finished and valid:
-    // if (valid) {
-    //     (document.getElementsByClassName("step")[currentTab] as HTMLElement).className += " finish";
-    // }
-
     return valid; // return the valid status
 }
 
@@ -150,9 +136,8 @@ function Register() {
                 console.log("data: " + data);
     
                 if (data.status == "201") {
-                    
                     message.success(data.message);
-                    router.push("/")
+                    router.push("/");
                 } else {
                     message.error(data.message);
                 }
@@ -214,6 +199,9 @@ function Register() {
                             </Button>
                             
                         </Form>
+                        <div id="link-register">
+                            <a href="/auth/login/">Hai già un account? Accedi</a>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -62,7 +62,7 @@ function Login() {
                             </Button>
                         </Form>
                         <div id="link-register">
-                            <a href="">Non hai un account? Registati</a>
+                            <a href="/auth/register/">Non hai un account? Registati</a>
                         </div>
                     </div>
                 </div>
