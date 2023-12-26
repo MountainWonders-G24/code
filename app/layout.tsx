@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'MountainWonders',
-  description: 'Next App generation: shop online',
+  description: 'MountainWonders - Il sito per gli amanti della montagna',
 }
 
 export default function RootLayout({
@@ -18,9 +18,15 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="it">
       <body>
-
+      <div className="topnav">
+                <a href="/">Home</a>
+                <div className="topnav-right">
+                    <a href="/">Supporto</a>
+                    <a href="/auth/login/">Profile</a>
+                </div>
+            </div>
 
 
         <ThemeProvider>

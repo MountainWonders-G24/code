@@ -112,7 +112,10 @@ function validateForm(): boolean {
     return valid; // return the valid status
 }
 
-
+function handleInputChange(event: React.FormEvent<HTMLInputElement>) {
+    const input= event.currentTarget; 
+    
+  }
 
 
 import { useEffect } from 'react';
@@ -151,6 +154,7 @@ function Register() {
 
     return (
         <div>
+            
             <div className="center-page">
                 <div className="login-form">
                     <h1 className="form-title">Register</h1>
@@ -184,8 +188,8 @@ function Register() {
                                 </Form.Item>
                             </div>
                             <div className='tab'>
-                                <Form.Item className = "input" name="email" label="email"  rules={getAntdFieldRequiredRule('Please input your password')}>
-                                    <input type='email' id='email-input' name='login_email' placeholder='' />
+                                <Form.Item className = "input" name="email" label="email"  rules={getAntdFieldRequiredRule('Please input your email')}>
+                                    <input type='email' id='email-input' name='login_email' onInput={(event)=>handleInputChange(event)} placeholder='' />
                                 </Form.Item>
                                 <Form.Item name="password" label="password" className='input' rules={getAntdFieldRequiredRule('Please input your password')}>
                                     <input type='password' id='pass-input' />

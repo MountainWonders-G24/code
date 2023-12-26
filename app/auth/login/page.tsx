@@ -37,13 +37,7 @@ function Login() {
 
     return (
         <div>
-            <div className="topnav">
-                <a href="homepage.html">Home</a>
-                <div className="topnav-right">
-                    <a href="#search">Supporto</a>
-                    <a href="#profile">Profile</a>
-                </div>
-            </div>
+            
 
             <div className="center-page">
                 <div className="login-form">
@@ -51,7 +45,7 @@ function Login() {
                     <div className="form">
                         <Form className='' layout='vertical'
                             onFinish={onLogin} >
-                            <Form.Item name="email" label="email" rules={getAntdFieldRequiredRule('Please input your password')}>
+                            <Form.Item name="email" label="email" rules={getAntdFieldRequiredRule('Please input your email')}>
                                 <input type='email' id='email-input' name='login_email' placeholder='' />
                             </Form.Item>
                             <Form.Item name="password" label="password" rules={getAntdFieldRequiredRule('Please input your password')}>
