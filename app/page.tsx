@@ -5,13 +5,7 @@ export default function Home() {
   return (
     
     <div>
-      <h1>Home Page</h1>
-      <Button href="/auth/register" type='primary' htmlType='submit' block>
-        Register
-      </Button>
-      <Link href="/auth/login" className='text-black'>
-        Already have an account? Login
-      </Link>
+      
     </div>
 
 
