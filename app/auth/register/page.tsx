@@ -41,9 +41,11 @@ function showTab(n: number): void {
         
 
     if (n === (x.length - 1)) {
-        const nextBtnElement = document.getElementById("nextBtn");
+        const nextBtnElement = document.getElementById("nextBtn") ;
         if (nextBtnElement){
             nextBtnElement.innerHTML = "Submit";
+            (nextBtnElement as HTMLButtonElement).type = "submit"; 
+            
         }
         
     } else {
@@ -70,12 +72,6 @@ function nextPrev(n: number): boolean {
         return false;
     }
     x[currentTab].style.display = "none";  
-    
-
-
-    
-    
-    
 
     // If you have reached the end of the form... :
     if (currentTab >= x.length-1) {
@@ -84,19 +80,8 @@ function nextPrev(n: number): boolean {
             console.log("form not valid");
         }else{
             console.log("submitting form");
-            setTimeout(() => {
-                console.log(document.getElementById('name'));
-            }, 2000);
-           
-            setTimeout(() => {
-                (document.getElementById("register-form") as HTMLFormElement).submit();
-                
-            }, 2000);
-           
-            // window.location.href = "../auth/login/";
+                // window.location.href = "../auth/login/";
         }
-        
-
         return false;
     }
     else if ((validateForm() && n==1) || n==-1) {
@@ -156,26 +141,29 @@ function Register() {
     useEffect(() => {
         showTab(0);
     }, []);
-    const onRegister = async (values: userType) => {
-        try {
-            setLoading(true);
-            console.log("userType: " + values);
-            console.log("salve: ");
-            const { data } = await axios.post("/api/auth/register", values);
-            console.log("data: " + data);
 
-            if (data.status == "201") {
-                message.success(data.message);
-                router.push("/")
-            } else {
-                message.error(data.message);
+
+    const onRegister = async (values: userType) => {
+            try {
+                setLoading(true);
+                const { data } = await axios.post("/api/auth/register", values);
+                console.log("data: " + data);
+    
+                if (data.status == "201") {
+                    
+                    message.success(data.message);
+                    router.push("/")
+                } else {
+                    message.error(data.message);
+                }
+            } catch (error: any) {
+                
+                message.error(error.response.data.message);
+            } finally {
+                setLoading(false);
             }
-        } catch (error: any) {
-            message.error(error.response.data.message);
-        } finally {
-            setLoading(false);
-        }
     };
+
     return (
         <div>
             <div className="center-page">
@@ -185,8 +173,8 @@ function Register() {
                         <Form id='register-form' layout='vertical'
                             onFinish={(values => onRegister(values))}>
                             <div className='tab'>
-                                <Form.Item id='namePRIOVA' name="name" label="name" className='input' rules={[
-                                        {
+                                <Form.Item id='name' name="name" label="name" className='input' rules={[
+                                        {   
                                             required : true,
                                             message : "Please input your name",
                                         },
