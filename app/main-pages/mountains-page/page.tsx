@@ -15,7 +15,7 @@ interface userType {
 }
 
 interface Mountain{
-    id: Number;
+    id: String;
     name: String;
     refuges: Array<Number>;
 }
@@ -114,17 +114,17 @@ function Mountains() {
             </div>
             <div id="refuges">
             {mountains.map((mountain) => (
-                
-                <div className="refuge">
-                    <h3> {mountain.name} </h3>
-                <div className="refuge-image">
+                <div key={String(mountain.id)}>
+                    <div className="refuge" >
+                        <h3> {mountain.name} </h3>
+                        <div className="refuge-image">
+                        </div>
+                        <div className="info-refuge">
+                            <h3> {mountain.name} </h3>
+                            <p>Descrizione: </p>
+                        </div>
+                    </div>
                 </div>
-                <div className="info-refuge">
-                    <h3> {mountain.name} </h3>
-                    <p>Descrizione: </p>
-                </div>
-            </div>
-          
             ))}
             
             </div>
