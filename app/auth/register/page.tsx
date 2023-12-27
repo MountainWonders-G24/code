@@ -115,7 +115,7 @@ function validateForm(): boolean {
 function handleInputChange(event: React.FormEvent<HTMLInputElement>) {
     const input= event.currentTarget; 
     
-  }
+}
 
 
 import { useEffect } from 'react';
