@@ -51,6 +51,12 @@ h3 {
     background-color: #444;
 }
 
+#add-refuge-form{
+    display: none;
+    margin: auto;
+    margin-top: 3.25rem;
+}
+
 #mountain {
     transition: margin-left .5s;
     padding: 16px;
@@ -95,6 +101,7 @@ h3 {
     bottom: 1.5rem;
     right: 1.5rem;
     z-index: 99;
+    display: none;
 }
 
 #up-button input, #add-refuge-btn input {

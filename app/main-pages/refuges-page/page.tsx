@@ -7,6 +7,7 @@ import axios from 'axios';
 import React from 'react';
 import { Select, Space} from 'antd';
 import { Input } from 'antd';
+import { NextRequest, NextResponse } from "next/server";
 
 const { TextArea } = Input;
 
@@ -15,7 +16,7 @@ import 'app/globals.css'
 import { scrollFunction, topFunction, open_sidebar, close_sidebar } from './script.tsx'
 
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useRouter } from "next/navigation";
 
@@ -33,13 +34,55 @@ interface Refuge{
     image: String; //nel diagramma delle classi un rifugio non ha un'immagine mentre qui gliela mettiamo???????
 }
 
+function displayAddButton(logged: boolean){
+    if(logged){
+        (document.getElementById("add-refuge-btn") as HTMLElement).style.display = "block";
+    }else{
+        (document.getElementById("add-refuge-btn") as HTMLElement).style.display = "none";
+    }
+}
+
 function Refuges() {
+    const [user, _] = useState<userType>();
     useEffect(() => {
         if (typeof window !== 'undefined') {
             window.onscroll = function () {
                 scrollFunction();
             };
         }
+        // const fetchUser = async (request: NextRequest) => {
+        //     try {
+        //       const token = request.cookies.get("token")?.value || "";
+        //       if (token) {
+        //         // Assuming the API response is an array of mountains
+        //         displayAddButton(true);
+        //       } else {
+        //         displayAddButton(false);
+        //         console.error('User not logged: ');
+        //       }
+        //     } catch (error) {
+        //       console.error('Error fetching data:', error);
+        //     }
+        //   };
+        
+          const fetchUser = async () => {
+            try {
+              const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, "$1");
+      
+              if (token) {
+                // Assuming the API response is an array of mountains
+                displayAddButton(true);
+              } else {
+                displayAddButton(false);
+                console.error('User not logged: ');
+              }
+            } catch (error) {
+              console.error('Error fetching data:', error);
+            }
+          };
+      
+          fetchUser();
+          
     }, []);
 
     return (
@@ -51,7 +94,7 @@ function Refuges() {
                 </div>
                 <div>
                     <p>Montagna: </p>
-                    <Select
+                    <Select id='add-refuge-mountain'
                         defaultValue=" -- Insert mountain -- "
                         style={{ width: 120 }}
                         options={[
@@ -67,7 +110,7 @@ function Refuges() {
                     <TextArea id="add-refuge-description" cols={10} rows={4}></TextArea>
                 </div>
                 <div>Immagine: </div>
-
+                <Input type="text" id="add-refuge-image" />
 
             </div>
             <div id='sidebar'>

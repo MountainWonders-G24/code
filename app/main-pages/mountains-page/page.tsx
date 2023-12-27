@@ -1,15 +1,11 @@
 'use client'
-import { getAntdFieldRequiredRule } from '@/app/helpers/validation';
 import Button from 'antd/es/button';
-import Form from 'antd/es/form';
-import message from 'antd/es/message';
 import axios from 'axios';
 import React, { Ref } from 'react'
-import './refuges.css'
+import './mountains.css'
 import 'app/globals.css'
-import {scrollFunction, topFunction, open_sidebar, close_sidebar} from './script.tsx'
+import {topFunction, open_sidebar, close_sidebar} from './script.tsx'
 import { useEffect, useState } from 'react';
-import { useRouter } from "next/navigation";
 
 interface userType {
     name: string;

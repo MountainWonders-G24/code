@@ -4,7 +4,7 @@ export async function middleware(request: NextRequest) {
   let isPublicRoute = 
   request.nextUrl.pathname === "/auth/login" ||
   request.nextUrl.pathname === "/auth/register" ||
-  request.nextUrl.pathname === "/main-pages/refuges-page" ;//add refuge and delete
+  request.nextUrl.pathname === "/main-pages/" ;
 
   const token = request.cookies.get("token")?.value || "";
 
@@ -13,11 +13,11 @@ export async function middleware(request: NextRequest) {
   console.log("token " + token);
 
   if (!token && !isPublicRoute) return NextResponse.redirect(new URL("/auth/login", request.url));
-  if (token && isPublicRoute) return NextResponse.redirect(new URL("/", request.url));
+  if (token && isPublicRoute) return NextResponse.redirect(new URL("/main-pages/home-page", request.url));
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/auth/login", "/auth/register"  ],
+  matcher: ["/auth/login", "/auth/register"],
 };
