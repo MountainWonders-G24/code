@@ -12,8 +12,6 @@ export async function GET(request: NextRequest) {
             name: reqBody.name
         });
 
-        // TODO: Filters
-
         if (!mountains) {
             throw new Error("No mountains found")
         }

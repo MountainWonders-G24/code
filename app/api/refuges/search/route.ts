@@ -12,8 +12,6 @@ export async function GET(request: NextRequest) {
             name: reqBody.name
         });
 
-        // TODO: Filters
-
         if (!refuges) {
             throw new Error("No refuges found")
         }

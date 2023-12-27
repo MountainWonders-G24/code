@@ -1,0 +1,266 @@
+html {
+    font-size: small;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+p, h3{
+    margin: 1rem 0;
+}
+
+#sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+  }
+  
+  #sidebar a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+  }
+  
+  #sidebar a:hover {
+    color: #f1f1f1;
+  }
+  
+  #sidebar .closeBtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    margin-left: 50px;
+    text-decoration: none;
+  }
+  
+  .openBtn {
+    cursor: pointer;
+    padding: 10px 15px;
+    border: none;
+  }
+  
+  .openBtn:hover {
+    background-color: #444;
+  }
+  
+  #mountain {
+    transition: margin-left .5s;
+    padding: 16px;
+  }
+
+#mountain{
+    padding: 2rem 0 5rem 0;
+    margin-bottom: 4rem;
+    background-image: url("https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8NXx8fGVufDB8fHx8fA%3D%3D");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+#mountain h1{
+    font-size: 3em;
+    margin: 3rem 0 2rem 0;
+    -webkit-text-stroke: 1px lightgray;
+}
+
+#up-button {
+    display: none;
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 99;
+    border: none;
+    outline: none;
+    background-color: lightskyblue;
+    height: 4rem;
+    width: 4rem;
+    border-radius: 2rem;
+    padding-top: 1%;
+
+}
+
+#up-button input{
+    max-height: 90%;
+    max-width: 90%;
+    
+}
+
+#up-button:hover {
+    background-color: gray;
+}
+
+#mountain-name{
+    text-align: center;
+    margin: 0;
+}
+
+#make-search, #applied-filters {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    max-width: 100%;
+    padding: 0.5rem;
+    height: 3.5rem;
+    box-sizing: border-box;
+}
+
+/*responsive layout*/
+@media (max-width: 300px) {
+    #make-search {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/*responsive layout*/
+@media (max-width: 165px) {
+    #applied-filters {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+#search-bar,#filters {
+    margin: 0 0.5rem;
+    height: 100%;
+}
+
+#filters {
+    border: 2px solid lightgray;
+    background-color: lightgray;
+    border-radius: 2rem;
+    padding: 0;
+    width: 4.5rem;
+    cursor: pointer;
+}
+
+#filters input {
+    width: 15%;
+}
+
+#applied-filters {
+    align-items: center; 
+}
+
+#applied-filters p, .name-filter{
+    display: flex;
+    padding: 0 0.5rem;
+    align-items: center;
+}
+
+#applied-filters p,
+.single-filter {
+    height: 100%;
+}
+.single-filter {
+    margin: 0 0.5rem;
+}
+
+#search-bar,
+.single-filter {
+    display: flex;
+    border: 2px solid lightgray;
+    border-radius: 2rem;
+    padding: 0;
+    width: fit-content;
+}
+
+#research-input,
+.name-filter {
+    border: none;
+    margin: 0;
+    border-radius: 2rem 0 0 2rem;
+    background-color: white;
+    width: fit-content;
+}
+
+#research-input{
+    padding: 0.2rem 0.4rem;
+    
+}
+
+#research-input:focus {
+    outline: none;
+}
+
+#search-button,
+.delete-filter {
+    border: none;
+    border-left: 1px solid lightgray;
+    border-radius: 0 1rem 1rem 0;
+    margin: 0;
+    padding: 0.3rem 0.8rem;
+    background-color: lightgray;
+    width: fit-content;
+    height: 100%;
+}
+
+.delete-filter {
+    padding: 0.3rem 0.5rem;
+}
+
+#search-button input,
+.delete-filter input {
+    height: 1rem;
+    vertical-align: middle;
+}
+
+.refuge {
+    display: flex;
+    flex-direction: row;
+    margin: 2rem 15rem;
+    padding: 2rem 1.5rem;
+    border-radius: 1rem;
+    background-color: rgba(208, 253, 253, 0.8);
+}
+
+.refuge-image {
+    border: 1px solid rgba(208, 253, 253,0.5);
+    border-radius: 1rem;
+    width: 30%;
+    height: 10rem;
+    display: flex;
+    justify-content: center;
+    background-image: url(https://i0.wp.com/alpshiking.swisshikingvacations.com/wp-content/uploads/2018/05/Cover-image-refuge-blog-sml.jpg?fit=1200%2C799&ssl=1);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+
+}
+
+.info-refuge {
+    width: 70%;
+    padding: 0 1rem;
+}
+
+@media (max-width: 700px) {
+    .refuge {
+        flex-direction: column;
+        max-width: 100%;
+        margin: 2rem 4rem;
+        padding: 1.5rem;
+    }
+
+    .refuge-image {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .info-refuge {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+.refuge-image input {
+    width: 100%;
+    height: fit-content;
+    margin: auto;
+}

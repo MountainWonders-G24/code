@@ -9,14 +9,6 @@
   margin: 0;
   padding: 0;
 }
-
-
-
-input {
-  width: 100% !important;
-  height: 40px !important;
-  padding: 0 10px !important;
-}
   
 
 body{
@@ -48,6 +40,8 @@ body{
   float: right;
   height: 100%;
 }
+
+
 
 
 

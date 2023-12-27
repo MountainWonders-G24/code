@@ -18,15 +18,18 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="it">
+    <html lang="en">
+      <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+      </head>
       <body>
-      <div className="topnav">
-                <a href="/">Home</a>
-                <div className="topnav-right">
-                    <a href="/">Supporto</a>
-                    <a href="/auth/login/">Profile</a>
-                </div>
-            </div>
+        <div className="topnav">
+          <a href="/">Home</a>
+          <div className="topnav-right">
+            <a href="/">Supporto</a>
+            <a href="/auth/login/">Profile</a>
+          </div>
+        </div>
 
 
         <ThemeProvider>

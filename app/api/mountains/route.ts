@@ -1,10 +1,10 @@
 
 import Mountain from "@/app/models/mountainModel";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { connectDB } from "@/configs/dbConfig";
 
 connectDB();
-export async function GET(request: NextRequest) {
+export async function GET() {
     try {
         const mountains = await Mountain.find({});
 
