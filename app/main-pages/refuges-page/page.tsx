@@ -5,7 +5,7 @@ import Form from 'antd/es/form';
 import message from 'antd/es/message';
 import axios from 'axios';
 import React from 'react';
-import { Select, Space} from 'antd';
+import { Select, Space } from 'antd';
 import { Input } from 'antd';
 import { NextRequest, NextResponse } from "next/server";
 
@@ -27,17 +27,17 @@ interface userType {
     password: string;
 }
 
-interface Refuge{
+interface Refuge {
     id: Number;
     name: String;
     mountain: Number;
     image: String; //nel diagramma delle classi un rifugio non ha un'immagine mentre qui gliela mettiamo???????
 }
 
-function displayAddButton(logged: boolean){
-    if(logged){
+function displayAddButton(logged: boolean) {
+    if (logged) {
         (document.getElementById("add-refuge-btn") as HTMLElement).style.display = "block";
-    }else{
+    } else {
         (document.getElementById("add-refuge-btn") as HTMLElement).style.display = "none";
     }
 }
@@ -50,25 +50,11 @@ function Refuges() {
                 scrollFunction();
             };
         }
-        // const fetchUser = async (request: NextRequest) => {
-        //     try {
-        //       const token = request.cookies.get("token")?.value || "";
-        //       if (token) {
-        //         // Assuming the API response is an array of mountains
-        //         displayAddButton(true);
-        //       } else {
-        //         displayAddButton(false);
-        //         console.error('User not logged: ');
-        //       }
-        //     } catch (error) {
-        //       console.error('Error fetching data:', error);
-        //     }
-        //   };
         
-          const fetchUser = async () => {
+        /*
+          const fetchUser = async (request: NextRequest) => {
             try {
-              const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, "$1");
-      
+              const token = request.cookies.get("token")?.value || "";
               if (token) {
                 // Assuming the API response is an array of mountains
                 displayAddButton(true);
@@ -80,9 +66,30 @@ function Refuges() {
               console.error('Error fetching data:', error);
             }
           };
-      
-          fetchUser();
-          
+          */
+        
+        
+        const fetchUser = async () => {
+             try {
+                 const token = document.cookie/*.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, "$1")*/;
+                 console.log("Cookie: " + token);
+                 console.log("Cookie: |" + document.cookie + "|");
+                 //perrhcé non va!? boh In teoria dovrebbe salvarlo nel browser Il fatto che anche doc.cook non stampi niente è molto strano
+             if (token != null && token != "") {
+                     displayAddButton(true); 
+                     console.log("utente loggato correttamente");
+              
+                 } else { // patata@patato.patatosissimi --> pwd patato1234
+                     displayAddButton(false);
+                     console.error('User not logged: ');
+                 }
+             } catch (error) {
+                 console.error('Error fetching data:', error);
+             }
+         };
+
+        fetchUser();
+
     }, []);
 
     return (
@@ -104,7 +111,7 @@ function Refuges() {
                             { value: '3', label: 'Pippo' },
                         ]}
                     />
-                    </div>   
+                </div>
                 <div>
                     <p>Descrizione: </p>
                     <TextArea id="add-refuge-description" cols={10} rows={4}></TextArea>

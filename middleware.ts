@@ -7,13 +7,14 @@ export async function middleware(request: NextRequest) {
   request.nextUrl.pathname === "/main-pages/" ;
 
   const token = request.cookies.get("token")?.value || "";
-
+  
+  
   console.log("request.nextUrl.pathname " + request.nextUrl.pathname);
   console.log("isPublicRoute_ " + isPublicRoute);
   console.log("token " + token);
 
   if (!token && !isPublicRoute) return NextResponse.redirect(new URL("/auth/login", request.url));
-  if (token && isPublicRoute) return NextResponse.redirect(new URL("/main-pages/home-page", request.url));
+  if (token && isPublicRoute) return NextResponse.redirect(new URL("/", request.url));
 
   return NextResponse.next();
 }

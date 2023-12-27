@@ -22,9 +22,12 @@ export async function POST(request: NextRequest) {
             throw new Error("Invalid credentials");
         }
 
-        const token = jwt.sign({ id: user._id }, process.env.jwt_secret!, {
+        const token = jwt.sign({ id: user._id}, process.env.jwt_secret!, {
             expiresIn: "7d",
+            
         });
+
+
 
         const response = NextResponse.json({
             message: "Login successful",
