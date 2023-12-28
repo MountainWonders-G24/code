@@ -136,7 +136,7 @@ function Refuges() {
             </div>
             <div id='list-refuges'>
                 <div id="mountain">
-                    <Button onClick={() => displayAddRefugeForm(true)} id="add-refuge-btn" title="Add refuge">
+                    <Button onClick={() => {topFunction(); displayAddRefugeForm(true)}} id="add-refuge-btn" title="Add refuge">
                         <input type="image"
                             src="https://cdn-icons-png.flaticon.com/512/1237/1237946.png"
                             alt="Add refuge" />

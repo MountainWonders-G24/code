@@ -7,6 +7,7 @@ connectDB();
 export async function GET(request: NextRequest) {
     try {
         const userId = await validateJWT(request);
+        console.log(userId);
         const user = await User.findById(userId).select("-password");
 
         return NextResponse.json({
