@@ -10,9 +10,9 @@ import { Input } from 'antd';
 import { NextRequest, NextResponse } from "next/server";
 
 const { TextArea } = Input;
-import 'app/globals.css'
-import './refuges.css'
 
+import './refuges.css'
+import 'app/globals.css'
 import { scrollFunction, topFunction, open_sidebar, close_sidebar } from './script.tsx'
 
 
@@ -47,20 +47,12 @@ function displayAddButton(register: boolean) {
 function displayDeleteButton(admin: boolean) {
     if (admin) {
         Array.from((document.getElementsByClassName("delete-refuge-btn") as HTMLCollectionOf<HTMLElement>)).forEach((button) =>{
-            button.style.display = "block";
+            button.style.display = "none";
         });
     } else {
         Array.from((document.getElementsByClassName("delete-refuge-btn") as HTMLCollectionOf<HTMLElement>)).forEach((button) =>{
-            button.style.display = "none";
+            button.style.display = "block";
         });
-    }
-}
-
-function displayAddRefugeForm(authorized: boolean){
-    if(authorized){
-        (document.getElementById("add-refuge-form") as HTMLElement).style.display = "block";
-    }else{
-        (document.getElementById("add-refuge-form") as HTMLElement).style.display = "none";
     }
 }
 
@@ -98,7 +90,7 @@ function Refuges() {
             }
         };
         fetchUser()
-        
+
     }, []);
 
     return (
@@ -112,7 +104,7 @@ function Refuges() {
                     <p>Montagna: </p>
                     <Select id='add-refuge-mountain'
                         defaultValue=" -- Insert mountain -- "
-                        style={{}}
+                        style={{ width: 120 }}
                         options={[
                             { value: '0', label: ' -- Insert mountain -- ' },
                             { value: '1', label: 'Marzola' },
@@ -127,6 +119,7 @@ function Refuges() {
                 </div>
                 <div>Immagine: </div>
                 <Input type="text" id="add-refuge-image" />
+
             </div>
             <div id='sidebar'>
                 <button className="closeBtn" onClick={() => close_sidebar()}>Close &times;</button>
@@ -136,7 +129,7 @@ function Refuges() {
             </div>
             <div id='list-refuges'>
                 <div id="mountain">
-                    <Button onClick={() => displayAddRefugeForm(true)} id="add-refuge-btn" title="Add refuge">
+                    <Button onClick={() => topFunction()} id="add-refuge-btn" title="Add refuge">
                         <input type="image"
                             src="https://cdn-icons-png.flaticon.com/512/1237/1237946.png"
                             alt="Add refuge" />

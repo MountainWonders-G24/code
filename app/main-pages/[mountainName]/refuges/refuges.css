@@ -55,11 +55,6 @@ h3 {
     display: none;
     margin: auto;
     margin-top: 3.25rem;
-    border: solid 1px black;
-    height: 25rem;
-    width: 20rem;
-    padding: 5rem;
-
 }
 
 #mountain {
@@ -248,7 +243,7 @@ h3 {
     background-color: rgba(208, 253, 253, 0.8);
 }
 
-.delete-refuge-btn {
+#delete-refuge-btn {
     display: flex;
     padding: 0.75rem;
     white-space: nowrap;
@@ -261,13 +256,13 @@ h3 {
     border-radius: 1.5rem;
 }
 
-.delete-refuge-btn input {
+#delete-refuge-btn input {
     max-height: 100%;
     max-width: 100%;
 
 }
 
-.delete-refuge-btn:hover {
+#delete-refuge-btn:hover {
     transition: 0.5s;
     background-color: red;
 }

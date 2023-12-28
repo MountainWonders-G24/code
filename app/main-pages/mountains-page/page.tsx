@@ -31,24 +31,39 @@ function renderList(items: Mountain[]) {
 function Mountains() {
     const [mountains = [], setMountains] = useState<Mountain[]>([]);
 
-    useEffect(() => {
-        const fetchMountains = async () => {
-          try {
-            const response  = await axios.get('/api/mountains');
-            const responseData = response.data.data;
+    useEffect(() => {   
+       
+        const printUser = async () => {
+            console.log("print");
+            const { data } = await axios.get("/api/auth/currentUser");
+            console.log(data);
+            if (data) {
+              const user: userType = data;
+              console.log(user);
+            }else{
+                console.log("No user");
             
-            if (Array.isArray(responseData)) {
-              // Assuming the API response is an array of mountains
-              setMountains(responseData);
-            } else {
-              console.error('Invalid API response structure:', responseData);
             }
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        };
+        }
+
+        // const fetchMountains = async () => {
+        //   try {
+        //     const response  = await axios.get('/api/mountains');
+        //     const responseData = response.data.data;
+            
+        //     if (Array.isArray(responseData)) {
+        //       // Assuming the API response is an array of mountains
+        //       setMountains(responseData);
+        //     } else {
+        //       console.error('Invalid API response structure:', responseData);
+        //     }
+        //   } catch (error) {
+        //     console.error('Error fetching data:', error);
+        //   }
+        // };
       
-        fetchMountains();
+        // fetchMountains();
+        printUser();
       }, []);
 
     return (
@@ -114,7 +129,7 @@ function Mountains() {
             </div>
             <div id="refuges">
             {mountains.map((mountain) => (
-                <div key={String(mountain.id)}>
+                <div key={String(mountain.id)}  onClick={()=> {window.location.href = '/main-pages/'+mountain.id+'/refuges';}}>
                     <div className="refuge" >
                         <h3> {mountain.name} </h3>
                         <div className="refuge-image">

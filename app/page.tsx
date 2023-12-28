@@ -16,7 +16,7 @@ export default function Home() {
         <Button href='../main-pages/refuges-page'>
           RIFUGI
         </Button>
-        <Button href='../main-pages/mountaints-page'>
+        <Button href='../main-pages/mountains-page'>
           MONTAGNE
         </Button>
       </div>

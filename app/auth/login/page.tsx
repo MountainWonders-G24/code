@@ -21,8 +21,7 @@ function Login() {
         try {
             setLoading(true);
             const { data } = await axios.post("/api/auth/login", values);
-            console.log("data: " + data);
-            console.log("data.status: " + data.status);
+            console.log(data);
             if (data.status == "200") {
                 message.success(data.message);
                 router.push("/");
