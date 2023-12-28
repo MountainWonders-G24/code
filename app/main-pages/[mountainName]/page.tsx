@@ -171,9 +171,10 @@ function Refuges() {
         };
 
         const fetchUser = async () => {
-           
+           /*
                   await axios.get("/api/auth/currentUser", { timeout: 10000 }).then(data=>
                     {
+                        
                         if(data.data.status!=200){
                             const d = data.data.data; 
                             if(d){
@@ -194,7 +195,9 @@ function Refuges() {
                         }
                     }
                     ).catch (error=> {
-                console.error('Error fetching data:', error)});
+                        console.error('Error fetching data:', error.response.data.message);
+                        
+                    });*/
             
         };
 
