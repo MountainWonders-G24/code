@@ -47,26 +47,7 @@ function getCookie(name: string): string| null {
 		;
 }
 
-const fetchUser = async () => {
-    try {
-        console.log("Cookie: |" + document.cookie + "|");
-        console.log("Cokie: "+ getCookie("token"));
-        const token = document.cookie/*.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, "$1")*/;
-        console.log("Cookie: " + token);
-       
-        //perrhcé non va!? boh In teoria dovrebbe salvarlo nel browser Il fatto che anche doc.cook non stampi niente è molto strano
-    if (token != null && token != "") {
-            displayAddButton(true); 
-            console.log("utente loggato correttamente");
-     
-        } else { // patata@patato.patatosissimi --> pwd patato1234
-            displayAddButton(false);
-            console.error('User not logged: ');
-        }
-    } catch (error) {
-        console.error('Error fetching data:', error);
-    }
-};
+
 
 function Refuges() {
     const [user, _] = useState<userType>();
@@ -77,27 +58,33 @@ function Refuges() {
             };
         }
         
-        /*
-          const fetchUser = async (request: NextRequest) => {
+        
+        const fetchUser = async () => {
             try {
-              const token = request.cookies.get("token")?.value || "";
-              if (token) {
-                // Assuming the API response is an array of mountains
-                displayAddButton(true);
-              } else {
-                displayAddButton(false);
-                console.error('User not logged: ');
-              }
+                console.log("Cookie: |" + document.cookie + "|");
+                console.log("Cokie: "+ getCookie("token"));
+                const token = document.cookie/*.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, "$1")*/;
+                console.log("Cookie: " + token);
+               
+                //perrhcé non va!? boh In teoria dovrebbe salvarlo nel browser Il fatto che anche doc.cook non stampi niente è molto strano
+            if (token != null && token != "") {
+                    displayAddButton(true); 
+                    console.log("utente loggato correttamente");
+             
+                } else { // patata@patato.patatosissimi --> pwd patato1234
+                    displayAddButton(false);
+                    console.error('User not logged: ');
+                }
             } catch (error) {
-              console.error('Error fetching data:', error);
+                console.error('Error fetching data:', error);
             }
-          };
-          */
+        };
+          
         
         
         
 
-        
+        fetchUser
 
     }, []);
 
@@ -158,7 +145,7 @@ function Refuges() {
                                         alt="Search button" />
                                 </Button>
                             </div>
-                            <Button id="filters" className='openBtn' onClick={() => fetchUser()}>
+                            <Button id="filters" className='openBtn' onClick={() => open_sidebar()}>
                                 <input type="image"
                                     src="https://cdn2.iconfinder.com/data/icons/font-awesome/1792/filter-512.png"
                                     alt="Filter icon" />
