@@ -15,10 +15,11 @@ export async function GET(request: NextRequest, { params }: { params: Params }) 
             id: mountainId
         });
         
+        
         if (!mountain) {
             throw new Error("No mountain found")
         }
-       
+        
         return NextResponse.json({
             message: "Mountain retrieved!",
             data: mountain,

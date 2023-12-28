@@ -48,6 +48,9 @@ h3 {
     right: 25px;
     margin-left: 50px;
     text-decoration: none;
+    border: none;
+    top: 2rem;
+    right: 2rem;
 }
 
 .openBtn {

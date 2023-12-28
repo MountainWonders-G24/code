@@ -15,6 +15,10 @@ export const refugeSchema = new mongoose.Schema(
             type :mongoose.Types.Decimal128,
             required: true,
         },
+        description: {
+            type: String,
+            required: true,
+        },
         // Reviews
         // Position
         mountainId: {

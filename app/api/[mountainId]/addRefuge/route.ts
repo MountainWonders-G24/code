@@ -7,7 +7,7 @@ import { connectDB } from "@/configs/dbConfig";
 interface Params {
     mountainId: string;
 }
-connectDB();
+//connectDB();
 export async function POST(request: NextRequest, { params }: { params: Params }) {
     try { 
         const user = await getCurrentUser(request);

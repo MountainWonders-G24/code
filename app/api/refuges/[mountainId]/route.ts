@@ -14,7 +14,6 @@ export async function GET(request: NextRequest, { params }: { params: Params }) 
         const refuges = await Refuge.find({
             mountainId: id
         });
-        
         if (!refuges) {
             throw new Error("No refuges found")
         }

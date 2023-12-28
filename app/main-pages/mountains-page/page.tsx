@@ -48,10 +48,11 @@ function Mountains() {
               console.error('Invalid API response structure:', responseData);
             }
           } catch (error) {
-            console.error('Error fetching data:', error);
+            console.error('Error fetching mountains:', error);
           }
         };
       
+        
         fetchMountains();
         
       }, []);

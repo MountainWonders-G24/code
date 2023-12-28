@@ -3,13 +3,12 @@ import jwt from "jsonwebtoken";
 
 export const validateJWT = async (request: NextRequest) => {
   try {
-    console.log("Validating JWT");
     const token = request.cookies.get("token")?.value || "";
     if (!token) {
       console.log("No token provided");
       throw new Error("No token provided");
-      
     }
+    console.log("Token provided");
 
     const decryptedToken: any = jwt.verify(token, process.env.jwt_secret!);
     return decryptedToken.id;

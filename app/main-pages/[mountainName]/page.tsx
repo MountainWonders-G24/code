@@ -20,12 +20,7 @@ import { useEffect, useState } from 'react';
 
 import { useRouter } from "next/navigation";
 
-interface userType {
-    name: string;
-    surname: string;
-    email: string;
-    password: string;
-}
+
 
 
 interface Mountain {
@@ -35,11 +30,10 @@ interface Mountain {
     image: string;
 }
 
-
 interface Refuge {
     name: String;
     image: String; //nel diagramma delle classi un rifugio non ha un'immagine mentre qui gliela mettiamo???????
-    id: Number;
+    id: string;
     mountain: Number;
     description: String;
     rating: number;
@@ -89,6 +83,41 @@ function setRating(nStars: number) {
     });
 }
 
+
+const fetchUser = async () => {
+    console.log("Entrato per gettare il current user");
+    try {
+        
+        const currentUser = await axios.get('/api/auth/currentUser');
+        console.log( currentUser);
+        
+        if (currentUser.data.status !== 200) {
+            const d = currentUser.data.data;
+            if (d) {
+                if (d.isAdmin) {
+                    displayAddButton(false);
+                    displayDeleteButton(true);
+                    console.log("Admin logged");
+                } else {
+                    displayAddButton(true);
+                    displayDeleteButton(false);
+                    console.log("User logged");
+                }
+            }
+        } else {
+            displayAddButton(false);
+            displayDeleteButton(false);
+            console.log("No user");
+        }
+        console.log("Should have printed the user");
+    } catch (error: any) {
+        console.error("Error fetching user data:", error);
+    };
+
+
+};
+
+
 const validateImageUrl = (_: any, value: string) => {
     const lowerCaseValue = value.toLowerCase();
     if (lowerCaseValue.startsWith('http') && (lowerCaseValue.endsWith('.png') || lowerCaseValue.endsWith('.jpg'))) {
@@ -98,17 +127,42 @@ const validateImageUrl = (_: any, value: string) => {
 };
 
 function Refuges() {
+    const [mountain, setMountain] = useState<Mountain | null>();
     const [loading, setLoading] = React.useState(false);
     const [refuges = [], setRefuges] = useState<Refuge[]>([]);
-    const [mountain, setMountain] = useState<Mountain | null>();
+    
     const router = useRouter();
-    const onAddRefuge = async (values: Refuge) => {
+    
+
+    const deleteRefuge = async (id: string) => {
+        console.log(id);
         try {
             setLoading(true);
-
-            const { data } = await axios.post("/api/" + values.mountain + "/addRefuge", values);
+            const { data } = await axios.delete("/api/delete/"+ id);
             console.log(data);
-            if (data.status === "201") {
+            if (data.status == "200") {
+                message.success(data.message);
+                
+            } else {
+                message.error(data.message)
+            }
+            console.log("data");
+        } catch (error: any) {
+            message.error(error.response.data.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
+
+    const addRefuge = async (values: Refuge) => {
+        try {
+            setLoading(true);
+            
+            const { data } = await axios.post("/api/" + mountain + "/addRefuge", values);
+            console.log("Dati: " + data);
+            if (data.status == "201") {
                 message.success(data.message);
                 router.push("/");
                 console.log("Inserito correttamente")
@@ -117,7 +171,7 @@ function Refuges() {
                 message.error(data.message);
             }
         } catch (error: any) {
-            message.error(error.response.data.message);
+            message.error("Error: " + error);
         } finally {
             setLoading(false);
         }
@@ -127,9 +181,9 @@ function Refuges() {
         const queryString = window.location.search;
         const params = new URLSearchParams(queryString);
         const idValue = params.get("mountainId");
-        displayAddButton(false);
-        displayDeleteButton(false);
-        console.log("Ciao");
+        
+        displayAddButton(true);
+        displayDeleteButton(true);
 
 
         const fetchRefuges = async (path: string) => {
@@ -146,7 +200,7 @@ function Refuges() {
                     console.error('Invalid API response structure:', responseData);
                 }
             } catch (error) {
-                console.error('Error fetching data:', error);
+                console.error('Error fetching refuge:', error);
             }
         };
 
@@ -154,58 +208,21 @@ function Refuges() {
         const fetchMountain = async (path: string) => {
             try {
                 const response = await axios.get(path, { timeout: 10000 });
-
                 const responseData = response.data.data;
                 if ((responseData)) {
                     setMountain(responseData);
-
                     (document.getElementById("mountain-name") as HTMLElement).innerHTML = responseData.name;
-
                     (document.getElementById("mountain") as HTMLElement).style.backgroundImage = `url(${responseData.image})`;
                 } else {
                     console.error('Invalid API response structure:', responseData);
                 }
             } catch (error) {
-                console.error('Error fetching data:', error);
+                console.error('Error fetching mountain:', error);
             }
         };
 
-        const fetchUser = async () => {
-            console.log("Entrato per gettare il current user");
-
-            
-
-            try {
-                
-                const {data} = await axios.get('/api/auth/currentUser');
-                console.log( data);
-               
-                if (data.data.status != 200) {
-                    const d = data.data.data;
-                    if (d) {
-                        if (d.isAdmin) {
-                            displayAddButton(false);
-                            displayDeleteButton(true);
-                            console.log("Admin logged");
-                        } else {
-                            displayAddButton(true);
-                            displayDeleteButton(false);
-                            console.log("User logged");
-                        }
-                    }
-                } else {
-                    displayAddButton(false);
-                    displayDeleteButton(false);
-                    console.log("No user");
-                }
-                console.log("Should have printed the user");
-            } catch (error: any) {
-                console.error("Error fetching data:", error);
-                
-            };
-
-
-        };
+        
+        fetchUser();
 
         if (typeof window !== 'undefined') {
             window.onscroll = function () {
@@ -217,17 +234,18 @@ function Refuges() {
             fetchRefuges('/api/refuges/' + idValue);
             fetchMountain('/api/mountains/' + idValue);
         } else {
+            displayAddButton(false);
             fetchRefuges('/api/refuges');
             (document.getElementById("mountain-name") as HTMLElement).innerHTML = "Rifugi del trentino";
         }
 
-        fetchUser();
+        
 
     }, []);
 
     return (
         <div>
-            <Form id='add-refuge-form' onFinish={onAddRefuge}>
+            <Form id='add-refuge-form' onFinish={addRefuge}>
                 <button className="close-add-refuge" onClick={() => displayAddRefugeForm(false)}>&times;</button>
                 <div>
                     <p>Nome rifugio: </p>
@@ -238,12 +256,13 @@ function Refuges() {
                     <TextArea id="add-refuge-description" cols={10} rows={4} required></TextArea>
                 </div>
                 <div>
-                    <Form.Item name="refuge-image" label="Immagine" className='input' rules={[
+                <Form.Item name="refuge-image" label="Immagine" className='input' rules={[
                         { required: true, message: 'Please enter an image URL' },
                         { validator: validateImageUrl },
                     ]}>
-                        <input type='text' id='add-refuge-image' />
+                    <Input type='text' id='add-refuge-image' />
                     </Form.Item>
+                    
 
 
                 </div>
@@ -333,7 +352,7 @@ function Refuges() {
 
                     {refuges.map((refuge) => (
 
-                        <div className="refuge" key={String(refuge.id)} /*onClick={() => { console.log(mountain) }}*/>
+                        <div className="refuge" key={String(refuge.id)} /*onClick={() => { fetchUser(); }}*/>
                             <div className="refuge-image" id={'refuge' + refuge.id} style={{ backgroundImage: `url(${refuge.image})` }}>
                             </div>
                             <div className="info-refuge">
@@ -344,7 +363,8 @@ function Refuges() {
                                     <span key={index} className={`fa fa-star${index < refuge.rating ? ' checked' : ''}`}></span>
                                 ))}</div>
                             </div>
-                            <Button onClick={() => topFunction()} className="delete-refuge-btn" title="Delete refuge">
+
+                            <Button onClick={() => deleteRefuge(refuge.id)} className="delete-refuge-btn" title="Delete refuge">
                                 <input type="image"
                                     src="https://static-00.iconduck.com/assets.00/trash-icon-462x512-njvey5nf.png"
                                     alt="Delete" />

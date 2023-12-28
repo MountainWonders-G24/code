@@ -13,6 +13,7 @@ interface Params {
 
 export async function DELETE(request: NextRequest, { params }: { params: Params }) {
     try {
+        console.log("DELETE refuge API called");
         const user = await getCurrentUser(request);
         if (!user) {
             return NextResponse.json({
@@ -21,12 +22,12 @@ export async function DELETE(request: NextRequest, { params }: { params: Params 
             })
         }
 
-        if (user.name != 'admin') {
-            return NextResponse.json({
-                message: "Only admin can use this API!",
-                status: 404
-            })
-        }
+        // if (!user.isAdmin ) {
+        //     return NextResponse.json({
+        //         message: "Only admin can use this API!",
+        //         status: 404
+        //     })
+        // }
 
         const refugeId = params.refugeId;
 
@@ -35,7 +36,8 @@ export async function DELETE(request: NextRequest, { params }: { params: Params 
         });
 
         if (!refuge) {
-            throw new Error("No refuge found")
+            console.log("No refuge found");
+            throw new Error("No refuge found");
         }
 
         return NextResponse.json({
@@ -43,6 +45,7 @@ export async function DELETE(request: NextRequest, { params }: { params: Params 
             status: 200
         })
     } catch (error: any) {
+        console.log(error.message);
         return NextResponse.json({
             message: error.message,
             status: 404
@@ -53,9 +56,9 @@ export async function DELETE(request: NextRequest, { params }: { params: Params 
 async function getCurrentUser(request: NextRequest) {
     try {
         const userId = await validateJWT(request);
-        const user = await User.findById(userId).select("-password");
+        // const user = await User.findById(userId).select("-password");
 
-        return user;
+        return userId;
       } catch (error: any) {
         return null;
       }
