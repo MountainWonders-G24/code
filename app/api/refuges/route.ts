@@ -1,4 +1,3 @@
-
 import Refuge from "@/app/models/refugeModel";
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/configs/dbConfig";

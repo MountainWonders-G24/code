@@ -3,11 +3,11 @@ import Mountain from "@/app/models/mountainModel";
 import Refuge from "@/app/models/refugeModel";
 import User from "@/app/models/userModel";
 import { validateJWT } from "@/app/helpers/validateJWT";
-
+import { connectDB } from "@/configs/dbConfig";
 interface Params {
     mountainId: string;
 }
-
+connectDB();
 export async function POST(request: NextRequest, { params }: { params: Params }) {
     try { 
         const user = await getCurrentUser(request);
