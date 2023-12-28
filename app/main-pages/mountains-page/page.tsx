@@ -28,41 +28,52 @@ function renderList(items: Mountain[]) {
 
 }
 
+const printUser = async () => {
+    // const  data  = await axios.get("/api/auth/currentUser");
+    console.log(await axios.get("/api/auth/currentUser"));
+
+    // if (data) {
+    //   console.log(data.data.data);
+    // }else{
+    //     console.log("No user");
+    // }
+}
+
 function Mountains() {
     const [mountains = [], setMountains] = useState<Mountain[]>([]);
 
     useEffect(() => {   
        
         const printUser = async () => {
-            console.log("print");
-            const { data } = await axios.get("/api/auth/currentUser");
-            console.log(data);
-            if (data) {
-              const user: userType = data;
-              console.log(user);
-            }else{
-                console.log("No user");
-            
+            const  data  = await axios.get("/api/auth/currentUser");
+            if(data.data.status!=200){
+                console.log(data.data.data);
             }
+            
+            // if (data) {
+            //   console.log(data.data.data);
+            // }else{
+            //     console.log("No user");
+            // }
         }
 
-        // const fetchMountains = async () => {
-        //   try {
-        //     const response  = await axios.get('/api/mountains');
-        //     const responseData = response.data.data;
+        const fetchMountains = async () => {
+          try {
+            const response  = await axios.get('/api/mountains');
+            const responseData = response.data.data;
             
-        //     if (Array.isArray(responseData)) {
-        //       // Assuming the API response is an array of mountains
-        //       setMountains(responseData);
-        //     } else {
-        //       console.error('Invalid API response structure:', responseData);
-        //     }
-        //   } catch (error) {
-        //     console.error('Error fetching data:', error);
-        //   }
-        // };
+            if (Array.isArray(responseData)) {
+              // Assuming the API response is an array of mountains
+              setMountains(responseData);
+            } else {
+              console.error('Invalid API response structure:', responseData);
+            }
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
+        };
       
-        // fetchMountains();
+        fetchMountains();
         printUser();
       }, []);
 
@@ -92,7 +103,7 @@ function Mountains() {
                                     alt="Search button" />
                             </Button>
                         </div>
-                        <Button id="filters" className='openBtn' onClick={() => open_sidebar()}>
+                        <Button id="filters" className='openBtn' onClick={() => /*open_sidebar()*/ printUser()}>
                             <input type="image"
                                 src="https://cdn2.iconfinder.com/data/icons/font-awesome/1792/filter-512.png"
                                 alt="Filter icon" />

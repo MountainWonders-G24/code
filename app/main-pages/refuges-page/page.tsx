@@ -73,31 +73,38 @@ function Refuges() {
                 scrollFunction();
             };
         }
-        
-        
         const fetchUser = async () => {
-            try {
-                console.log("Cookie with js: |" + document.cookie + "|");
-                
-                const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, "$1");
-                
-            if (token != null && token != "") {//add refuge solo per utenti loggati
-                    displayAddButton(true); 
-                    displayDeleteButton(true);
-                    console.log("utente loggato correttamente");
-             
-                } else { // patata@patato.patatosissimi --> pwd patato1234
+            try{
+                const  data  = await axios.get("/api/auth/currentUser");
+                if(data.data.status!=200){
+                    if(data.data.data.isAdmin){
+                        displayAddButton(false);    
+                        displayDeleteButton(true);
+                        console.log("Admin logged");
+                    }else{
+                        displayAddButton(true); 
+                        displayDeleteButton(false);
+                        console.log("User logged");
+                    }
+                }else{
                     displayAddButton(false);
                     displayDeleteButton(false);
-                    console.error('User not logged: ');
+                    console.log("No user");
                 }
-
-                //aggiungere delete rifugio solo per utente admin
-            } catch (error) {
+            }catch (error) {
                 console.error('Error fetching data:', error);
             }
+            
+            
+            // if (data) {
+            //   console.log(data.data.data);
+            // }else{
+            //     console.log("No user");
+            // }
         };
-        fetchUser()
+        
+        
+        fetchUser();
         
     }, []);
 
