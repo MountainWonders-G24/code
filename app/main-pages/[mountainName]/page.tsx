@@ -134,7 +134,7 @@ function Refuges() {
         const fetchRefuges = async (path: string) => {
             try {
                 
-            const response  = await axios.get(path);
+            const response  = await axios.get(path, { timeout: 10000 });
 
             const responseData = response.data.data;
             
@@ -152,8 +152,7 @@ function Refuges() {
 
         const fetchMountain = async (path: string) => {
             try {
-                
-            const response  = await axios.get(path);
+            const response  = await axios.get(path, { timeout: 10000 });
             
             const responseData = response.data.data;
             console.log(responseData);
@@ -173,7 +172,7 @@ function Refuges() {
 
         const fetchUser = async () => {
             try{
-                const  data  = await axios.get("/api/auth/currentUser");
+                const  data  = await axios.get("/api/auth/currentUser", { timeout: 10000 });
                 if(data.data.status!=200){
                     const d = data.data.data; 
                     if(d){
