@@ -41,12 +41,6 @@ function displayAddButton(logged: boolean) {
         (document.getElementById("add-refuge-btn") as HTMLElement).style.display = "none";
     }
 }
-function getCookie(name: string): string| null {
-	const nameLenPlus = (name.length + 1);
-	return document.cookie
-		;
-}
-
 
 
 function Refuges() {
@@ -61,12 +55,10 @@ function Refuges() {
         
         const fetchUser = async () => {
             try {
-                console.log("Cookie: |" + document.cookie + "|");
-                console.log("Cokie: "+ getCookie("token"));
-                const token = document.cookie/*.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, "$1")*/;
-                console.log("Cookie: " + token);
-               
-                //perrhcé non va!? boh In teoria dovrebbe salvarlo nel browser Il fatto che anche doc.cook non stampi niente è molto strano
+                console.log("Cookie with js: |" + document.cookie + "|");
+                
+                const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, "$1");
+                
             if (token != null && token != "") {
                     displayAddButton(true); 
                     console.log("utente loggato correttamente");

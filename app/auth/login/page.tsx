@@ -22,7 +22,8 @@ function Login() {
             setLoading(true);
             const { data } = await axios.post("/api/auth/login", values);
             console.log("data: " + data);
-            if (data.status == "201") {
+            console.log("data.status: " + data.status);
+            if (data.status == "200") {
                 message.success(data.message);
                 router.push("/");
             } else {
@@ -37,8 +38,6 @@ function Login() {
 
     return (
         <div>
-            
-
             <div className="center-page">
                 <div className="login-form">
                     <h1 className="form-title">Login</h1>
