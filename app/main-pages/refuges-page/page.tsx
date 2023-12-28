@@ -88,24 +88,7 @@ function setRating(nStars: number){
 
 function Refuges() {
     const [loading, setLoading] = React.useState(false);
-    const onAddRefuge = () => {
-        try {
-            setLoading(true);
-            /*
-            const { data } = await axios.post("/api/auth/login", values);
-            console.log(data);
-            if (data.status == "200") {
-                message.success(data.message);
-                router.push("/");
-            } else {
-                message.error(data.message)
-            }*/
-        } catch (error: any) {
-            message.error(error.response.data.message);
-        } finally {
-            setLoading(false);
-        }
-    }
+    
     
     useEffect(() => {
         if (typeof window !== 'undefined') {

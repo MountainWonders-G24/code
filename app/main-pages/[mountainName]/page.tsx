@@ -89,10 +89,13 @@ function setRating(nStars: number){
     });
 }
 
-function isImageUrl(input: string): boolean {
-    const lowerCaseInput = input.toLowerCase();
-    return lowerCaseInput.startsWith('http') && (lowerCaseInput.endsWith('.png') || lowerCaseInput.endsWith('.jpg') || lowerCaseInput.endsWith('.jpeg'));
-}
+const validateImageUrl = (_: any, value: string) => {
+    const lowerCaseValue = value.toLowerCase();
+    if (lowerCaseValue.startsWith('http') && (lowerCaseValue.endsWith('.png') || lowerCaseValue.endsWith('.jpg'))) {
+      return Promise.resolve();
+    }
+    return Promise.reject('Please enter a valid URL ending with .png or .jpg');
+  };
 
 function Refuges() {
     const [loading, setLoading] = React.useState(false);
@@ -105,11 +108,13 @@ function Refuges() {
             
             const { data } = await axios.post("/api/" + values.mountain +"/addRefuge", values);
             console.log(data);
-            if (data.status == "201") {
+            if (data.status === "201") {
                 message.success(data.message);
                 router.push("/");
+                console.log("Inserito correttamente")
             } else {
-                message.error(data.message)
+                console.log("Non inserito correttamente");
+                message.error(data.message);
             }
         } catch (error: any) {
             message.error(error.response.data.message);
@@ -220,8 +225,7 @@ function Refuges() {
                     <TextArea id="add-refuge-description" cols={10} rows={4} required></TextArea>
                 </div>
                 <div>
-                    <p>Immagine: </p>
-                    <Input type="text" id="add-refuge-image"  rules= {[
+                <Form.Item name="refuge-image" label="Immagine" className='input' rules={[
                                     {
                                         required: true,
                                         message: "Please input your surname",
@@ -230,8 +234,11 @@ function Refuges() {
                                         min: 3,
                                         message: "surname not valid"
                                     }
-                                ]} 
-                    />
+                                ]}>
+                                    <input type='text' id='add-refuge-image'  />
+                                </Form.Item>
+                    
+                    
                 </div>
                 <div>
                     <p>Valutazione:</p>
