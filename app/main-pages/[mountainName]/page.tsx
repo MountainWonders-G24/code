@@ -227,7 +227,7 @@ function Refuges() {
                 <div>
                 <Form.Item name="refuge-image" label="Immagine" className='input' rules={[
                                     {
-                                        required: true,
+                                        required: false,
                                         message: "Please input your surname",
                                     },
                                     {
