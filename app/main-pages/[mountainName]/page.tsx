@@ -197,7 +197,8 @@ function Refuges() {
                     ).catch (error=> {
                         console.error('Error fetching data:', error.response.data.message);
                         
-                    });*/
+                    });
+                    */
             
         };
 

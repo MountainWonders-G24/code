@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import Refuge from "@/app/models/refugeModel";
+import { connectDB } from "@/configs/dbConfig";
 
 interface Params {
     mountainId: string;
 }
-
+connectDB();
 export async function GET(request: NextRequest, { params }: { params: Params }) {
     try {
         const id = params.mountainId;
