@@ -1,4 +1,4 @@
-import { connectDB } from "@/configs/dbConfig";
+import { connectDB, disconnectDB } from "@/configs/dbConfig";
 import User from "@/app/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
@@ -7,7 +7,6 @@ import jwt from "jsonwebtoken";
 connectDB();
 
 export async function POST(request: NextRequest) {
-    
     try {
         const reqBody = await request.json();
 

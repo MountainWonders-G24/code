@@ -28,6 +28,7 @@ function Login() {
             } else {
                 message.error(data.message)
             }
+            console.log("data");
         } catch (error: any) {
             message.error(error.response.data.message);
         } finally {

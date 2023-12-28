@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 
 export const validateJWT = async (request: NextRequest) => {
   try {
+    console.log("Validating JWT");
     const token = request.cookies.get("token")?.value || "";
     if (!token) {
       console.log("No token provided");
