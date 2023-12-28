@@ -175,14 +175,17 @@ function Refuges() {
             try{
                 const  data  = await axios.get("/api/auth/currentUser");
                 if(data.data.status!=200){
-                    if(data.data.data.isAdmin){
-                        displayAddButton(false);    
-                        displayDeleteButton(true);
-                        console.log("Admin logged");
-                    }else{
-                        displayAddButton(true); 
-                        displayDeleteButton(false);
-                        console.log("User logged");
+                    const d = data.data.data; 
+                    if(d){
+                        if (d.isAdmin){
+                            displayAddButton(false);    
+                            displayDeleteButton(true);
+                            console.log("Admin logged");
+                        }else{
+                            displayAddButton(true); 
+                            displayDeleteButton(false);
+                            console.log("User logged");
+                        }
                     }
                 }else{
                     displayAddButton(false);
@@ -226,14 +229,8 @@ function Refuges() {
                 </div>
                 <div>
                 <Form.Item name="refuge-image" label="Immagine" className='input' rules={[
-                                    {
-                                        required: false,
-                                        message: "Please input your surname",
-                                    },
-                                    {
-                                        min: 3,
-                                        message: "surname not valid"
-                                    }
+                                    { required: true, message: 'Please enter an image URL' },
+                                    { validator: validateImageUrl },
                                 ]}>
                                     <input type='text' id='add-refuge-image'  />
                                 </Form.Item>
