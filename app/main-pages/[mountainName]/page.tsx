@@ -180,25 +180,25 @@ function Refuges() {
                 const {data} = await axios.get('/api/auth/currentUser');
                 console.log( data);
                
-                // if (data.data.status != 200) {
-                //     const d = data.data.data;
-                //     if (d) {
-                //         if (d.isAdmin) {
-                //             displayAddButton(false);
-                //             displayDeleteButton(true);
-                //             console.log("Admin logged");
-                //         } else {
-                //             displayAddButton(true);
-                //             displayDeleteButton(false);
-                //             console.log("User logged");
-                //         }
-                //     }
-                // } else {
-                //     displayAddButton(false);
-                //     displayDeleteButton(false);
-                //     console.log("No user");
-                // }
-                // console.log("Should have printed the user");
+                if (data.data.status != 200) {
+                    const d = data.data.data;
+                    if (d) {
+                        if (d.isAdmin) {
+                            displayAddButton(false);
+                            displayDeleteButton(true);
+                            console.log("Admin logged");
+                        } else {
+                            displayAddButton(true);
+                            displayDeleteButton(false);
+                            console.log("User logged");
+                        }
+                    }
+                } else {
+                    displayAddButton(false);
+                    displayDeleteButton(false);
+                    console.log("No user");
+                }
+                console.log("Should have printed the user");
             } catch (error: any) {
                 console.error("Error fetching data:", error);
                 
