@@ -13,7 +13,7 @@ export default function Home() {
         <h1>wonders</h1>
       </div>
       <div id='buttons'>
-        <Button href='../main-pages/refuges-page'>
+        <Button href='../main-pages/refuges?mountainId=0'>
           RIFUGI
         </Button>
         <Button href='../main-pages/mountains-page'>

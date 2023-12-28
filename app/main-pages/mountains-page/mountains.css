@@ -50,12 +50,12 @@ p, h3{
     background-color: #444;
   }
   
-  #mountain {
+  #mountain-bg {
     transition: margin-left .5s;
     padding: 16px;
   }
 
-#mountain{
+#mountain-bg{
     padding: 2rem 0 5rem 0;
     margin-bottom: 4rem;
     background-image: url("https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8NXx8fGVufDB8fHx8fA%3D%3D");
@@ -64,7 +64,7 @@ p, h3{
     background-position: center;
 }
 
-#mountain h1{
+#mountain-bg h1{
     font-size: 3em;
     margin: 3rem 0 2rem 0;
     -webkit-text-stroke: 1px lightgray;
@@ -86,6 +86,7 @@ p, h3{
 
 }
 
+
 #up-button input{
     max-height: 90%;
     max-width: 90%;
@@ -101,7 +102,7 @@ p, h3{
     margin: 0;
 }
 
-#make-search, #applied-filters {
+#make-search {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -119,52 +120,14 @@ p, h3{
     }
 }
 
-/*responsive layout*/
-@media (max-width: 165px) {
-    #applied-filters {
-        flex-direction: column;
-        align-items: center;
-    }
-}
 
-#search-bar,#filters {
+#search-bar {
     margin: 0 0.5rem;
     height: 100%;
 }
 
-#filters {
-    border: 2px solid lightgray;
-    background-color: lightgray;
-    border-radius: 2rem;
-    padding: 0;
-    width: 4.5rem;
-    cursor: pointer;
-}
 
-#filters input {
-    width: 15%;
-}
-
-#applied-filters {
-    align-items: center; 
-}
-
-#applied-filters p, .name-filter{
-    display: flex;
-    padding: 0 0.5rem;
-    align-items: center;
-}
-
-#applied-filters p,
-.single-filter {
-    height: 100%;
-}
-.single-filter {
-    margin: 0 0.5rem;
-}
-
-#search-bar,
-.single-filter {
+#search-bar {
     display: flex;
     border: 2px solid lightgray;
     border-radius: 2rem;
@@ -172,8 +135,7 @@ p, h3{
     width: fit-content;
 }
 
-#research-input,
-.name-filter {
+#research-input{
     border: none;
     margin: 0;
     border-radius: 2rem 0 0 2rem;
@@ -190,8 +152,7 @@ p, h3{
     outline: none;
 }
 
-#search-button,
-.delete-filter {
+#search-button{
     border: none;
     border-left: 1px solid lightgray;
     border-radius: 0 1rem 1rem 0;
@@ -202,17 +163,13 @@ p, h3{
     height: 100%;
 }
 
-.delete-filter {
-    padding: 0.3rem 0.5rem;
-}
-
-#search-button input,
-.delete-filter input {
+#search-button input {
     height: 1rem;
     vertical-align: middle;
 }
 
-.refuge {
+.mountain {
+    cursor: pointer;
     display: flex;
     flex-direction: row;
     margin: 2rem 15rem;
@@ -221,45 +178,45 @@ p, h3{
     background-color: rgba(208, 253, 253, 0.8);
 }
 
-.refuge-image {
+.mountain-image {
     border: 1px solid rgba(208, 253, 253,0.5);
     border-radius: 1rem;
     width: 30%;
     height: 10rem;
     display: flex;
     justify-content: center;
-    background-image: url(https://i0.wp.com/alpshiking.swisshikingvacations.com/wp-content/uploads/2018/05/Cover-image-refuge-blog-sml.jpg?fit=1200%2C799&ssl=1);
+    
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
 
 }
 
-.info-refuge {
+.info-mountain {
     width: 70%;
     padding: 0 1rem;
 }
 
 @media (max-width: 700px) {
-    .refuge {
+    .mountain {
         flex-direction: column;
         max-width: 100%;
         margin: 2rem 4rem;
         padding: 1.5rem;
     }
 
-    .refuge-image {
+    .mountain-image {
         width: 100%;
         box-sizing: border-box;
     }
 
-    .info-refuge {
+    .info-mountain {
         width: 100%;
         box-sizing: border-box;
     }
 }
 
-.refuge-image input {
+.mountain-image input {
     width: 100%;
     height: fit-content;
     margin: auto;

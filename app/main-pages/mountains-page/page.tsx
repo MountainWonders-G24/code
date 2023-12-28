@@ -15,9 +15,11 @@ interface userType {
 }
 
 interface Mountain{
-    id: String;
+    id: Number;
+    image: String;
     name: String;
-    refuges: Array<Number>;
+    description: String;
+    
 }
 
 const apiResponse: Mountain[] = [];
@@ -28,37 +30,14 @@ function renderList(items: Mountain[]) {
 
 }
 
-const printUser = async () => {
-    // const  data  = await axios.get("/api/auth/currentUser");
-    console.log(await axios.get("/api/auth/currentUser"));
 
-    // if (data) {
-    //   console.log(data.data.data);
-    // }else{
-    //     console.log("No user");
-    // }
-}
 
 function Mountains() {
     const [mountains = [], setMountains] = useState<Mountain[]>([]);
 
     useEffect(() => {   
-       
-        const printUser = async () => {
-            const  data  = await axios.get("/api/auth/currentUser");
-            if(data.data.status!=200){
-                console.log(data.data.data);
-            }
-            
-            // if (data) {
-            //   console.log(data.data.data);
-            // }else{
-            //     console.log("No user");
-            // }
-        }
-
         const fetchMountains = async () => {
-          try {
+            try {
             const response  = await axios.get('/api/mountains');
             const responseData = response.data.data;
             
@@ -74,7 +53,7 @@ function Mountains() {
         };
       
         fetchMountains();
-        printUser();
+        
       }, []);
 
     return (
@@ -86,7 +65,7 @@ function Mountains() {
                 <a href="#">Distanza da Trento</a>
             </div>
             <div id='list-refuges'>
-            <div id="mountain">
+            <div id="mountain-bg">
                 <Button onClick={() => topFunction()} id="up-button" title="Go to top">
                     <input type="image"
                         src="https://icons.veryicon.com/png/o/miscellaneous/unicons/top-arrow-to-top.png"
@@ -103,54 +82,21 @@ function Mountains() {
                                     alt="Search button" />
                             </Button>
                         </div>
-                        <Button id="filters" className='openBtn' onClick={() => /*open_sidebar()*/ printUser()}>
-                            <input type="image"
-                                src="https://cdn2.iconfinder.com/data/icons/font-awesome/1792/filter-512.png"
-                                alt="Filter icon" />
-                            Filtri
-                        </Button>
-                    </div>
-                    <div id="applied-filters">
-                        <div className="single-filter">
-                            <p className="name-filter">Filtro1</p>
-                            <Button className="delete-filter">
-                                <input type="image"
-                                    src="https://cdn.iconscout.com/icon/free/png-256/free-clear-1780599-1513754.png"
-                                    alt="Clear" />
-                            </Button>
-                        </div>
-                        <div className="single-filter">
-                            <p className="name-filter">Filtro2</p>
-                            <Button className="delete-filter">
-                                <input type="image"
-                                    src="https://cdn.iconscout.com/icon/free/png-256/free-clear-1780599-1513754.png"
-                                    alt="Clear" />
-                            </Button>
-                        </div>
-                        <div className="single-filter">
-                            <p className="name-filter">Filtro3</p>
-                            <Button className="delete-filter">
-                                <input type="image"
-                                    src="https://cdn.iconscout.com/icon/free/png-256/free-clear-1780599-1513754.png"
-                                    alt="Clear" />
-                            </Button>
-                        </div>
                     </div>
                 </div>
             </div>
-            <div id="refuges">
+            <div id="mountains">
             {mountains.map((mountain) => (
-                <div key={String(mountain.id)}  onClick={()=> {window.location.href = '/main-pages/'+mountain.id+'/refuges';}}>
-                    <div className="refuge" >
-                        <h3> {mountain.name} </h3>
-                        <div className="refuge-image">
+                    <div className="mountain" key={String(mountain.id)} onClick={()=> {window.location.href = '/main-pages/refuges?mountainId='+mountain.id;}}>
+                        
+                        
+                        <div className="mountain-image" id={'mountain'+mountain.id} style={{backgroundImage: `url(${mountain.image})`}}>
                         </div>
-                        <div className="info-refuge">
+                        <div className="info-mountain">
                             <h3> {mountain.name} </h3>
                             <p>Descrizione: </p>
                         </div>
                     </div>
-                </div>
             ))}
             
             </div>

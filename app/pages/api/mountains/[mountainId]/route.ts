@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import Refuge from "@/app/models/refugeModel";
+import Mountain from "@/app/models/mountainModel";
 
 interface Params {
     mountainId: string;
@@ -8,19 +8,18 @@ interface Params {
 export async function GET(request: NextRequest, { params }: { params: Params }) {
     try {
         const id = params.mountainId;
-        console.log("moutnaiD: " + id);
 
-        const refuges = await Refuge.find({
+        const mountain = await Mountain.findOne({
             mountainId: id
         });
         
-        if (!refuges) {
-            throw new Error("No refuges found")
+        if (!mountain) {
+            throw new Error("No mountain found")
         }
        
         return NextResponse.json({
-            message: "Refuges retrieved!",
-            data: refuges,
+            message: "Mountain retrieved!",
+            data: mountain,
             status: 200
         });
     } catch (error: any) {

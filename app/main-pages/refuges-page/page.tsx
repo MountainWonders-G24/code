@@ -31,6 +31,7 @@ interface Refuge {
     id: Number;
     name: String;
     mountain: Number;
+    description: String;
     image: String; //nel diagramma delle classi un rifugio non ha un'immagine mentre qui gliela mettiamo???????
 }
 
@@ -64,15 +65,55 @@ function displayAddRefugeForm(authorized: boolean){
     }
 }
 
+interface StarRatingProps {
+    maxStars: Number;
+  }
+
+function setRating(nStars: number){
+    const stars = (document.getElementById("review")?.getElementsByClassName("fa fa-star") as HTMLCollectionOf<HTMLElement>);
+    let n: number = 0;
+    Array.from(stars).forEach((star) => {
+        if(n < nStars){
+            star.className += " checked";
+            n += (1);
+        }else{
+            star.className = "fa fa-star";
+        }
+        
+    });
+}
+      
+
+
 
 function Refuges() {
-    const [user, _] = useState<userType>();
+    const [loading, setLoading] = React.useState(false);
+    const onAddRefuge = () => {
+        try {
+            setLoading(true);
+            /*
+            const { data } = await axios.post("/api/auth/login", values);
+            console.log(data);
+            if (data.status == "200") {
+                message.success(data.message);
+                router.push("/");
+            } else {
+                message.error(data.message)
+            }*/
+        } catch (error: any) {
+            message.error(error.response.data.message);
+        } finally {
+            setLoading(false);
+        }
+    }
+    
     useEffect(() => {
         if (typeof window !== 'undefined') {
             window.onscroll = function () {
                 scrollFunction();
             };
         }
+        
         const fetchUser = async () => {
             try{
                 const  data  = await axios.get("/api/auth/currentUser");
@@ -94,13 +135,6 @@ function Refuges() {
             }catch (error) {
                 console.error('Error fetching data:', error);
             }
-            
-            
-            // if (data) {
-            //   console.log(data.data.data);
-            // }else{
-            //     console.log("No user");
-            // }
         };
         
         
@@ -110,7 +144,8 @@ function Refuges() {
 
     return (
         <div>
-            <div id='add-refuge-form'>
+            <Form id='add-refuge-form' onFinish={onAddRefuge}>
+            <button className="close-add-refuge" onClick={() => displayAddRefugeForm(false)}>&times;</button>
                 <div>
                     <p>Nome rifugio: </p>
                     <Input type="text" id="add-refuge-name" />
@@ -132,9 +167,24 @@ function Refuges() {
                     <p>Descrizione: </p>
                     <TextArea id="add-refuge-description" cols={10} rows={4}></TextArea>
                 </div>
-                <div>Immagine: </div>
-                <Input type="text" id="add-refuge-image" />
-            </div>
+                <div>
+                    <p>Immagine: </p>
+                    <Input type="text" id="add-refuge-image" />
+                </div>
+                <div>
+                    <p>Valutazione:</p>
+                    <div id="review">
+                        <span className="fa fa-star" onClick={() => setRating(1)}></span>
+                        <span className="fa fa-star" onClick={() => setRating(2)}></span>
+                        <span className="fa fa-star" onClick={() => setRating(3)}></span>
+                        <span className="fa fa-star" onClick={() => setRating(4)}></span>
+                        <span className="fa fa-star" onClick={() => setRating(5)}></span>
+                    </div>
+                </div>
+                <Button id='sumbit-add-button' type='primary' htmlType='submit' block loading={loading}>
+                    Aggiungi
+                </Button>
+            </Form>
             <div id='sidebar'>
                 <button className="closeBtn" onClick={() => close_sidebar()}>Close &times;</button>
                 <a href="#">Montagna</a>

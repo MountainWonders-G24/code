@@ -41,6 +41,15 @@ h3 {
     text-decoration: none;
 }
 
+.close-add-refuge {
+    position: absolute;
+    top: 0;
+    z-index: 6;
+    right: 25px;
+    margin-left: 50px;
+    text-decoration: none;
+}
+
 .openBtn {
     cursor: pointer;
     padding: 10px 15px;
@@ -57,6 +66,34 @@ h3 {
     margin-top: 3.25rem;
 }
 
+
+#add-refuge-form{
+    display: none;
+    background-color: #f1f1f1;
+    border-radius: 1rem;
+    position: fixed;
+    height: fit-content;
+    width: 30rem;
+    z-index: 5;
+    padding: 2.5rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 
+    0 2.8px 2.2px rgba(0, 0, 0, 0.054),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+    0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+    0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.12);
+    stroke-width: 1px;
+    stroke: #626061;
+}
+
+#sumbit-add-button{
+    margin: 2rem 0 0 0;
+}
+
 #mountain {
     transition: margin-left .5s;
     padding: 16px;
@@ -65,8 +102,8 @@ h3 {
 #mountain {
     padding: 2rem 0 5rem 0;
     margin-bottom: 4rem;
-    background-image: url("https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8NXx8fGVufDB8fHx8fA%3D%3D");
     background-repeat: no-repeat;
+    background-image: url("https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8NXx8fGVufDB8fHx8fA%3D%3D");
     background-size: cover;
     background-position: center;
 }
@@ -243,7 +280,7 @@ h3 {
     background-color: rgba(208, 253, 253, 0.8);
 }
 
-#delete-refuge-btn {
+.delete-refuge-btn {
     display: flex;
     padding: 0.75rem;
     white-space: nowrap;
@@ -256,13 +293,12 @@ h3 {
     border-radius: 1.5rem;
 }
 
-#delete-refuge-btn input {
+.delete-refuge-btn input {
     max-height: 100%;
     max-width: 100%;
-
 }
 
-#delete-refuge-btn:hover {
+.delete-refuge-btn:hover {
     transition: 0.5s;
     background-color: red;
 }
@@ -271,7 +307,7 @@ h3 {
     border: 1px solid rgba(208, 253, 253, 0.5);
     border-radius: 1rem;
     width: 30%;
-    height: 10rem;
+    height: auto;
     display: flex;
     justify-content: center;
     background-image: url(https://i0.wp.com/alpshiking.swisshikingvacations.com/wp-content/uploads/2018/05/Cover-image-refuge-blog-sml.jpg?fit=1200%2C799&ssl=1);
@@ -296,6 +332,7 @@ h3 {
 
     .refuge-image {
         width: 100%;
+        height: 10rem;
         box-sizing: border-box;
     }
 
@@ -309,4 +346,12 @@ h3 {
     width: 100%;
     height: fit-content;
     margin: auto;
+}
+
+.fa.fa-star, .fa.fa-star.checked{
+    cursor: pointer;
+}
+
+.checked {
+    color: gold; /* or any other color you prefer for filled stars */
 }

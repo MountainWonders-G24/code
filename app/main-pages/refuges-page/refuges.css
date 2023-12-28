@@ -53,13 +53,40 @@ h3 {
 
 #add-refuge-form{
     display: none;
-    margin: auto;
-    position: relative;
-    margin-top: 3.25rem;
-    border: solid 1px black;
-    height: 25rem;
-    width: 20rem;
-    padding: 5rem;
+    background-color: #f1f1f1; 
+    border-radius: 1rem;
+    position: fixed;
+    height: fit-content;
+    width: 30rem;
+    z-index: 5;
+    padding: 2.5rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 
+    0 2.8px 2.2px rgba(0, 0, 0, 0.054),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+    0 12.5px 10px rgba(0, 0, 0, 0.06),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+    0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+    0 100px 80px rgba(0, 0, 0, 0.12);
+    stroke-width: 1px;
+    stroke: #626061;
+}
+
+.close-add-refuge {
+    position: absolute;
+    height: 1rem;
+    right: 1rem;
+    top: 1rem;
+    z-index: 6;
+    right: 2rem;
+    border: none;
+    text-decoration: none;
+}
+
+#sumbit-add-button{
+    margin: 2rem 0 0 0;
 }
 
 #mountain {
@@ -70,7 +97,7 @@ h3 {
 #mountain {
     padding: 2rem 0 5rem 0;
     margin-bottom: 4rem;
-    background-image: url("https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8NXx8fGVufDB8fHx8fA%3D%3D");
+    background-image: url("https://wallpapers.com/images/hd/4k-mountain-0hb4gnwalnj51zsh.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -85,7 +112,6 @@ h3 {
 #up-button, #add-refuge-btn {
     
     position: fixed;
-    
     border: none;
     outline: none;
     background-color: lightskyblue;
@@ -276,14 +302,21 @@ h3 {
     border: 1px solid rgba(208, 253, 253, 0.5);
     border-radius: 1rem;
     width: 30%;
-    height: 10rem;
+    height: auto;
     display: flex;
     justify-content: center;
     background-image: url(https://i0.wp.com/alpshiking.swisshikingvacations.com/wp-content/uploads/2018/05/Cover-image-refuge-blog-sml.jpg?fit=1200%2C799&ssl=1);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+}
 
+.fa.fa-star, .fa.fa-star.checked{
+    cursor: pointer;
+}
+
+.checked {
+    color: gold; /* or any other color you prefer for filled stars */
 }
 
 .info-refuge {
@@ -301,6 +334,7 @@ h3 {
 
     .refuge-image {
         width: 100%;
+        height: 10rem;
         box-sizing: border-box;
     }
 

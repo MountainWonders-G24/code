@@ -9,10 +9,6 @@ export const mountainSchema = new mongoose.Schema(
         name: {
             type: String,
             required: true,
-        },
-        refuges: {
-            type: Array,
-            required: false
         }
     }
 );
