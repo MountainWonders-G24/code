@@ -7,6 +7,7 @@ interface Params {
 
 export async function GET(request: NextRequest, { params }: { params: Params }) {
     try {
+        throw new Error("No mountain found");
         const id = params.mountainId;
         console.log("moutnaiD: " + id);
 

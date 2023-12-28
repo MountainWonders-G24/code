@@ -171,29 +171,31 @@ function Refuges() {
         };
 
         const fetchUser = async () => {
-            try{
-                const  data  = await axios.get("/api/auth/currentUser", { timeout: 10000 });
-                if(data.data.status!=200){
-                    const d = data.data.data; 
-                    if(d){
-                        if (d.isAdmin){
-                            displayAddButton(false);    
-                            displayDeleteButton(true);
-                            console.log("Admin logged");
+           
+                  await axios.get("/api/auth/currentUser", { timeout: 10000 }).then(data=>
+                    {
+                        if(data.data.status!=200){
+                            const d = data.data.data; 
+                            if(d){
+                                if (d.isAdmin){
+                                    displayAddButton(false);    
+                                    displayDeleteButton(true);
+                                    console.log("Admin logged");
+                                }else{
+                                    displayAddButton(true); 
+                                    displayDeleteButton(false);
+                                    console.log("User logged");
+                                }
+                            }
                         }else{
-                            displayAddButton(true); 
+                            displayAddButton(false);
                             displayDeleteButton(false);
-                            console.log("User logged");
+                            console.log("No user");
                         }
                     }
-                }else{
-                    displayAddButton(false);
-                    displayDeleteButton(false);
-                    console.log("No user");
-                }
-            }catch (error) {
-                console.error('Error fetching data:', error);
-            }
+                    ).catch (error=> {
+                console.error('Error fetching data:', error)});
+            
         };
 
         if (typeof window !== 'undefined') {

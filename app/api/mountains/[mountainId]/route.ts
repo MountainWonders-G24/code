@@ -7,8 +7,9 @@ interface Params {
 
 export async function GET(request: NextRequest, { params }: { params: Params }) {
     try {
+        throw new Error("No mountain found");
         const mountainId = params.mountainId;
-
+        
         const mountain = await Mountain.findOne({
             id: mountainId
         });
