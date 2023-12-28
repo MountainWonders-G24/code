@@ -31,9 +31,7 @@ export async function DELETE(request: NextRequest, { params }: { params: Params 
 
         const refugeId = params.refugeId;
 
-        const refuge = Refuge.findOneAndDelete({
-            id: refugeId
-        });
+        const refuge = Refuge.findByIdAndDelete(refugeId);
 
         if (!refuge) {
             console.log("No refuge found");
