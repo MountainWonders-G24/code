@@ -146,7 +146,7 @@ function Refuges() {
     const fetchRefuges = async (path: string) => {
         
         try {
-            const response = await axios.get(path, { timeout: 10000 });
+            const response = await axios.get(path);
 
             const responseData = response.data.data;
             
@@ -155,7 +155,6 @@ function Refuges() {
                 let array : Refuge[]= [];
                 refuges= new Array<Refuge>();
                 for (let i = 0; i < responseData.length; i++) {
-                        console.log("QUI!!");
                         const q: Refuge= {
                             _id: responseData[i]._id,
                             name: responseData[i].name,
@@ -267,13 +266,17 @@ function Refuges() {
         try {
             setLoading(true);
             values.avgRating = avg_rating <= 0 ? 1 : avg_rating;
-            values.mountainId=Number(mountain?.id);
-            if (mountain?.id == null||mountain?.id=="0") {
-                message.error("Errore: montagna non trovata");
-                return;
-            }
             
-            const { data } = await axios.post("/api/" + Number(mountain?.id) + "/addRefuge", values);
+            var id;
+            if (mountain?.id == null||mountain?.id=="0") {
+                id="1";
+                values.mountainId=Number("1");
+            }
+            else{
+                id = Number(mountain?.id);
+                values.mountainId = Number(mountain?.id);
+            }
+            const {data}  = await axios.post("/api/" + id + "/addRefuge", values);
             console.log("Dati: " + data);
             
             if (data.status == "201") {
