@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-
 import ThemeProvider from './providers/ThemeProvider'
+import axios from 'axios'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -12,11 +12,13 @@ export const metadata: Metadata = {
   description: 'MountainWonders - Il sito per gli amanti della montagna',
 }
 
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  
   return (
     <html lang="en">
       <head>
@@ -26,7 +28,7 @@ export default function RootLayout({
         <div className="topnav">
           <a href="/">Home</a>
           <div className="topnav-right">
-            <a href="/">Supporto</a>
+            <a href="/" id="logout">Logout</a>
             <a href="/auth/login/">Profile</a>
           </div>
         </div>

@@ -6,7 +6,9 @@ import React from 'react'
 import axios from "axios";
 import message from 'antd/es/message';
 import { useRouter } from "next/navigation";
+import { useEffect } from 'react';
 import Script from 'next/script';
+import { logout } from "@/app/script.tsx"
 import '../auth.css'
 interface userType {
     email: string;
@@ -17,6 +19,9 @@ function Login() {
     const [loading, setLoading] = React.useState(false);
     const router = useRouter();
 
+    useEffect(() => {
+        logout();
+    }, []);
     const onLogin = async (values: userType) => {
         try {
             setLoading(true);
@@ -60,8 +65,6 @@ function Login() {
                     </div>
                 </div>
             </div>
-
-
         </div>
     )
 }

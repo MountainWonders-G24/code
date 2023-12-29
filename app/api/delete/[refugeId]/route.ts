@@ -3,62 +3,71 @@ import Refuge from "@/app/models/refugeModel";
 import User from "@/app/models/userModel";
 import { validateJWT } from "@/app/helpers/validateJWT";
 import { connectDB } from "@/configs/dbConfig";
+import { cookies } from "next/headers";
+import jwt from "jsonwebtoken";
 
 connectDB();
-
 interface Params {
     refugeId: string;
 }
 
 export async function DELETE(request: NextRequest, { params }: { params: Params }) {
     try {
+        
         console.log("DELETE refuge API called");
-        const user = await getCurrentUser(request);
-        if (!user) {
+        const cookieStore = cookies();
+        console.log(cookieStore);
+        let token = cookieStore.get('email');
+        let cookieEmail;
+        
+        try {
+            const jwtsecret= (process.env.jwt_secret!);
+            if (!token) {
+                return NextResponse.json({
+                    message: "You need to be an Admin to use this API!",
+                    status: 401
+                });
+            }
+            const decryptedToken:any = jwt.verify(token.value, jwtsecret);
+            cookieEmail = decryptedToken.email;
+            
+        } catch (error: any) {
+            throw error;
+        }
+        
+        const user= await User.findOne({ email: cookieEmail,}).select("-password");
+        if (!user.isAdmin) {
             return NextResponse.json({
-                message: "You need to login to use this API!",
+                message: "You need to be an Admin to use this API!",
                 status: 401
             });
         }
-
-        // if (!user.isAdmin) {
-        //     return NextResponse.json({
-        //         message: "Only admin can use this API!",
-        //         status: 404
-        //     });
-        // }
-
         const refugeId = params.refugeId;
 
-        const refuge = await Refuge.findOneAndDelete({
-            _id: refugeId
-        });
+            const refuge = await Refuge.findOneAndDelete({
+                _id: refugeId
+            });
+    
+            if (!refuge) {
+                return NextResponse.json({
+                    message: "Refuge not found",
+                    status: 404,
+                });
+            }
+    
+            return NextResponse.json({
+                message: "Refuge deleted!",
+                status: 200
+            });
 
-        if (!refuge) {
-            console.log("No refuge found");
-            throw new Error("No refuge found");
-        }
-
-        return NextResponse.json({
-            message: "Refuge deleted!",
-            status: 200
-        });
     } catch (error: any) {
-        console.log(error.message);
         return NextResponse.json({
             message: error.message,
-            status: 404
+            status: error.status||500,
         });
     }
+    
+    
+    
 }
 
-async function getCurrentUser(request: NextRequest) {
-    try {
-        const userId = await validateJWT(request);
-        // const user = await User.findById(userId).select("-password");
-
-        return userId;
-    } catch (error: any) {
-        return null;
-    }
-}

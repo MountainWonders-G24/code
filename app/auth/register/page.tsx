@@ -5,11 +5,11 @@ import Form from 'antd/es/form';
 import message from 'antd/es/message';
 import axios from 'axios';
 import React from 'react';
-import '../auth.css';
 import { useEffect } from 'react';
-import { currentTab, showTab, handleInputChange, nextPrev } from '../script.tsx';
-
 import { useRouter } from "next/navigation";
+import '../auth.css';
+import { currentTab, showTab, handleInputChange, nextPrev } from '../script.tsx';
+import { logout } from "@/app/script.tsx"
 interface userType {
     name: string;
     surname: string;
@@ -17,22 +17,20 @@ interface userType {
     password: string;
 }
 
-
 function Register() {
     const [loading, setLoading] = React.useState(false);
     const router = useRouter();
 
     useEffect(() => {
+        logout();
         showTab(0);
     }, []);
-
 
     const onRegister = async (values: userType) => {
         try {
             setLoading(true);
             const { data } = await axios.post("/api/auth/register", values);
             console.log("data: " + data);
-
             if (data.status == "201") {
                 message.success(data.message);
                 router.push("/");
@@ -40,7 +38,6 @@ function Register() {
                 message.error(data.message);
             }
         } catch (error: any) {
-
             message.error(error.response.data.message);
         } finally {
             setLoading(false);
@@ -49,7 +46,6 @@ function Register() {
 
     return (
         <div>
-
             <div className="center-page">
                 <div className="login-form">
                     <h1 className="form-title">Register</h1>
@@ -64,7 +60,7 @@ function Register() {
                                     },
                                     {
                                         min: 3,
-                                        message: "name not valid"
+                                        message: "Name not valid"
                                     }
                                 ]}>
                                     <input type='text' id='name-input' name='login_email' placeholder='' onInput={(event) => handleInputChange(event)} />
@@ -76,7 +72,7 @@ function Register() {
                                     },
                                     {
                                         min: 3,
-                                        message: "surname not valid"
+                                        message: "Surname not valid"
                                     }
                                 ]}>
                                     <input type='text' id='surname-input' onInput={(event) => handleInputChange(event)} />
@@ -114,7 +110,6 @@ function Register() {
                             <Button onClick={() => nextPrev(1)} id='nextBtn' className='sumbit-form-button' type='primary' htmlType='button' >
                                 Next
                             </Button>
-
                         </Form>
                         <div id="link-register">
                             <a href="/auth/login/">Hai già un account? Accedi</a>
@@ -123,11 +118,7 @@ function Register() {
                 </div>
             </div>
         </div>
-
     )
 }
-
-
-
 
 export default Register

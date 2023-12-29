@@ -4,9 +4,13 @@ import { Button } from 'antd'
 import Link from 'next/link'
 import './page.css'
 import axios from 'axios';
-import { useEffect, useState } from 'react';
-export default function Home() {
-  
+import { useEffect } from 'react';
+import { logout } from "./script.tsx";
+
+export default function Home() {  
+  useEffect(() => {
+    logout();
+  }, []);
   return (
 
     <div id='main'>
@@ -23,8 +27,6 @@ export default function Home() {
         </Button>
       </div>
     </div>
-
-
   )
 }
 

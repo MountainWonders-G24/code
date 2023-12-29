@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
 
-export async function GET(){
+export function GET(){
     const response = NextResponse.json({
         message: "Logout successful",
         status: 200
     });
 
     response.cookies.delete("token");
+    response.cookies.delete("email");
     return response;
 }

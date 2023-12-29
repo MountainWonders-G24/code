@@ -3,18 +3,30 @@ import Refuge from "@/app/models/refugeModel";
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/configs/dbConfig";
 
-connectDB();
-export async function GET(request: NextRequest) {
-    try {
-        const reqBody = await request.json();
+interface Params {
+    searchString: string;
+}
 
-        const refuges = await Refuge.findOne({
-            name: reqBody.name
+connectDB();
+export async function GET(request: NextRequest, { params }: { params: Params }) {
+    try {
+        console.log(params);
+        const refugeName = params.searchString;
+        console.log("Refuge name: " + refugeName);
+
+
+        const refuges = await Refuge.find({
+            name: { $regex: refugeName, $options: "i" } // "i" case-insensitive
         });
+
+        // const refuges = await Refuge.find({
+        //     name: reqBody.name
+        // });
 
         if (!refuges) {
             throw new Error("No refuges found")
         }
+        console.log(refuges);
 
         return NextResponse.json({
             message: "Refuges retrieved!",

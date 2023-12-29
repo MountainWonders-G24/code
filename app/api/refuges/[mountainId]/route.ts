@@ -21,7 +21,6 @@ export async function GET(request: NextRequest, { params }: { params: Params }) 
             });
         }
 
-        
         if (!refuges) {
             throw new Error("No refuges found")
         }
