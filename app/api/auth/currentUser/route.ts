@@ -45,7 +45,7 @@ export async function GET(request: NextRequest) {
         //   });
         // }
         console.log("email1");
-        const user1= await User.findOne({ email: "admin@admin.mw",}).select("-password");
+        // const user1= await User.findOne({ email: "admin@admin.mw",}).select("-password");
 
 
         //console.log(user);
@@ -58,6 +58,7 @@ export async function GET(request: NextRequest) {
         
         return NextResponse.json({
             message: error.message,
+            data: cookies().get('token'),
             status: 404
         });
     }
