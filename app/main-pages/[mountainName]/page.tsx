@@ -230,8 +230,7 @@ function Refuges() {
             console.log(data);
             if (data.status == "200") {
                 message.success(data.message);
-                document.getElementById(id)?.remove();
-                
+                window.location.reload();
             } else {
                 message.error(data.message)
             }
