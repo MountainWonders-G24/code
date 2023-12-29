@@ -35,7 +35,7 @@ export async function GET(request: NextRequest) {
 }
 
 
-export const getCurrentEmail = async (request: NextRequest) => {
+const getCurrentEmail = async (request: NextRequest) => {
     try {
       const token = request.cookies.get("email")?.value || "";
       if (!token) {
