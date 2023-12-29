@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
         
       const cookieStore = cookies();
       console.log(cookieStore);
-      let token = cookieStore.get('token');
+      let token = cookieStore.get('email');
       
         //const user = await User.findOne({ id: new ObjectId('658c345409d3ed8ea82f26c8'),});
         let email1;
@@ -20,30 +20,22 @@ export async function GET(request: NextRequest) {
         let test;
 
         
-        // try {
+        try {
+          const jwtsecret= (process.env.jwt_secret!);
           
-
-        //   console.log("Token: --- " + token);
-        //   let token2 = request.cookies.getAll();
-
-        //   console.log("Token2: --- ");
-        //   for (let [key, value] of Object.entries(token2)) {
-        //     console.log(`${key}: ${value.name}`);
-        //   }
-        //   test=token2;
-        //   const jwtsecret= (process.env.jwt_secret!);
-        //   test= token2;
+          if (!token) {
+            throw new Error("No token found");
+          }
+          const decryptedToken:any = jwt.verify(token.value, jwtsecret);
+          email1 = decryptedToken.email;
           
-        //   const decryptedToken:any = jwt.verify(token, jwtsecret);
-        //   email1 = decryptedToken.email;
-          
-        // } catch (error: any) {
-        //   return NextResponse.json({
-        //     message: error.message,
-        //     data: test,
-        //     status: 500, // or any appropriate status code
-        //   });
-        // }
+        } catch (error: any) {
+          return NextResponse.json({
+            message: error.message,
+            data: test,
+            status: 500, // or any appropriate status code
+          });
+        }
         console.log("email1");
         // const user1= await User.findOne({ email: "admin@admin.mw",}).select("-password");
 
@@ -51,7 +43,7 @@ export async function GET(request: NextRequest) {
         //console.log(user);
         return NextResponse.json({
             message: "User presente!",
-            data: token?.name,
+            data: token?.value,
             status: 500
         });
     } catch (error: any) {
