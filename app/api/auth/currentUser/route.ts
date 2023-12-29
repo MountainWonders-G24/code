@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
         let test;
         try {
           
-          token = request.cookies.get("email")?.value || "";
+          token = request.cookies.get("token")?.value || "";
           console.log("Token: --- " + token);
           const jwtsecret= (process.env.jwt_secret!);
           test= jwtsecret;
