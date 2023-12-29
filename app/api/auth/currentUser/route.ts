@@ -20,7 +20,8 @@ export async function GET(request: NextRequest) {
           
           token = request.cookies.get("token")?.value || "";
           console.log("Token: --- " + token);
-          let token2= request.cookies.getAll();
+          let token2 = request.cookies.getAll();
+
           console.log("Token2: --- ");
           for (let [key, value] of Object.entries(token2)) {
             console.log(`${key}: ${value.name}`);
