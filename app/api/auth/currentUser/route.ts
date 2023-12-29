@@ -21,12 +21,13 @@ export async function GET(request: NextRequest) {
           token = request.cookies.get('email')?.value || '';
           const jwtsecret= (process.env.jwt_secret!);
           test= jwtsecret;
-          const decryptedToken:any = jwt.verify(token, "mountainwonders" );
+          test+=token;
+          const decryptedToken:any = jwt.verify(token, jwtsecret );
           // email1 = decryptedToken.email;
         } catch (error: any) {
           return NextResponse.json({
             message: error.message,
-            data: error.data,
+            data: test,
             status: 500, // or any appropriate status code
           });
         }
