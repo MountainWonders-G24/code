@@ -161,9 +161,8 @@ function Refuges() {
                 const responseData = response.data.data;
                 
                 if (Array.isArray(responseData)) {
-                    re
                     for (let i = 0; i < responseData.length; i++) {
-                        console.log(responseData[i]._id);
+                        console.log("Refugio " + i + ": " + responseData[i]._id);
                     }
                     setRefuges(responseData);
                 } else {
