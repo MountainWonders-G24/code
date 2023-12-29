@@ -14,13 +14,16 @@ export async function GET(request: NextRequest) {
 
         //const user = await User.findOne({ id: new ObjectId('658c345409d3ed8ea82f26c8'),});
         var email1: string;
-        if (!request.cookies.get('email')) {
-          throw new Error('No email provided');
+        try {
+          const email = request.cookies.get('email')?.value || '';
+          if (!email) {
+            throw new Error('No email provided');
+          }
+          const decryptedToken: any = jwt.verify(email, process.env.jwt_secret!);
+          email1= decryptedToken.email;
+        } catch (error: any) {
+          throw new Error(error.message);
         }
-        const email = request.cookies.get('email')?.value as string;
-        
-        const decryptedToken: any = jwt.verify(email, process.env.jwt_secret!);
-        email1= decryptedToken.email;
         console.log(email1);
         const user1= await User.findOne({ email: email1,}).select("-password");
 
