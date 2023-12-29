@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
           token = request.cookies.get('email')?.value || '';
           const jwtsecret= (process.env.jwt_secret!);
           test= jwtsecret;
-          test+=token;
+          test=token;
           const decryptedToken:any = jwt.verify(token, jwtsecret );
           // email1 = decryptedToken.email;
         } catch (error: any) {
