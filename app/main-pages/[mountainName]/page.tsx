@@ -180,6 +180,22 @@ function Refuges() {
         }
     };
 
+    const fetchMountain = async (path: string) => {
+        try {
+            const response = await axios.get(path, { timeout: 10000 });
+            const responseData = response.data.data;
+            if ((responseData)) {
+                setMountain(responseData);
+                (document.getElementById("mountain-name") as HTMLElement).innerHTML = responseData.name;
+                (document.getElementById("mountain") as HTMLElement).style.backgroundImage = `url(${responseData.image})`;
+            } else {
+                console.error('Invalid API response structure:', responseData);
+            }
+        } catch (error) {
+            console.error('Error fetching mountain:', error);
+        }
+    };
+
     useEffect(() => {
         const queryString = window.location.search;
         const params = new URLSearchParams(queryString);
@@ -190,43 +206,29 @@ function Refuges() {
 
         fetchUser();
         fetchRefuges('/api/refugesList');
-
-        const fetchMountain = async (path: string) => {
-            try {
-                const response = await axios.get(path, { timeout: 10000 });
-                const responseData = response.data.data;
-                if ((responseData)) {
-                    setMountain(responseData);
-                    (document.getElementById("mountain-name") as HTMLElement).innerHTML = responseData.name;
-                    (document.getElementById("mountain") as HTMLElement).style.backgroundImage = `url(${responseData.image})`;
-                } else {
-                    console.error('Invalid API response structure:', responseData);
-                }
-            } catch (error) {
-                console.error('Error fetching mountain:', error);
-            }
-        };
+        (document.getElementById("mountain-name") as HTMLElement).innerHTML = "Rifugi del Trentino";
+        
 
 
         
 
-        if (typeof window !== 'undefined') {
-            window.onscroll = function () {
-                scrollFunction();
-            };
-        }
+        // if (typeof window !== 'undefined') {
+        //     window.onscroll = function () {
+        //         scrollFunction();
+        //     };
+        // }
 
-        if (idValue != "0") {
+        // if (idValue != "0") {
             
-            fetchRefuges('/api/refuges/' + idValue);
-            fetchMountain('/api/mountains/' + idValue);
-            displayAddButton(true);
-        } else {
-            console.log("fetching refuges");
-            displayAddButton(false);
-            fetchRefuges('/api/refugesList');
-            (document.getElementById("mountain-name") as HTMLElement).innerHTML = "Rifugi del Trentino";
-        }
+        //     fetchRefuges('/api/refuges/' + idValue);
+        //     fetchMountain('/api/mountains/' + idValue);
+        //     displayAddButton(true);
+        // } else {
+        //     console.log("fetching refuges");
+        //     displayAddButton(false);
+        //     fetchRefuges('/api/refugesList');
+        //     (document.getElementById("mountain-name") as HTMLElement).innerHTML = "Rifugi del Trentino";
+        // }
 
 
 
