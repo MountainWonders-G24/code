@@ -37,7 +37,6 @@ export async function GET(request: NextRequest) {
         console.log("email1");
         const user= await User.findOne({ email: email1,}).select("-password");
 
-
         //console.log(user);
         return NextResponse.json({
             message: "User presente!",

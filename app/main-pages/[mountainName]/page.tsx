@@ -201,16 +201,14 @@ function Refuges() {
         displayDeleteButton(false);
 
         fetchUser();
-
+        
         const fetchRefuges = async (path: string) => {
             try {
-
                 const response = await axios.get(path, { timeout: 10000 });
 
                 const responseData = response.data.data;
 
                 if (Array.isArray(responseData)) {
-
                     setRefuges(responseData);
                 } else {
                     console.error('Invalid API response structure:', responseData);
@@ -253,7 +251,7 @@ function Refuges() {
         } else {
             displayAddButton(false);
             fetchRefuges('/api/refuges');
-            (document.getElementById("mountain-name") as HTMLElement).innerHTML = "Rifugi del trentino";
+            (document.getElementById("mountain-name") as HTMLElement).innerHTML = "Rifugi del Trentino";
         }
 
 
