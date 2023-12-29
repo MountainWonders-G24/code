@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
 
         //console.log(user);
         
-        	
+        console.log(user1);
         return NextResponse.json({
             message: "User presente!",
             data: user1,
@@ -42,6 +42,7 @@ const getCurrentEmail = async (request: NextRequest) => {
         throw new Error("No email provided");
       }
       const decryptedToken: any = jwt.verify(token, process.env.jwt_secret!);
+      console.log(decryptedToken);
       return decryptedToken.email;
     } catch (error: any) {
       throw new Error(error.message);
