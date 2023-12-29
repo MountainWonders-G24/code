@@ -4,6 +4,7 @@ export const userSchema = new mongoose.Schema(
     {
         _id: {
             type: String,
+            required: false,
         },
         name: {
             type: String,
@@ -39,4 +40,4 @@ export const userSchema = new mongoose.Schema(
 );
 
 // if the model is already defined, use that model else create a new one
-export default mongoose.models["Users"] || mongoose.model("users", userSchema);
+export default mongoose.models["Users"] || mongoose.model("Users", userSchema);

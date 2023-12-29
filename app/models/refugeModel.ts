@@ -3,17 +3,17 @@ import {Decimal128} from "bson";
 
 export const refugeSchema = new mongoose.Schema(
     {
-        _id: {
+        /*_id: {
             type: String,
             required: false,
-        },
+        },*/
         name: {
             type: String,
             required: true,
         },
         avgRating: {
-            type :mongoose.Types.Decimal128,
-            required: true,
+            type : Number,
+            required: false,
         },
         description: {
             type: String,
@@ -22,7 +22,12 @@ export const refugeSchema = new mongoose.Schema(
         // Reviews
         // Position
         mountainId: {
-            type: Number
+            type: Number,
+            required: false,
+        },
+        image: {
+            type: String,
+            required: true,
         }
     }
 );

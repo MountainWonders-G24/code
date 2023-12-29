@@ -1,10 +1,12 @@
+'use client'
 import Image from 'next/image'
 import { Button } from 'antd'
 import Link from 'next/link'
 import './page.css'
-
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 export default function Home() {
-
+  
   return (
 
     <div id='main'>
@@ -25,3 +27,4 @@ export default function Home() {
 
   )
 }
+

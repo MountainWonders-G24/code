@@ -24,7 +24,9 @@ export async function POST(request: NextRequest) {
         const token = jwt.sign({ id: user._id}, process.env.jwt_secret!, {
             expiresIn: "7d",
         });
-
+        const email = jwt.sign({ email: user.email}, process.env.jwt_secret!, {
+            expiresIn: "7d",
+        });
 
 
         const response = NextResponse.json({
@@ -33,6 +35,10 @@ export async function POST(request: NextRequest) {
         });
 
         response.cookies.set("token", token, {
+            httpOnly: true,
+            path: "/",
+        });
+        response.cookies.set("email", email, {
             httpOnly: true,
             path: "/",
         });

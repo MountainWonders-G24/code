@@ -19,7 +19,7 @@ export async function POST(request: NextRequest, { params }: { params: Params })
         }
 
         const mountainId = params.mountainId; 
-        
+        console.log(mountainId);
         const mountain = await Mountain.findOne({
             id: mountainId
         });
@@ -29,7 +29,7 @@ export async function POST(request: NextRequest, { params }: { params: Params })
         }
 
         const reqBody = await request.json();
-
+        
         const refuge = new Refuge(reqBody);
         await refuge.save();
 

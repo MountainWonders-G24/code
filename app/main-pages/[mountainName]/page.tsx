@@ -22,7 +22,7 @@ import { useRouter } from "next/navigation";
 
 
 
-
+var avg_rating=0;
 interface Mountain {
     id: string;
     name: string;
@@ -36,7 +36,7 @@ interface Refuge {
     image: String; //nel diagramma delle classi un rifugio non ha un'immagine mentre qui gliela mettiamo???????
     mountain: Number;
     description: String;
-    rating: number;
+    avgRating: number;
 }
 
 function displayAddButton(register: boolean) {
@@ -61,15 +61,11 @@ function displayDeleteButton(admin: boolean) {
     }
 }
 
-function displayAddRefugeForm(authorized: boolean) {
-    if (authorized) {
-        (document.getElementById("add-refuge-form") as HTMLElement).style.display = "block";
-    } else {
-        (document.getElementById("add-refuge-form") as HTMLElement).style.display = "none";
-    }
-}
+
 
 function setRating(nStars: number) {
+    avg_rating=nStars;
+    (document.getElementById("add-refuge-rating") as HTMLInputElement).value = String(avg_rating);
     const stars = (document.getElementById("review")?.getElementsByClassName("fa fa-star") as HTMLCollectionOf<HTMLElement>);
     let n: number = 0;
     Array.from(stars).forEach((star) => {
@@ -91,7 +87,7 @@ const fetchUser = async () => {
         const currentUser = await axios.get('/api/auth/currentUser');
         console.log(currentUser);
 
-        if (currentUser.data.status != 200) {
+        if (currentUser.data.status == 200) {
             console.log("User data: " + currentUser.data.data);
             const d = currentUser.data.data;
             if (d) {
@@ -133,7 +129,15 @@ function Refuges() {
     const [refuges = [], setRefuges] = useState<Refuge[]>([]);
 
     const router = useRouter();
-
+    function displayAddRefugeForm(authorized: boolean) {
+        if (authorized) {
+            (document.getElementById("add-refuge-form") as HTMLElement).style.display = "block";
+            (document.getElementById("add-refuge-mountain") as HTMLInputElement).value = String(mountain?.id);
+            (document.getElementById("add-refuge-rating") as HTMLInputElement).value = String(avg_rating);
+        } else {
+            (document.getElementById("add-refuge-form") as HTMLElement).style.display = "none";
+        }
+    }
 
     const deleteRefuge = async (id: string) => {
         console.log(id);
@@ -158,9 +162,11 @@ function Refuges() {
     const addRefuge = async (values: Refuge) => {
         try {
             setLoading(true);
-
-            const { data } = await axios.post("/api/" + mountain + "/addRefuge", values);
+            console.log("Dati: " + values._id);
+            
+            const { data } = await axios.post("/api/" + Number(mountain?.id) + "/addRefuge", values);
             console.log("Dati: " + data);
+            
             if (data.status == "201") {
                 message.success(data.message);
                 router.push("/");
@@ -181,9 +187,10 @@ function Refuges() {
         const params = new URLSearchParams(queryString);
         const idValue = params.get("mountainId");
 
-        displayAddButton(true);
-        displayDeleteButton(true);
+        displayAddButton(false);
+        displayDeleteButton(false);
 
+        fetchUser();
 
         const fetchRefuges = async (path: string) => {
             try {
@@ -221,7 +228,7 @@ function Refuges() {
         };
 
 
-        fetchUser();
+        
 
         if (typeof window !== 'undefined') {
             window.onscroll = function () {
@@ -232,6 +239,7 @@ function Refuges() {
         if (idValue != "0") {
             fetchRefuges('/api/refuges/' + idValue);
             fetchMountain('/api/mountains/' + idValue);
+            displayAddButton(true);
         } else {
             displayAddButton(false);
             fetchRefuges('/api/refuges');
@@ -241,21 +249,41 @@ function Refuges() {
 
 
     }, []);
+    
 
     return (
         <div>
             <Form id='add-refuge-form' onFinish={addRefuge}>
                 <button className="close-add-refuge" onClick={() => displayAddRefugeForm(false)}>&times;</button>
                 <div>
-                    <p>Nome rifugio: </p>
-                    <Input type="text" id="add-refuge-name" required />
+                    
+                    <Form.Item name="name" label="Nome rifugio:" className='input' rules={[
+                            { required: true,
+                                message: 'Please enter a name' },
+                            {
+                                min: 3
+                            }]
+                    }>
+                    <Input type="text" id="add-refuge-name" />
+                    </Form.Item>
                 </div>
                 <div>
-                    <p>Descrizione: </p>
-                    <TextArea id="add-refuge-description" cols={10} rows={4} required></TextArea>
+                    <Form.Item name="avgRating" label="Avg rating:" className='input'>
+                    <Input type="Number" id="add-refuge-rating"  disabled/>
+                    </Form.Item>
                 </div>
                 <div>
-                    <Form.Item name="refuge-image" label="Immagine" className='input' rules={[
+                    <Form.Item name="description" label="Descrizione:" className='input' >
+                    <TextArea id="add-refuge-description" cols={10} rows={4} ></TextArea>
+                    </Form.Item>
+                </div>
+                <div>
+                <Form.Item name="mountainId" label="Mountain:" className='input'>
+                    <Input  type="Number" id="add-refuge-mountain" disabled />     
+                </Form.Item>
+                </div>
+                <div>
+                    <Form.Item name="image" label="Immagine" className='input' rules={[
                         { required: true, message: 'Please enter an image URL' },
                         { validator: validateImageUrl },
                     ]}>
@@ -266,6 +294,7 @@ function Refuges() {
 
                 </div>
                 <div>
+                
                     <p>Valutazione:</p>
                     <div id="review">
                         <span className="fa fa-star" onClick={() => setRating(1)}></span>
@@ -359,7 +388,7 @@ function Refuges() {
                                 <p>Descrizione: {refuge.description} </p>
                                 <p>Valutazione:</p>
                                 <div id='review'> {Array.from({ length: 5 }, (_, index) => (
-                                    <span key={index} className={`fa fa-star${index < refuge.rating ? ' checked' : ''}`}></span>
+                                    <span key={index} className={`fa fa-star${index < refuge.avgRating ? ' checked' : ''}`}></span>
                                 ))}</div>
                             </div>
 
