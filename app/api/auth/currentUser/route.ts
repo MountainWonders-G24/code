@@ -17,12 +17,7 @@ export async function GET(request: NextRequest) {
         let token;
         let test;
 
-        token = request.cookies.get("token")?.value || "";
-        return NextResponse.json({
-          message: "Helo",
-          data: token,
-          status: 500, // or any appropriate status code
-        })
+        
         try {
           
           token = request.cookies.get("token")?.value || "";
@@ -34,11 +29,11 @@ export async function GET(request: NextRequest) {
             console.log(`${key}: ${value.name}`);
           }
           test=token2;
-          // const jwtsecret= (process.env.jwt_secret!);
-          // test= jwtsecret;
+          const jwtsecret= (process.env.jwt_secret!);
+          test= jwtsecret;
           
-          // const decryptedToken:any = jwt.verify(token, jwtsecret );
-          // email1 = decryptedToken.email;
+          const decryptedToken:any = jwt.verify(token, jwtsecret );
+          email1 = decryptedToken.email;
           
         } catch (error: any) {
           return NextResponse.json({
