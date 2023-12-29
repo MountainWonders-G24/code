@@ -204,30 +204,27 @@ function Refuges() {
         displayDeleteButton(false);
 
         fetchUser();
-        fetchRefuges('/api/refugesList');
-        (document.getElementById("mountain-name") as HTMLElement).innerHTML = "Rifugi del Trentino";
-        
 
 
         
 
-        // if (typeof window !== 'undefined') {
-        //     window.onscroll = function () {
-        //         scrollFunction();
-        //     };
-        // }
+        if (typeof window !== 'undefined') {
+            window.onscroll = function () {
+                scrollFunction();
+            };
+        }
 
-        // if (idValue != "0") {
+        if (idValue != "0") {
             
-        //     fetchRefuges('/api/refuges/' + idValue);
-        //     fetchMountain('/api/mountains/' + idValue);
-        //     displayAddButton(true);
-        // } else {
-        //     console.log("fetching refuges");
-        //     displayAddButton(false);
-        //     fetchRefuges('/api/refugesList');
-        //     (document.getElementById("mountain-name") as HTMLElement).innerHTML = "Rifugi del Trentino";
-        // }
+            fetchRefuges('/api/refuges/' + idValue);
+            fetchMountain('/api/mountains/' + idValue);
+            displayAddButton(true);
+        } else {
+            console.log("fetching refuges");
+            displayAddButton(true);
+            fetchRefuges('/api/refugesList');
+            (document.getElementById("mountain-name") as HTMLElement).innerHTML = "Rifugi del Trentino";
+        }
 
 
 
