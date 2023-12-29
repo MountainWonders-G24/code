@@ -13,14 +13,12 @@ export async function GET(request: NextRequest) {
         
 
         //const user = await User.findOne({ id: new ObjectId('658c345409d3ed8ea82f26c8'),});
-        const email1 = await getCurrentEmail(request);
+        //const email1 = await getCurrentEmail(request);
 
         const user1= await User.findOne({ email: "admin@admin.mw",}).select("-password");
 
 
         //console.log(user);
-        
-        console.log(user1);
         return NextResponse.json({
             message: "User presente!",
             data: user1,
