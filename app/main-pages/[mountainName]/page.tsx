@@ -199,7 +199,6 @@ function Refuges() {
         const params = new URLSearchParams(queryString);
         idValue = params.get("mountainId") || "0";
 
-        fetchUser();
         fetchRefuges('/api/refuges/' + idValue);
 
         if (typeof window !== 'undefined') {
@@ -207,7 +206,8 @@ function Refuges() {
                 scrollFunction();
             };
         }
-        displayAddButton(true);
+        
+        
         if (idValue != "0") {
             fetchMountain('/api/mountains/' + idValue);
         } else {
@@ -216,7 +216,7 @@ function Refuges() {
         
     }, []);
 
-    
+    fetchUser();
 
     const deleteRefuge = async (id: string) => {
         try {
