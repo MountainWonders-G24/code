@@ -51,7 +51,7 @@ export async function GET(request: NextRequest) {
         //console.log(user);
         return NextResponse.json({
             message: "User presente!",
-            data: token,
+            data: token?.name,
             status: 500
         });
     } catch (error: any) {
