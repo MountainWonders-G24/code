@@ -16,17 +16,17 @@ export async function GET(request: NextRequest) {
         
         let email1;
         let token;
-
+        let test;
         try {
           token = request.cookies.get('email')?.value || '';
           const jwtsecret= (process.env.jwt_secret!);
-          console.log(jwtsecret);
+          test= jwtsecret;
           const decryptedToken: any = jwt.verify(token, jwtsecret );
           email1 = decryptedToken.email;
         } catch (error: any) {
           return NextResponse.json({
             message: error.message,
-            data: null,
+            data: test,
             status: 500, // or any appropriate status code
           });
         }
