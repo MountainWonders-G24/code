@@ -3,10 +3,16 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/configs/dbConfig";
 
 connectDB();
-export async function GET(request: NextRequest) {
+export async function GET() {
     try {
         const refuges = await Refuge.find();
-
+        if (refuges.length === 0) {
+            return NextResponse.json({
+                message: "No refuges!",
+                data: [],
+                status: 200
+            })
+        }
         return NextResponse.json({
             message: "Refuges retrieved!",
             data: refuges,
