@@ -142,55 +142,7 @@ function Refuges() {
         }
     }
 
-    const deleteRefuge = async (id: string) => {
-        console.log(id);
-        try {
-            setLoading(true);
-            const { data } = await axios.delete("/api/delete/" + id);
-            console.log(data);
-            if (data.status == "200") {
-                message.success(data.message);
-                document.getElementById(id)?.remove();
-            } else {
-                message.error(data.message)
-            }
-            console.log("data");
-        } catch (error: any) {
-            message.error(error.response.data.message);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const addRefuge = async (values: Refuge) => {
-        
-        try {
-            setLoading(true);
-            values.avgRating = avg_rating <= 0 ? 1 : avg_rating;
-            values.mountainId=Number(mountain?.id);
-            if (mountain?.id == null||mountain?.id=="0") {
-                message.error("Errore: montagna non trovata");
-                return;
-            }
-            
-            const { data } = await axios.post("/api/" + Number(mountain?.id) + "/addRefuge", values);
-            console.log("Dati: " + data);
-            
-            if (data.status == "201") {
-                values._id = data.data;
-                message.success(data.message);
-                setRefuges((prevRefuges) => [...prevRefuges, values]);
-                console.log("Inserito correttamente")
-            } else {
-                console.log("Non inserito correttamente");
-                message.error(data.message);
-            }
-        } catch (error: any) {
-            message.error("Error: " + error);
-        } finally {
-            setLoading(false);
-        }
-    }
+    
 
     useEffect(() => {
         const queryString = window.location.search;
@@ -257,6 +209,57 @@ function Refuges() {
 
 
     }, []);
+
+    const deleteRefuge = async (id: string) => {
+        console.log(id);
+        try {
+            setLoading(true);
+            const { data } = await axios.delete("/api/delete/" + id);
+            console.log(data);
+            if (data.status == "200") {
+                message.success(data.message);
+                //document.getElementById(id)?.remove();
+            } else {
+                message.error(data.message)
+            }
+            console.log("data");
+            
+        } catch (error: any) {
+            message.error(error.response.data.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const addRefuge = async (values: Refuge) => {
+        
+        try {
+            setLoading(true);
+            values.avgRating = avg_rating <= 0 ? 1 : avg_rating;
+            values.mountainId=Number(mountain?.id);
+            if (mountain?.id == null||mountain?.id=="0") {
+                message.error("Errore: montagna non trovata");
+                return;
+            }
+            
+            const { data } = await axios.post("/api/" + Number(mountain?.id) + "/addRefuge", values);
+            console.log("Dati: " + data);
+            
+            if (data.status == "201") {
+                values._id = data.data;
+                message.success(data.message);
+                setRefuges((prevRefuges) => [...prevRefuges, values]);
+                console.log("Inserito correttamente")
+            } else {
+                console.log("Non inserito correttamente");
+                message.error(data.message);
+            }
+        } catch (error: any) {
+            message.error("Error: " + error);
+        } finally {
+            setLoading(false);
+        }
+    }
     
 
     return (
@@ -387,7 +390,7 @@ function Refuges() {
 
                     {refuges.map((refuge) => (
 
-                        <div className="refuge" id={refuge._id} key={String(refuge._id)} onClick={() => { fetchUser(); }}>
+                        <div className="refuge" id={refuge._id} key={String(refuge._id)} /*onClick={() => { fetchUser(); }}*/>
                             <div className="refuge-image" id={'refuge' + refuge._id} style={{ backgroundImage: `url(${refuge.image})` }}>
                             </div>
                             <div className="info-refuge">
