@@ -3,6 +3,7 @@ import Refuge from "@/app/models/refugeModel";
 import User from "@/app/models/userModel";
 import { validateJWT } from "@/app/helpers/validateJWT";
 import { connectDB } from "@/configs/dbConfig";
+import getCurrentEmail from "../../get_email";
 import jwt from "jsonwebtoken";
 
 connectDB();
@@ -13,9 +14,9 @@ export async function GET(request: NextRequest) {
         
 
         //const user = await User.findOne({ id: new ObjectId('658c345409d3ed8ea82f26c8'),});
-        //const email1 = await getCurrentEmail(request);
-
-        const user1= await User.findOne({ email: "admin@admin.mw",}).select("-password");
+        const email1 = await getCurrentEmail(request);
+        console.log(email1);
+        const user1= await User.findOne({ email: email1,}).select("-password");
 
 
         //console.log(user);
@@ -34,16 +35,4 @@ export async function GET(request: NextRequest) {
 }
 
 
-const getCurrentEmail = async (request: NextRequest) => {
-    try {
-      const token = request.cookies.get("email")?.value || "";
-      if (!token) {
-        throw new Error("No email provided");
-      }
-      const decryptedToken: any = jwt.verify(token, process.env.jwt_secret!);
-      console.log(decryptedToken);
-      return decryptedToken.email;
-    } catch (error: any) {
-      throw new Error(error.message);
-    }
-  };
+
