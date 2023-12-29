@@ -48,9 +48,9 @@ export async function POST(request: NextRequest, { params }: { params: Params })
 async function getCurrentUser(request: NextRequest) {
     try {
         const userId = await validateJWT(request);
-        const user = await User.findById(userId).select("-password");
+        // const user = await User.findById(userId).select("-password");
 
-        return user;
+        return userId;
     } catch (error: any) {
         return null;
     }

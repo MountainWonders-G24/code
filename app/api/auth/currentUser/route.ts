@@ -1,28 +1,27 @@
-import { connectDB, disconnectDB} from "@/configs/dbConfig";
+import { connectDB } from "@/configs/dbConfig";
 import { validateJWT } from "@/app/helpers/validateJWT";
 import { NextRequest, NextResponse } from "next/server";
 import User from "@/app/models/userModel";
 
-//connectDB();
+connectDB();
 export async function GET(request: NextRequest) {
     try {
-        const userId = await validateJWT(request);
-
-        //const user = await User.findById(userId).select("-password");
-        const userExists = await User.findOne({
-            id: userId
-        });
+        // const userId = await validateJWT(request);
+        // console.log(userId);
         
-        if (userExists) {
-            throw new Error("User already exists")
-        }
+        
+        const user = await User.findById("658b3e071e492a5f3abb8416").select("-password");
+        console.log(user);
         return NextResponse.json({
-            data: userExists,
+            data: user,
         });
     } catch (error: any) {
-        return NextResponse.json({
-            message: error.message,
-            status: 400
-        });
+            return NextResponse.json({
+                message: error.message,
+                status: 400
+            });
+        
+        
+        
     }
 }

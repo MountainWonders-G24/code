@@ -31,9 +31,9 @@ interface Mountain {
 }
 
 interface Refuge {
+    _id: string;
     name: String;
     image: String; //nel diagramma delle classi un rifugio non ha un'immagine mentre qui gliela mettiamo???????
-    id: string;
     mountain: Number;
     description: String;
     rating: number;
@@ -87,11 +87,12 @@ function setRating(nStars: number) {
 const fetchUser = async () => {
     console.log("Entrato per gettare il current user");
     try {
-        
+
         const currentUser = await axios.get('/api/auth/currentUser');
-        console.log( currentUser);
-        
-        if (currentUser.data.status !== 200) {
+        console.log(currentUser);
+
+        if (currentUser.data.status != 200) {
+            console.log("User data: " + currentUser.data.data);
             const d = currentUser.data.data;
             if (d) {
                 if (d.isAdmin) {
@@ -130,19 +131,19 @@ function Refuges() {
     const [mountain, setMountain] = useState<Mountain | null>();
     const [loading, setLoading] = React.useState(false);
     const [refuges = [], setRefuges] = useState<Refuge[]>([]);
-    
+
     const router = useRouter();
-    
+
 
     const deleteRefuge = async (id: string) => {
         console.log(id);
         try {
             setLoading(true);
-            const { data } = await axios.delete("/api/delete/"+ id);
+            const { data } = await axios.delete("/api/delete/" + id);
             console.log(data);
             if (data.status == "200") {
                 message.success(data.message);
-                
+
             } else {
                 message.error(data.message)
             }
@@ -154,12 +155,10 @@ function Refuges() {
         }
     };
 
-
-
     const addRefuge = async (values: Refuge) => {
         try {
             setLoading(true);
-            
+
             const { data } = await axios.post("/api/" + mountain + "/addRefuge", values);
             console.log("Dati: " + data);
             if (data.status == "201") {
@@ -181,7 +180,7 @@ function Refuges() {
         const queryString = window.location.search;
         const params = new URLSearchParams(queryString);
         const idValue = params.get("mountainId");
-        
+
         displayAddButton(true);
         displayDeleteButton(true);
 
@@ -221,7 +220,7 @@ function Refuges() {
             }
         };
 
-        
+
         fetchUser();
 
         if (typeof window !== 'undefined') {
@@ -239,7 +238,7 @@ function Refuges() {
             (document.getElementById("mountain-name") as HTMLElement).innerHTML = "Rifugi del trentino";
         }
 
-        
+
 
     }, []);
 
@@ -256,13 +255,13 @@ function Refuges() {
                     <TextArea id="add-refuge-description" cols={10} rows={4} required></TextArea>
                 </div>
                 <div>
-                <Form.Item name="refuge-image" label="Immagine" className='input' rules={[
+                    <Form.Item name="refuge-image" label="Immagine" className='input' rules={[
                         { required: true, message: 'Please enter an image URL' },
                         { validator: validateImageUrl },
                     ]}>
-                    <Input type='text' id='add-refuge-image' />
+                        <Input type='text' id='add-refuge-image' />
                     </Form.Item>
-                    
+
 
 
                 </div>
@@ -352,11 +351,11 @@ function Refuges() {
 
                     {refuges.map((refuge) => (
 
-                        <div className="refuge" key={String(refuge.id)} /*onClick={() => { fetchUser(); }}*/>
-                            <div className="refuge-image" id={'refuge' + refuge.id} style={{ backgroundImage: `url(${refuge.image})` }}>
+                        <div className="refuge" key={String(refuge._id)} /*onClick={() => { fetchUser(); }}*/>
+                            <div className="refuge-image" id={'refuge' + refuge._id} style={{ backgroundImage: `url(${refuge.image})` }}>
                             </div>
                             <div className="info-refuge">
-                                <h3> {refuge.name} </h3>
+                                <h3> {refuge._id} </h3>
                                 <p>Descrizione: {refuge.description} </p>
                                 <p>Valutazione:</p>
                                 <div id='review'> {Array.from({ length: 5 }, (_, index) => (
@@ -364,7 +363,7 @@ function Refuges() {
                                 ))}</div>
                             </div>
 
-                            <Button onClick={() => deleteRefuge(refuge.id)} className="delete-refuge-btn" title="Delete refuge">
+                            <Button onClick={() => deleteRefuge(refuge._id)} className="delete-refuge-btn" title="Delete refuge">
                                 <input type="image"
                                     src="https://static-00.iconduck.com/assets.00/trash-icon-462x512-njvey5nf.png"
                                     alt="Delete" />
@@ -372,12 +371,6 @@ function Refuges() {
 
                         </div>
                     ))}
-
-
-
-
-
-
                 </div>
             </div>
         </div>

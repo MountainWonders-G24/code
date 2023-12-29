@@ -3,9 +3,9 @@ import {Decimal128} from "bson";
 
 export const refugeSchema = new mongoose.Schema(
     {
-        id: {
-            type: Number,
-            required: true,
+        _id: {
+            type: String,
+            required: false,
         },
         name: {
             type: String,

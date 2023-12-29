@@ -6,7 +6,6 @@ import { connectDB } from "@/configs/dbConfig";
 
 connectDB();
 
-
 interface Params {
     refugeId: string;
 }
@@ -19,20 +18,20 @@ export async function DELETE(request: NextRequest, { params }: { params: Params 
             return NextResponse.json({
                 message: "You need to login to use this API!",
                 status: 401
-            })
+            });
         }
 
-        // if (!user.isAdmin ) {
+        // if (!user.isAdmin) {
         //     return NextResponse.json({
         //         message: "Only admin can use this API!",
         //         status: 404
-        //     })
+        //     });
         // }
 
         const refugeId = params.refugeId;
 
-        const refuge = Refuge.findOneAndDelete({
-            id: refugeId
+        const refuge = await Refuge.findOneAndDelete({
+            _id: refugeId
         });
 
         if (!refuge) {
@@ -43,7 +42,7 @@ export async function DELETE(request: NextRequest, { params }: { params: Params 
         return NextResponse.json({
             message: "Refuge deleted!",
             status: 200
-        })
+        });
     } catch (error: any) {
         console.log(error.message);
         return NextResponse.json({
@@ -59,7 +58,7 @@ async function getCurrentUser(request: NextRequest) {
         // const user = await User.findById(userId).select("-password");
 
         return userId;
-      } catch (error: any) {
+    } catch (error: any) {
         return null;
-      }
+    }
 }
