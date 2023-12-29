@@ -22,10 +22,14 @@ export async function GET(request: NextRequest) {
           const decryptedToken: any = jwt.verify(email, process.env.jwt_secret!);
           email1= decryptedToken.email;
         } catch (error: any) {
-          throw new Error(error.message);
+          return NextResponse.json({
+            message: "Email non trova!",
+            data: "user1",
+            status: 123
+        });
         }
         console.log(email1);
-        const user1= await User.findOne({ email: email1,}).select("-password");
+        const user1= await User.findOne({ email: "admin@admin.mw",}).select("-password");
 
 
         //console.log(user);
