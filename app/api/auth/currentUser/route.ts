@@ -19,14 +19,19 @@ export async function GET(request: NextRequest) {
         try {
           
           token = request.cookies.get("token")?.value || "";
-          let token2= request.cookies.getAll()
-
+          console.log("Token: --- " + token);
+          let token2= request.cookies.getAll();
+          console.log("Token2: --- ");
+          for (let [key, value] of Object.entries(token2)) {
+            console.log(`${key}: ${value.name}`);
+          }
+          
           const jwtsecret= (process.env.jwt_secret!);
           test= jwtsecret;
           test=token2;
           const decryptedToken:any = jwt.verify(token, jwtsecret );
           // email1 = decryptedToken.email;
-          console.log("Token: --- " + token);
+          
         } catch (error: any) {
           return NextResponse.json({
             message: error.message,

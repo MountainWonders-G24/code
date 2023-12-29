@@ -36,11 +36,16 @@ export async function POST(request: NextRequest) {
 
         response.cookies.set("token", token, {
             httpOnly: true,
+            sameSite: 'none',
+            secure: true,
             path: "/",
         });
         response.cookies.set("email", email, {
             httpOnly: true,
+            sameSite: 'none',
+            secure: true,
             path: "/",
+
         });
 
         return response;
