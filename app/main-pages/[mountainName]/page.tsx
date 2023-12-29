@@ -63,6 +63,9 @@ const fetchUser = async () => {
                 }
             }
         } else {
+            console.log("currentUser.data.status: " + currentUser.data.status);
+            console.log("currentUser.data.data: " + currentUser.data.data);
+            console.log("currentUser.data.message: " + currentUser.data.message);
             displayAddButton(false);
             displayDeleteButton(false);
             console.log("No user");
