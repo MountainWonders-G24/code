@@ -25,6 +25,7 @@ import {
     avg_rating,
     setRating
 } from './script.tsx'
+import { log } from 'console';
 
 
 const { TextArea } = Input;
@@ -48,7 +49,6 @@ type Refuge = {
 
 const fetchUser = async () => {
     try {
-        logout();
         const currentUser = await axios.get('/api/auth/currentUser');
         if (currentUser.data.status == 200) {
             if (currentUser.data.data) {
@@ -213,10 +213,11 @@ function Refuges() {
         } else {
             (document.getElementById("mountain-name") as HTMLElement).innerHTML = "Rifugi del Trentino";
         }
-        
+        fetchUser();
+        logout();
     }, []);
 
-    fetchUser();
+    
 
     const deleteRefuge = async (id: string) => {
         try {
