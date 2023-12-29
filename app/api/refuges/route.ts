@@ -6,15 +6,7 @@ connectDB();
 export async function GET() {
     try {
 
-        const refuges = await Refuge.aggregate([
-            {
-                $match: {
-                    $expr: {
-                        $eq: ['$mountainId', '$mountainId']
-                    }
-                }
-            }
-        ]);
+        const refuges = await Refuge.find({});
         return NextResponse.json({
             message: "Refuges retrieved!",
             data: refuges,
