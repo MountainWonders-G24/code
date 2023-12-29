@@ -145,6 +145,7 @@ function Refuges() {
     
 
     useEffect(() => {
+        console.log("Entrato in use effect");
         const queryString = window.location.search;
         const params = new URLSearchParams(queryString);
         const idValue = params.get("mountainId");
@@ -155,6 +156,7 @@ function Refuges() {
         fetchUser();
         
         const fetchRefuges = async (path: string) => {
+            
             try {
                 const response = await axios.get(path, { timeout: 10000 });
 
@@ -201,6 +203,7 @@ function Refuges() {
         }
 
         if (idValue != "0") {
+            console.log("fetching refuges");
             fetchRefuges('/api/refuges/' + idValue);
             fetchMountain('/api/mountains/' + idValue);
             displayAddButton(true);
