@@ -5,14 +5,9 @@ import { connectDB } from "@/configs/dbConfig";
 connectDB();
 export async function GET() {
     try {
-        const refuges = await Refuge.find();
-        if (refuges.length === 0) {
-            return NextResponse.json({
-                message: "No refuges!",
-                data: [],
-                status: 200
-            })
-        }
+
+        const refuges = await Refuge.find({ mountainId: { $eq: '$mountainId' }});
+
         return NextResponse.json({
             message: "Refuges retrieved!",
             data: refuges,
