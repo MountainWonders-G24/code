@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
     try {
         
         const refuges = await Refuge.find({
-            __v: 0
+            __v: "0"
         });
 
         
