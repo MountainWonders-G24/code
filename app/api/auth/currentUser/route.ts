@@ -19,8 +19,9 @@ export async function GET(request: NextRequest) {
 
         try {
           token = request.cookies.get('email')?.value || '';
-          throw new Error(process.env.jwt_secret!)
-          const decryptedToken: any = jwt.verify(token, process.env.jwt_secret! );
+          const jwtsecret= (process.env.jwt_secret!);
+          console.log(jwtsecret);
+          const decryptedToken: any = jwt.verify(token, jwtsecret );
           email1 = decryptedToken.email;
         } catch (error: any) {
           return NextResponse.json({
