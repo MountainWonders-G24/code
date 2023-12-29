@@ -28,13 +28,35 @@ export async function POST(request: NextRequest, { params }: { params: Params })
             throw new Error("No mountain found")
         }
 
+
         const reqBody = await request.json();
         
         const refuge = new Refuge(reqBody);
-        await refuge.save();
+
+        const existingData = await Refuge.findOne({ 
+            mountainId: mountainId,
+            name: refuge.name,
+            image: refuge.image,
+            description: refuge.description,
+         });
+
+        if (existingData) {
+            console.log("Data already exists in the database.");
+            return NextResponse.json({
+                message: "existingData",
+                status: 405
+            })
+             ; // or handle the case appropriately
+        }else{
+            await refuge.save();
+        }
+
+        const refugeId = refuge._id;
+        
 
         return NextResponse.json({
             message: "Refuge added!",
+            data: refugeId,
             status: 201
         })
     } catch (error: any) {

@@ -21,7 +21,6 @@ import { useEffect, useState } from 'react';
 import { useRouter } from "next/navigation";
 
 
-
 var avg_rating=0;
 interface Mountain {
     id: string;
@@ -33,10 +32,12 @@ interface Mountain {
 interface Refuge {
     _id: string;
     name: String;
-    image: String; //nel diagramma delle classi un rifugio non ha un'immagine mentre qui gliela mettiamo???????
-    mountain: Number;
-    description: String;
     avgRating: number;
+    description: String;
+    mountainId: Number;
+    image: String; //nel diagramma delle classi un rifugio non ha un'immagine mentre qui gliela mettiamo???????
+    
+    
 }
 
 function displayAddButton(register: boolean) {
@@ -65,7 +66,7 @@ function displayDeleteButton(admin: boolean) {
 
 function setRating(nStars: number) {
     avg_rating=nStars;
-    (document.getElementById("add-refuge-rating") as HTMLInputElement).value = String(avg_rating);
+    (document.getElementById("add-refuge-rating") as HTMLInputElement).value = "5";
     const stars = (document.getElementById("review")?.getElementsByClassName("fa fa-star") as HTMLCollectionOf<HTMLElement>);
     let n: number = 0;
     Array.from(stars).forEach((star) => {
@@ -85,7 +86,6 @@ const fetchUser = async () => {
     try {
 
         const currentUser = await axios.get('/api/auth/currentUser');
-        console.log(currentUser);
 
         if (currentUser.data.status == 200) {
             console.log("User data: " + currentUser.data.data);
@@ -96,6 +96,7 @@ const fetchUser = async () => {
                     displayDeleteButton(true);
                     console.log("Admin logged");
                 } else {
+                    
                     displayAddButton(true);
                     displayDeleteButton(false);
                     console.log("User logged");
@@ -106,7 +107,6 @@ const fetchUser = async () => {
             displayDeleteButton(false);
             console.log("No user");
         }
-        console.log("Should have printed the user");
     } catch (error: any) {
         console.error("Error fetching user data:", error);
     };
@@ -130,6 +130,7 @@ function Refuges() {
 
     const router = useRouter();
     function displayAddRefugeForm(authorized: boolean) {
+        console.log((document.getElementById("add-refuge-rating") as HTMLInputElement).value);
         if (authorized) {
             (document.getElementById("add-refuge-form") as HTMLElement).style.display = "block";
             (document.getElementById("add-refuge-mountain") as HTMLInputElement).value = String(mountain?.id);
@@ -147,7 +148,7 @@ function Refuges() {
             console.log(data);
             if (data.status == "200") {
                 message.success(data.message);
-
+                document.getElementById(id)?.remove();
             } else {
                 message.error(data.message)
             }
@@ -160,16 +161,23 @@ function Refuges() {
     };
 
     const addRefuge = async (values: Refuge) => {
+        
         try {
             setLoading(true);
-            console.log("Dati: " + values._id);
+            values.avgRating = avg_rating <= 0 ? 1 : avg_rating;
+            values.mountainId=Number(mountain?.id);
+            if (mountain?.id == null||mountain?.id=="0") {
+                message.error("Errore: montagna non trovata");
+                return;
+            }
             
             const { data } = await axios.post("/api/" + Number(mountain?.id) + "/addRefuge", values);
             console.log("Dati: " + data);
             
             if (data.status == "201") {
+                values._id = data.data;
                 message.success(data.message);
-                router.push("/");
+                setRefuges((prevRefuges) => [...prevRefuges, values]);
                 console.log("Inserito correttamente")
             } else {
                 console.log("Non inserito correttamente");
@@ -254,9 +262,8 @@ function Refuges() {
     return (
         <div>
             <Form id='add-refuge-form' onFinish={addRefuge}>
-                <button className="close-add-refuge" onClick={() => displayAddRefugeForm(false)}>&times;</button>
+                <button type='button' className="close-add-refuge" onClick={() => displayAddRefugeForm(false)}>&times;</button>
                 <div>
-                    
                     <Form.Item name="name" label="Nome rifugio:" className='input' rules={[
                             { required: true,
                                 message: 'Please enter a name' },
@@ -269,7 +276,7 @@ function Refuges() {
                 </div>
                 <div>
                     <Form.Item name="avgRating" label="Avg rating:" className='input'>
-                    <Input type="Number" id="add-refuge-rating"  disabled/>
+                        <Input type="number" id="add-refuge-rating" disabled/>
                     </Form.Item>
                 </div>
                 <div>
@@ -380,15 +387,15 @@ function Refuges() {
 
                     {refuges.map((refuge) => (
 
-                        <div className="refuge" key={String(refuge._id)} /*onClick={() => { fetchUser(); }}*/>
+                        <div className="refuge" id={refuge._id} key={String(refuge._id)} /*onClick={() => { fetchUser(); }}*/>
                             <div className="refuge-image" id={'refuge' + refuge._id} style={{ backgroundImage: `url(${refuge.image})` }}>
                             </div>
                             <div className="info-refuge">
-                                <h3> {refuge._id} </h3>
+                                <h3> {refuge.name} </h3>
                                 <p>Descrizione: {refuge.description} </p>
                                 <p>Valutazione:</p>
-                                <div id='review'> {Array.from({ length: 5 }, (_, index) => (
-                                    <span key={index} className={`fa fa-star${index < refuge.avgRating ? ' checked' : ''}`}></span>
+                                <div id='review' > {Array.from({ length: 5 }, (_, index) => (
+                                    <span style={{cursor: 'default'}} key={index} className={`fa fa-star${index < refuge.avgRating ? ' checked' : ''}`}></span>
                                 ))}</div>
                             </div>
 
