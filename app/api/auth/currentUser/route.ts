@@ -3,7 +3,7 @@ import Refuge from "@/app/models/refugeModel";
 import User from "@/app/models/userModel";
 import { validateJWT } from "@/app/helpers/validateJWT";
 import { connectDB } from "@/configs/dbConfig";
-import getCurrentEmail from "../../get_email";
+import getCurrentEmail from "@/app/api/get_email/get_email";
 import jwt from "jsonwebtoken";
 
 connectDB();

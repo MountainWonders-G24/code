@@ -1,4 +1,4 @@
-import { NextRequest } from 'next';
+import { NextRequest } from 'next/server';
 import jwt from 'jsonwebtoken';
 
 const getCurrentEmail = async (request: NextRequest): Promise<string> => {
