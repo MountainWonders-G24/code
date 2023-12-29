@@ -151,10 +151,7 @@ function Refuges() {
             const responseData = response.data.data;
             
             
-            if (Array.isArray(responseData)) {
-                
-                
-                
+            if (Array.isArray(responseData)) {  
                 let array : Refuge[]= [];
                 refuges= new Array<Refuge>();
                 for (let i = 0; i < responseData.length; i++) {
@@ -184,7 +181,6 @@ function Refuges() {
     };
 
     useEffect(() => {
-        console.log("Entrato in use effect");
         const queryString = window.location.search;
         const params = new URLSearchParams(queryString);
         idValue = params.get("mountainId") || "0";
@@ -193,6 +189,7 @@ function Refuges() {
         displayDeleteButton(false);
 
         fetchUser();
+        fetchRefuges('/api/refugesList');
 
         const fetchMountain = async (path: string) => {
             try {
