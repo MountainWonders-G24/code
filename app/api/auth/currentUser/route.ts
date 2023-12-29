@@ -14,6 +14,7 @@ export async function GET(request: NextRequest) {
 
         //const user = await User.findOne({ id: new ObjectId('658c345409d3ed8ea82f26c8'),});
         var email1: string;
+<<<<<<< HEAD
         if (!request.cookies.get('email')) {
           throw new Error('No email provided');
         }
@@ -21,6 +22,21 @@ export async function GET(request: NextRequest) {
         
         const decryptedToken: any = jwt.verify(email, process.env.jwt_secret!);
         email1= decryptedToken.email;
+=======
+        try {
+          const email = request.cookies.get('email')?.value || '';
+          if (!email) {
+            throw new Error('No email provided');
+          }
+          const decryptedToken: any = jwt.verify(email, process.env.jwt_secret!);
+          email1= decryptedToken.email;
+        } catch (error: any) {
+          return NextResponse.json({
+            message: error.message,
+            status: 404
+          });
+        }
+>>>>>>> 5f0bdae7f311fe23da44cecd93b1e8d95617b9e6
         console.log(email1);
         const user1= await User.findOne({ email: email1,}).select("-password");
 
