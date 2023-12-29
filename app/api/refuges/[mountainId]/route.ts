@@ -10,10 +10,18 @@ export async function GET(request: NextRequest, { params }: { params: Params }) 
     try {
         const id = params.mountainId;
         console.log("moutnaiD: " + id);
+        let refuges;
+        if (id=="0") {
+            refuges= await Refuge.find({
+                __v: id
+            });
+        }else{
+            refuges= await Refuge.find({
+                mountainId: id
+            });
+        }
 
-        const refuges: typeof Refuge[]= await Refuge.find({
-            mountainId: id
-        });
+        
         if (!refuges) {
             throw new Error("No refuges found")
         }

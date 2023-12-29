@@ -214,16 +214,15 @@ function Refuges() {
             };
         }
 
-        if (idValue != "0") {
+
+        fetchRefuges('/api/refuges/' + idValue);
             
-            fetchRefuges('/api/refuges/' + idValue);
-            fetchMountain('/api/mountains/' + idValue);
             displayAddButton(true);
-        } else {
-            console.log("fetching refuges");
-            displayAddButton(true);
-            fetchRefuges('/api/refugesList');
+
+        if (idValue == "0") {
             (document.getElementById("mountain-name") as HTMLElement).innerHTML = "Rifugi del Trentino";
+        }else{
+            fetchMountain('/api/mountains/' + idValue);
         }
 
 
