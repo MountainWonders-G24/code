@@ -15,10 +15,8 @@ export async function GET(request: NextRequest) {
       let token = cookieStore.get('email');
       
         //const user = await User.findOne({ id: new ObjectId('658c345409d3ed8ea82f26c8'),});
-        let email1;
-        
+        let email1;        
         let test;
-
         
         try {
           const jwtsecret= (process.env.jwt_secret!);
@@ -37,17 +35,16 @@ export async function GET(request: NextRequest) {
           });
         }
         console.log("email1");
-        // const user1= await User.findOne({ email: "admin@admin.mw",}).select("-password");
+        const user= await User.findOne({ email: email1,}).select("-password");
 
 
         //console.log(user);
         return NextResponse.json({
             message: "User presente!",
-            data: token?.value,
-            status: 500
+            data: user,
+            status: 200,
         });
     } catch (error: any) {
-        
         return NextResponse.json({
             message: error.message,
             data: cookies().get('token'),
