@@ -13,12 +13,13 @@ export async function GET(request: NextRequest) {
         
 
         //const user = await User.findOne({ id: new ObjectId('658c345409d3ed8ea82f26c8'),});
-        
         let email1;
         let token;
         let test;
         try {
-          token = request.cookies.get('email')?.value as string;
+          
+          token = request.cookies.get("email")?.value || "";
+          console.log("Token: --- " + token);
           const jwtsecret= (process.env.jwt_secret!);
           test= jwtsecret;
           test=token;
