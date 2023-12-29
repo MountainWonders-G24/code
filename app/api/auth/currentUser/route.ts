@@ -5,6 +5,9 @@ import { validateJWT } from "@/app/helpers/validateJWT";
 import { connectDB } from "@/configs/dbConfig";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
+
+//export const dynamic = 'force-dynamic';
+
 connectDB();
 
 export async function GET(request: NextRequest) {
