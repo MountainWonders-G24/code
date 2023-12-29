@@ -388,7 +388,7 @@ function Refuges() {
 
                     {refuges.map((refuge) => (
 
-                        <div className="refuge" id={refuge._id} key={String(refuge._id)} /*onClick={() => { fetchUser(); }}*/>
+                        <div className="refuge" id={refuge._id} key={String(refuge._id)} onClick={() => { fetchUser(); }}>
                             <div className="refuge-image" id={'refuge' + refuge._id} style={{ backgroundImage: `url(${refuge.image})` }}>
                             </div>
                             <div className="info-refuge">
