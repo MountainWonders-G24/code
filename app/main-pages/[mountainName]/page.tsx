@@ -88,6 +88,7 @@ const fetchUser = async () => {
         const currentUser = await axios.get('/api/auth/currentUser');
         console.log("Status: " + currentUser.data.status);
         console.log("Dati: " + currentUser.data.data);
+        console.log("Message: " + currentUser.data.message);
         if (currentUser.data.status == 200) {
             console.log("User data: " + currentUser.data.data);
             const d = currentUser.data.data;
