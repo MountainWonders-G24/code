@@ -206,7 +206,7 @@ function Refuges() {
             displayAddButton(true);
         } else {
             displayAddButton(false);
-            fetchRefuges('/api/refuges');
+            fetchRefuges('/api/refugesList');
             (document.getElementById("mountain-name") as HTMLElement).innerHTML = "Rifugi del Trentino";
         }
 
