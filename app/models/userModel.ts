@@ -2,10 +2,10 @@
 import mongoose from "mongoose";
 export const userSchema = new mongoose.Schema(
     {
-        _id: {
+        /*_id: {
             type: String,
             required: false,
-        },
+        },*/
         name: {
             type: String,
             required: true,

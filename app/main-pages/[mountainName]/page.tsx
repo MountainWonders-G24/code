@@ -19,18 +19,19 @@ import { scrollFunction, topFunction, open_sidebar, close_sidebar } from './scri
 import { useEffect, useState } from 'react';
 
 import { useRouter } from "next/navigation";
+import { ref } from 'firebase/database';
 
 
 var avg_rating=0;
 let idValue= "0";
-interface Mountain {
+type Mountain = {
     id: string;
     name: string;
     description: String;
     image: string;
 }
 
-interface Refuge {
+type Refuge = {
     _id: string;
     name: String;
     avgRating: number;
@@ -81,7 +82,6 @@ function setRating(nStars: number) {
     });
 }
 
-
 const fetchUser = async () => {
     
     try {
@@ -129,7 +129,7 @@ const validateImageUrl = (_: any, value: string) => {
 function Refuges() {
     const [mountain, setMountain] = useState<Mountain | null>();
     const [loading, setLoading] = React.useState(false);
-    const [refuges = [], setRefuges] = useState<Refuge[]>([]);
+    let [refuges = [], setRefuges] = useState<Refuge[]>([]);
 
     const router = useRouter();
     function displayAddRefugeForm(authorized: boolean) {
@@ -144,16 +144,33 @@ function Refuges() {
     }
 
     const fetchRefuges = async (path: string) => {
-            
+        
         try {
             const response = await axios.get(path, { timeout: 10000 });
 
             const responseData = response.data.data;
             
+            
             if (Array.isArray(responseData)) {
                 
                 
-                setRefuges(responseData);
+                
+                let array : Refuge[]= [];
+                refuges= new Array<Refuge>();
+                for (let i = 0; i < responseData.length; i++) {
+                        console.log("QUI!!");
+                        const q: Refuge= {
+                            _id: responseData[i]._id,
+                            name: responseData[i].name,
+                            avgRating: responseData[i].avgRating,
+                            description: responseData[i].description,
+                            mountainId: responseData[i].mountainId,
+                            image: responseData[i].image
+                        };
+                        refuges.push(q);
+                }
+                
+                setRefuges(refuges);
                 for (let i = 0; i < refuges.length; i++) {
                     console.log("Rifugio " + i + ": " + refuges[i]._id);
                 }
@@ -402,29 +419,29 @@ function Refuges() {
                 </div>
                 <div id="refuges">
 
+                {refuges.map((refuge) => (
 
-                    {refuges.map((refuge) => (
+                <div className="refuge" id={refuge._id} key={String(refuge._id)} /*onClick={() => { fetchUser(); }}*/>
+                    <div className="refuge-image" style={{ backgroundImage: `url(${refuge.image})` }}>
+                    </div>
+                    <div className="info-refuge">
+                        <h3> {refuge.name} </h3>
+                        <p>Descrizione: {refuge.description} </p>
+                        <p>Valutazione:</p>
+                        <div id='review' > {Array.from({ length: 5 }, (_, index) => (
+                            <span style={{cursor: 'default'}} key={index} className={`fa fa-star${index < refuge.avgRating ? ' checked' : ''}`}></span>
+                        ))}</div>
+                    </div>
 
-                        <div className="refuge" id={refuge._id} key={String(refuge._id)} /*onClick={() => { fetchUser(); }}*/>
-                            <div className="refuge-image" style={{ backgroundImage: `url(${refuge.image})` }}>
-                            </div>
-                            <div className="info-refuge">
-                                <h3> {refuge.name} </h3>
-                                <p>Descrizione: {refuge.description} </p>
-                                <p>Valutazione:</p>
-                                <div id='review' > {Array.from({ length: 5 }, (_, index) => (
-                                    <span style={{cursor: 'default'}} key={index} className={`fa fa-star${index < refuge.avgRating ? ' checked' : ''}`}></span>
-                                ))}</div>
-                            </div>
+                    <Button onClick={() => deleteRefuge(refuge._id)} className="delete-refuge-btn" title="Delete refuge">
+                        <input type="image"
+                            src="https://static-00.iconduck.com/assets.00/trash-icon-462x512-njvey5nf.png"
+                            alt="Delete" />
+                    </Button>
 
-                            <Button onClick={() => deleteRefuge(refuge._id)} className="delete-refuge-btn" title="Delete refuge">
-                                <input type="image"
-                                    src="https://static-00.iconduck.com/assets.00/trash-icon-462x512-njvey5nf.png"
-                                    alt="Delete" />
-                            </Button>
-
-                        </div>
-                    ))}
+                </div>
+                ))}
+                    
                 </div>
             </div>
         </div>
