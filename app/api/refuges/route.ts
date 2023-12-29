@@ -8,13 +8,13 @@ export async function GET() {
 
         const refuges = await Refuge.aggregate([
             {
-              $match: {
-                $expr: {
-                  $eq: ['$mountainId', '$mountainId']
+                $match: {
+                    $expr: {
+                        $eq: ['$mountainId', '$mountainId']
+                    }
                 }
-              }
             }
-          ]);
+        ]);
         return NextResponse.json({
             message: "Refuges retrieved!",
             data: refuges,

@@ -159,10 +159,12 @@ function Refuges() {
                 const response = await axios.get(path, { timeout: 10000 });
 
                 const responseData = response.data.data;
-
+                
                 if (Array.isArray(responseData)) {
+                    console.log("Refuges: " + responseData);
                     setRefuges(responseData);
                 } else {
+                    console.log("Refuges: " + responseData);
                     console.error('Invalid API response structure:', responseData);
                 }
             } catch (error) {
