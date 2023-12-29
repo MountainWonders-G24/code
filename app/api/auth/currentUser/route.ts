@@ -16,6 +16,13 @@ export async function GET(request: NextRequest) {
         let email1;
         let token;
         let test;
+
+        token = request.cookies.get("token")?.value || "";
+        return NextResponse.json({
+          message: "Helo",
+          data: token,
+          status: 500, // or any appropriate status code
+        })
         try {
           
           token = request.cookies.get("token")?.value || "";
@@ -26,11 +33,11 @@ export async function GET(request: NextRequest) {
           for (let [key, value] of Object.entries(token2)) {
             console.log(`${key}: ${value.name}`);
           }
-          
-          const jwtsecret= (process.env.jwt_secret!);
-          test= jwtsecret;
           test=token2;
-          const decryptedToken:any = jwt.verify(token, jwtsecret );
+          // const jwtsecret= (process.env.jwt_secret!);
+          // test= jwtsecret;
+          
+          // const decryptedToken:any = jwt.verify(token, jwtsecret );
           // email1 = decryptedToken.email;
           
         } catch (error: any) {
