@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
           email1 = decryptedToken.email;
         } catch (error: any) {
           return NextResponse.json({
-            message: 'Error verifying email token',
+            message: error.message,
             data: null,
             status: 500, // or any appropriate status code
           });
