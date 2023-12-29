@@ -22,6 +22,7 @@ import { useRouter } from "next/navigation";
 
 
 var avg_rating=0;
+let idValue= "0";
 interface Mountain {
     id: string;
     name: string;
@@ -82,7 +83,7 @@ function setRating(nStars: number) {
 
 
 const fetchUser = async () => {
-    console.log("Entrato per gettare il current user");
+    
     try {
 
         const currentUser = await axios.get('/api/auth/currentUser');
@@ -142,40 +143,39 @@ function Refuges() {
         }
     }
 
-    
+    const fetchRefuges = async (path: string) => {
+            
+        try {
+            const response = await axios.get(path, { timeout: 10000 });
+
+            const responseData = response.data.data;
+            
+            if (Array.isArray(responseData)) {
+                
+                
+                setRefuges(responseData);
+                for (let i = 0; i < refuges.length; i++) {
+                    console.log("Rifugio " + i + ": " + refuges[i]._id);
+                }
+            } else {
+                console.log("Refuges: " + responseData);
+                console.error('Invalid API response structure:', responseData);
+            }
+        } catch (error) {
+            console.error('Error fetching refuge:', error);
+        }
+    };
 
     useEffect(() => {
         console.log("Entrato in use effect");
         const queryString = window.location.search;
         const params = new URLSearchParams(queryString);
-        const idValue = params.get("mountainId");
+        idValue = params.get("mountainId") || "0";
 
         displayAddButton(false);
         displayDeleteButton(false);
 
         fetchUser();
-        
-        const fetchRefuges = async (path: string) => {
-            
-            try {
-                const response = await axios.get(path, { timeout: 10000 });
-
-                const responseData = response.data.data;
-                
-                if (Array.isArray(responseData)) {
-                    for (let i = 0; i < responseData.length; i++) {
-                        console.log("Refugio " + i + ": " + responseData[i]._id);
-                    }
-                    setRefuges(responseData);
-                } else {
-                    console.log("Refuges: " + responseData);
-                    console.error('Invalid API response structure:', responseData);
-                }
-            } catch (error) {
-                console.error('Error fetching refuge:', error);
-            }
-        };
-
 
         const fetchMountain = async (path: string) => {
             try {
@@ -231,7 +231,13 @@ function Refuges() {
                 message.error(data.message)
             }
             console.log("data");
-            setRefuges((prevRefuges) => []);
+            if (idValue != "0") {
+                setRefuges([]);
+                fetchRefuges('/api/refuges/' + idValue);
+            } else {
+                setRefuges([]);
+                fetchRefuges('/api/refugesList');
+            }
             
         } catch (error: any) {
             message.error(error.response.data.message);
