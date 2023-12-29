@@ -211,14 +211,10 @@ function Refuges() {
                 scrollFunction();
             };
         }
-
-        
-
+        displayAddButton(true);
         if (idValue != "0") {
             fetchMountain('/api/mountains/' + idValue);
-            displayAddButton(true);
         } else {
-            displayAddButton(true);
             (document.getElementById("mountain-name") as HTMLElement).innerHTML = "Rifugi del Trentino";
         }
 
