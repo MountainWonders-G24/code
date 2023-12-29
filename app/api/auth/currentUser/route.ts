@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
         
 
         //const user = await User.findOne({ id: new ObjectId('658c345409d3ed8ea82f26c8'),});
-        var email1: string;
+        ;
         let email1;
 
         try {
