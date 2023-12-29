@@ -28,7 +28,11 @@ export const refugeSchema = new mongoose.Schema(
         image: {
             type: String,
             required: true,
-        }
+        },
+        __v: {
+            type: Number,
+            required: false,
+        },
     }
 );
 

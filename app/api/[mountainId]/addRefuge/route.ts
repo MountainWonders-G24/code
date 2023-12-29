@@ -32,7 +32,8 @@ export async function POST(request: NextRequest, { params }: { params: Params })
         const reqBody = await request.json();
         
         const refuge = new Refuge(reqBody);
-
+        refuge.relativeId = 0;  
+        console.log(refuge.relativeId);
         const existingData = await Refuge.findOne({ 
             mountainId: mountainId,
             name: refuge.name,

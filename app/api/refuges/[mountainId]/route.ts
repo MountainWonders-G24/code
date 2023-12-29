@@ -11,13 +11,14 @@ export async function GET(request: NextRequest, { params }: { params: Params }) 
         const id = params.mountainId;
         console.log("moutnaiD: " + id);
 
-        const refuges = await Refuge.find({
+        const refuges: typeof Refuge[]= await Refuge.find({
             mountainId: id
         });
         if (!refuges) {
             throw new Error("No refuges found")
         }
-       
+        
+        console.log("Rifugio id: " + refuges[0].__v);
         return NextResponse.json({
             message: "Refuges retrieved!",
             data: refuges,
