@@ -227,6 +227,7 @@ function Refuges() {
                 message.error(data.message)
             }
             console.log("data");
+            setRefuges((prevRefuges) => []);
             
         } catch (error: any) {
             message.error(error.response.data.message);
