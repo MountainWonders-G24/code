@@ -19,6 +19,9 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   
+//<a href="/" id='logout'>Logout</a>
+//
+
   return (
     <html lang="en">
       <head>
@@ -28,8 +31,8 @@ export default function RootLayout({
         <div className="topnav">
           <a href="/">Home</a>
           <div className="topnav-right">
-            
             <button type='submit' id='logout'>Logout</button>
+            
             <a href="/auth/login/">Profile</a>
           </div>
         </div>
