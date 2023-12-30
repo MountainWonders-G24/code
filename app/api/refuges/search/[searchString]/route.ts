@@ -19,11 +19,11 @@ export async function GET(request: NextRequest, { params }: { params: Params }) 
             name: { $regex: refugeName, $options: "i" } // "i" case-insensitive
         });
 
-        // const refuges = await Refuge.find({
-        //     name: reqBody.name
-        // });
 
         if (!refuges) {
+            throw new Error("No refuges found")
+        }
+        if (refuges.length == 0) {
             throw new Error("No refuges found")
         }
         console.log(refuges);

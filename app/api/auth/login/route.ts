@@ -10,7 +10,8 @@ export async function POST(request: NextRequest) {
     try {
         const reqBody = await request.json();
 
-        const user = await User.findOne({ email: reqBody.email });
+        const user = await User.findOne({ email: { $regex: new RegExp(reqBody.email, 'i') } });
+
         
         if (!user) {
             throw new Error("User does not exist");
