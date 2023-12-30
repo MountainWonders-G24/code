@@ -1,8 +1,10 @@
 import axios from "axios";
 const response = () => {
     console.log("logoutbgudsobgoa");
-    axios.get('/api/auth/logout')};
-export async function logout(){
+    const logout = axios.get('/api/auth/logout');
+    console.log("MEssaggio logout: " + logout)
+};
+export async function logout() {
     const currentUser = await axios.get('/api/auth/currentUser');
     if (currentUser.data.status == 200) {
         console.log("logged");
