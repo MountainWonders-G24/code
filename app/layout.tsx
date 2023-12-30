@@ -2,9 +2,6 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import ThemeProvider from './providers/ThemeProvider'
-import axios from 'axios'
-import { logout } from './script'
-
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -13,15 +10,11 @@ export const metadata: Metadata = {
   description: 'MountainWonders - Il sito per gli amanti della montagna',
 }
 
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  
-//<a href="/" id='logout'>Logout</a>
-//<button type='submit' id='logout'>Logout</button>
 
   return (
     <html lang="en">
@@ -32,13 +25,10 @@ export default function RootLayout({
         <div className="topnav">
           <a href="/">Home</a>
           <div className="topnav-right">
-            
             <a id='logout'>Logout</a>
             <a href="/auth/login/">Profile</a>
           </div>
         </div>
-
-
         <ThemeProvider>
           {children}
         </ThemeProvider>
