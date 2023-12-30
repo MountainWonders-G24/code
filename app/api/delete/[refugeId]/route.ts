@@ -16,7 +16,6 @@ export async function DELETE(request: NextRequest, { params }: { params: Params 
         
         console.log("DELETE refuge API called");
         const cookieStore = cookies();
-        console.log(cookieStore);
         let token = cookieStore.get('email');
         let cookieEmail;
         

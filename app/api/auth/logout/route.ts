@@ -1,12 +1,13 @@
 import { NextResponse } from "next/server";
+import { cookies } from "next/headers";
 
-export function GET(){
-    const response = NextResponse.json({
+
+export async function GET()  {
+    const cookieStore = cookies();
+    cookieStore.delete('email');
+    cookieStore.delete('token');
+    return NextResponse.json({
         message: "Logout successful",
         status: 200
-    });
-
-    response.cookies.delete("token");
-    response.cookies.delete("email");
-    return response;
+    });;
 }
