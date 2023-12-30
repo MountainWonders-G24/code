@@ -33,7 +33,7 @@ export default function RootLayout({
           <a href="/">Home</a>
           <div className="topnav-right">
             
-            <a href="/" id='logout' onClick={logout}>Logout</a>
+            <a  id='logout'>Logout</a>
             <a href="/auth/login/">Profile</a>
           </div>
         </div>
