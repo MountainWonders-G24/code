@@ -20,7 +20,7 @@ export default function RootLayout({
 }) {
   
 //<a href="/" id='logout'>Logout</a>
-//
+//<button type='submit' id='logout'>Logout</button>
 
   return (
     <html lang="en">
@@ -31,8 +31,8 @@ export default function RootLayout({
         <div className="topnav">
           <a href="/">Home</a>
           <div className="topnav-right">
-            <button type='submit' id='logout'>Logout</button>
             
+            <a href="/" id='logout'>Logout</a>
             <a href="/auth/login/">Profile</a>
           </div>
         </div>
