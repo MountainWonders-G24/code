@@ -33,7 +33,7 @@ export default function RootLayout({
           <a href="/">Home</a>
           <div className="topnav-right">
             
-            <a  id='logout'>Logout</a>
+            <a id='logout'>Logout</a>
             <a href="/auth/login/">Profile</a>
           </div>
         </div>
