@@ -239,7 +239,7 @@ function Refuges() {
         } else {
             (document.getElementById("mountain-name") as HTMLElement).innerHTML = "Rifugi del Trentino";
         }
-        logout("@/app/api/auth/logout");
+        logout();
     }, []);
     
 
