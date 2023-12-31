@@ -102,6 +102,7 @@ function Refuges() {
 
     const fetchRefuges = async (path: string) => {
         try {
+            
             const response = await axios.get(path);
             const responseData = response.data.data;
             if (response.data.status == "404") {
