@@ -12,14 +12,11 @@ connectDB();
 
 export async function GET(request: NextRequest) {
     try {
-        
       const cookieStore = cookies();
-      console.log(cookieStore);
       let token = cookieStore.get('email');
       
-        //const user = await User.findOne({ id: new ObjectId('658c345409d3ed8ea82f26c8'),});
+        
         let email1;        
-        let test;
         
         try {
           const jwtsecret= (process.env.jwt_secret!);
@@ -33,8 +30,7 @@ export async function GET(request: NextRequest) {
         } catch (error: any) {
           return NextResponse.json({
             message: error.message,
-            data: test,
-            status: 500, // or any appropriate status code
+            status: 404,
           });
         }
         console.log("email1");

@@ -15,7 +15,6 @@ export async function GET(requestdf: NextRequest, { params }: { params: Params }
         let refuges;
         console.log("mountainId: " + mountainId);
         if (mountainId=="0") {
-        
             refuges= await Refuge.find({
                 __v: mountainId
             });
