@@ -246,10 +246,9 @@ function Refuges() {
     const deleteRefuge = async (id: string) => {
         try {
             setLoading(true);
-            const { data } = await axios.delete("/api/delete/" + id);
+            const { data } = await axios.delete("/api/refuges/delete/" + id);
             if (data.status == "200") {
                 message.success(data.message);
-                window.location.reload();
             } else {
                 message.error(data.message)
             }
@@ -267,16 +266,16 @@ function Refuges() {
             setLoading(true);
             values.avgRating = avg_rating <= 0 ? 1 : avg_rating;
 
-            var id;
+            var mountainId;
             if (mountain?.id == null || mountain?.id == "0") {
-                id = "1";
+                mountainId = "1";
                 values.mountainId = Number("1");
             }
             else {
-                id = Number(mountain?.id);
+                mountainId = Number(mountain?.id);
                 values.mountainId = Number(mountain?.id);
             }
-            const { data } = await axios.post("/api/" + id + "/addRefuge", values);
+            const { data } = await axios.post("/api/refuges/addRefuge"+ mountainId, values);
 
             if (data.status == "201") {
                 values._id = data.data;
