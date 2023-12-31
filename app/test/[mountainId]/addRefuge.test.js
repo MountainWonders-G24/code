@@ -6,8 +6,6 @@ const mongoose = require('mongoose');
 const jwt = require("jsonwebtoken");
 const { ObjectId } = mongoose.Types;
 const _id= new ObjectId();
-const request = require('supertest');
-
 require("dotenv").config();
 
 describe("POST /api/[mountainId]/addRefuge", () => {
@@ -31,6 +29,7 @@ describe("POST /api/[mountainId]/addRefuge", () => {
     afterAll(async () => {
         await mongoose.connection.close(true);
     });
+
     //admin no good
     test("POST add refuge with valid incredential", async () => {
         var email = jwt.sign({email: 'admin@admin.mw'}, process.env.jwt_secret, {expiresIn: "7d"});
