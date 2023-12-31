@@ -8,10 +8,9 @@ connectDB();
 
 export async function POST(request: NextRequest) {
     try {
-        
         const reqBody = await request.json();
-        const user = await User.findOne({ email: { $regex: new RegExp(reqBody.email, 'i') } });
-        
+
+        const user = await User.findOne({ email: reqBody.email });
         
         if (!user) {
             throw new Error("User does not exist");
@@ -41,6 +40,7 @@ export async function POST(request: NextRequest) {
         });
         response.cookies.set("email", email, {
             httpOnly: false,
+            
             path: "/",
 
         });

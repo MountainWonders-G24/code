@@ -1,33 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
 import Refuge from "@/app/models/refugeModel";
 import { connectDB } from "@/configs/dbConfig";
-import axios from "axios";
 
 interface Params {
     mountainId: string;
 }
 connectDB();
-export async function GET(requestdf: NextRequest, { params }: { params: Params }) {
-    
+export async function GET(request: NextRequest, { params }: { params: Params }) {
     try {
-        
-        const mountainId = params.mountainId;
+        const id = params.mountainId;
+        console.log("moutnaiD: " + id);
         let refuges;
-        console.log("mountainId: " + mountainId);
-        if (mountainId=="0") {
-        
+        if (id=="0") {
             refuges= await Refuge.find({
-                __v: mountainId
+                __v: id
             });
         }else{
-            const mountain = await (axios.get('https://mountainwonders-fawn.vercel.app/api/mountains/'+mountainId));
-            
-            console.log(mountain);
-            if (mountain.data.status == 404) {
-                throw new Error("No mountain found")
-            }
             refuges= await Refuge.find({
-                mountainId: mountainId
+                mountainId: id
             });
         }
 

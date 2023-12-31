@@ -5,7 +5,6 @@ import Form from 'antd/es/form';
 import message from 'antd/es/message';
 import axios from 'axios';
 import React from 'react';
-import { notFound } from 'next/navigation'
 import { Select, Space } from 'antd';
 import { Input } from 'antd';
 import { NextRequest, NextResponse } from "next/server";
@@ -31,7 +30,7 @@ import { log } from 'console';
 
 const { TextArea } = Input;
 
-let mountainId = "0";
+let idValue = "0";
 type Mountain = {
     id: string;
     name: string;
@@ -64,6 +63,9 @@ const fetchUser = async () => {
                 }
             }
         } else {
+            console.log("currentUser.data.status: " + currentUser.data.status);
+            console.log("currentUser.data.data: " + currentUser.data.data);
+            console.log("currentUser.data.message: " + currentUser.data.message);
             displayAddButton(false);
             displayDeleteButton(false);
             console.log("No user");
@@ -75,8 +77,7 @@ const fetchUser = async () => {
 
 const validateImageUrl = (_: any, value: string) => {
     const lowerCaseValue = value.toLowerCase();
-    if (lowerCaseValue.startsWith('http') && (lowerCaseValue.endsWith('.png') || lowerCaseValue.endsWith('.jpeg') 
-    ||lowerCaseValue.endsWith('.webp') || lowerCaseValue.endsWith('.jpg'))) {
+    if (lowerCaseValue.startsWith('http') && (lowerCaseValue.endsWith('.png') || lowerCaseValue.endsWith('.jpg'))) {
         return Promise.resolve();
     }
     return Promise.reject('Please enter a valid URL ending with .png or .jpg');
@@ -104,11 +105,7 @@ function Refuges() {
         try {
             const response = await axios.get(path);
             const responseData = response.data.data;
-            if (response.data.status == "404") {
-                console.error('Invalid API response structure:', responseData);
-                
-                throw new Error("Mountain not found");
-            }
+
             if (Array.isArray(responseData)) {
                 let array: Refuge[] = [];
                 refuges = new Array<Refuge>();
@@ -126,7 +123,6 @@ function Refuges() {
                 setRefuges(refuges);
             } else {
                 console.error('Invalid API response structure:', responseData);
-                console.error('Invalid API response structure:', responseData);
             }
         } catch (error) {
             console.error('Error fetching refuge:', error);
@@ -135,8 +131,10 @@ function Refuges() {
 
     const fetchSearchRefuge = async () => {
         try {
+            let id = "ciao";
             const searchString= (document.getElementById("research-input") as HTMLInputElement).value ;
             console.log("Elemento ricercato: " + searchString);
+            console.log('/api/refuges/search/'+ id);
             const response = await axios.get('/api/refuges/search/'+ searchString);
             console.log("Elemento ricercato: " + (document.getElementById("research-input") as HTMLInputElement).value );
             const responseData = response.data.data;
@@ -145,16 +143,16 @@ function Refuges() {
             if (!Array.isArray(responseData)) {
                 const queryString = window.location.search;
                 const params = new URLSearchParams(queryString);
-                mountainId = params.get("mountainId") || "0";
-                fetchRefuges('/api/refuges/' + mountainId);
+                idValue = params.get("mountainId") || "0";
+                fetchRefuges('/api/refuges/' + idValue);
                 return;
             } 
             if (responseData.length==0|| responseData.length==undefined){
                 message.error("No refuges founded");
                 const queryString = window.location.search;
                 const params = new URLSearchParams(queryString);
-                mountainId = params.get("mountainId") || "0";
-                fetchRefuges('/api/refuges/' + mountainId);
+                idValue = params.get("mountainId") || "0";
+                fetchRefuges('/api/refuges/' + idValue);
                 return;
             }
             else  {
@@ -179,16 +177,9 @@ function Refuges() {
     };
 
     const fetchMountain = async (path: string) => {
-        console.log("Path: " + path);
         try {
             const response = await axios.get(path, { timeout: 10000 });
             const responseData = response.data.data;
-            console.log("Fetch mountain response: " + response.data.status);
-            console.log(response.data.status == "404")
-            if (response.data.status == "404") {
-                console.log("Montagna: " + response.data.data);
-                throw new Error("Mountain not found");
-            }
             if ((responseData)) {
                 setMountain(responseData);
                 (document.getElementById("mountain-name") as HTMLElement).innerHTML = responseData.name;
@@ -201,16 +192,41 @@ function Refuges() {
         }
     };
 
+    // useEffect(() => {
+    //     displayAddButton(false);
+    //     displayDeleteButton(false);
+    //     const queryString = window.location.search;
+    //     const params = new URLSearchParams(queryString);
+    //     idValue = params.get("mountainId") || "0";
+
+    //     fetchRefuges('/api/refuges/' + idValue);
+
+    //     if (typeof window !== 'undefined') {
+    //         window.onscroll = function () {
+    //             scrollFunction();
+    //         };
+    //     }
+        
+        
+    //     if (idValue != "0") {
+    //         fetchMountain('/api/mountains/' + idValue);
+    //     } else {
+    //         (document.getElementById("mountain-name") as HTMLElement).innerHTML = "Rifugi del Trentino";
+    //     }
+    //     fetchUser();
+    //     logout();
+    // }, []);
+
     useEffect(() => {
         const queryString = window.location.search;
         const params = new URLSearchParams(queryString);
-        mountainId = params.get("mountainId") || "0";
+        idValue = params.get("mountainId") || "0";
 
         displayAddButton(false);
         displayDeleteButton(false);
 
         fetchUser();
-        fetchRefuges('/api/refuges/' + mountainId);
+        fetchRefuges('/api/refuges/' + idValue);
 
         if (typeof window !== 'undefined') {
             window.onscroll = function () {
@@ -218,8 +234,8 @@ function Refuges() {
             };
         }
         displayAddButton(true);
-        if (mountainId != "0") {
-            fetchMountain('/api/mountains/' + mountainId);
+        if (idValue != "0") {
+            fetchMountain('/api/mountains/' + idValue);
         } else {
             (document.getElementById("mountain-name") as HTMLElement).innerHTML = "Rifugi del Trentino";
         }
@@ -230,14 +246,14 @@ function Refuges() {
     const deleteRefuge = async (id: string) => {
         try {
             setLoading(true);
-            const { data } = await axios.delete("/api/refuges/delete/" + id);
+            const { data } = await axios.delete("/api/delete/" + id);
             if (data.status == "200") {
                 message.success(data.message);
-                //window.location.reload();
+                window.location.reload();
             } else {
                 message.error(data.message)
             }
-            fetchRefuges('/api/refuges/' + mountainId);
+            fetchRefuges('/api/refuges/' + idValue);
         } catch (error: any) {
             message.error(error.response.data.message);
         } finally {
@@ -260,7 +276,7 @@ function Refuges() {
                 id = Number(mountain?.id);
                 values.mountainId = Number(mountain?.id);
             }
-            const { data } = await axios.post("/api/refuges/addRefuge/" + id, values);
+            const { data } = await axios.post("/api/" + id + "/addRefuge", values);
 
             if (data.status == "201") {
                 values._id = data.data;
@@ -400,7 +416,7 @@ function Refuges() {
                 </div>
                 <div id="refuges">
                     {refuges.map((refuge) => (
-                        <div className="refuge" id={refuge._id} key={String(refuge._id)} >
+                        <div className="refuge" id={refuge._id} key={String(refuge._id)} /*onClick={() => { fetchUser(); }}*/>
                             <div className="refuge-image" style={{ backgroundImage: `url(${refuge.image})` }}>
                             </div>
                             <div className="info-refuge">

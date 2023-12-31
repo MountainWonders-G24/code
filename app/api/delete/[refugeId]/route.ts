@@ -14,7 +14,7 @@ interface Params {
 export async function DELETE(request: NextRequest, { params }: { params: Params }) {
     try {
         
-        
+        console.log("DELETE refuge API called");
         const cookieStore = cookies();
         let token = cookieStore.get('email');
         let cookieEmail;
@@ -38,7 +38,7 @@ export async function DELETE(request: NextRequest, { params }: { params: Params 
         if (!user.isAdmin) {
             return NextResponse.json({
                 message: "You need to be an Admin to use this API!",
-                status: 403
+                status: 401
             });
         }
         const refugeId = params.refugeId;
