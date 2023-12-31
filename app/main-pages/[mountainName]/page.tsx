@@ -105,6 +105,7 @@ function Refuges() {
             const response = await axios.get(path);
             const responseData = response.data.data;
             if (response.data.status == "404") {
+                console.error('Invalid API response structure:', responseData);
                 throw new Error("Mountain not found");
             }
             if (Array.isArray(responseData)) {
@@ -123,6 +124,7 @@ function Refuges() {
                 }
                 setRefuges(refuges);
             } else {
+                console.error('Invalid API response structure:', responseData);
                 console.error('Invalid API response structure:', responseData);
             }
         } catch (error) {
@@ -183,6 +185,7 @@ function Refuges() {
             console.log("Fetch mountain response: " + response.data.status);
             console.log(response.data.status == "404")
             if (response.data.status == "404") {
+                console.log("Montagna: " + response.data.data);
                 throw new Error("Mountain not found");
             }
             if ((responseData)) {

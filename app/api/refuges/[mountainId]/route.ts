@@ -8,6 +8,7 @@ interface Params {
 }
 connectDB();
 export async function GET(request: NextRequest, { params }: { params: Params }) {
+    let test= "test0";
     try {
         const id = params.mountainId;
         let refuges;
@@ -16,6 +17,7 @@ export async function GET(request: NextRequest, { params }: { params: Params }) 
                 __v: id
             });
         }else{
+            test= 'api/mountains/'+id;
             const mountain = await axios.get('api/mountains/'+id);
             if (mountain.data.status == 404) {
                 throw new Error("No mountain found")
@@ -38,6 +40,7 @@ export async function GET(request: NextRequest, { params }: { params: Params }) 
         console.log(error.message);
         return NextResponse.json({
             message: error.message,
+            data: test,
             status: 404
         });
     }
