@@ -13,18 +13,15 @@ export async function GET(request: NextRequest, { params }: { params: Params }) 
         const id = params.mountainId;
         let refuges;
         if (id=="0") {
+            let test= "test1";
             refuges= await Refuge.find({
                 __v: id
             });
         }else{
-            test= 'api/mountains/'+id;
-            const mountain = await axios.get('api/mountains/'+id);
+            const mountain = await axios.get('/api/mountains/'+id);
             if (mountain.data.status == 404) {
-                return NextResponse.json({
-                    message: mountain.data.message,
-                    data: mountain.data.mesage,
-                    status: 404
-                });
+                //restituire 405
+                throw new Error("No mountain found");
             }
             refuges= await Refuge.find({
                 mountainId: id

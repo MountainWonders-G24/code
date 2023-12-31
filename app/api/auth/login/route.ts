@@ -41,7 +41,6 @@ export async function POST(request: NextRequest) {
         });
         response.cookies.set("email", email, {
             httpOnly: false,
-            
             path: "/",
 
         });

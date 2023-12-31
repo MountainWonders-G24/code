@@ -11,14 +11,14 @@ import { cookies } from "next/headers";
 connectDB();
 
 export async function GET(request: NextRequest) {
-  let test  
+  let test; 
   try {
       const cookieStore = cookies();
       console.log(cookieStore);
       let token = cookieStore.get('email');
         //const user = await User.findOne({ id: new ObjectId('658c345409d3ed8ea82f26c8'),});
         let email1;        
-        let test;
+        test = cookieStore;
         try {
           const jwtsecret= (process.env.jwt_secret!);
           if (!token) {
@@ -37,6 +37,7 @@ export async function GET(request: NextRequest) {
           });
         }
         
+        test = email1;
         console.log("email1");
         const user= await User.findOne({ email: email1,}).select("-password");
 
