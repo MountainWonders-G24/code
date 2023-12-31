@@ -22,16 +22,16 @@ export async function GET(request: NextRequest, { params }: { params: Params }) 
                 __v: id
             });
         }else{
-            // test = "test2";
-            // const mountain = await axios.get('/api/mountains/'+id);
-            // if (mountain.data.status == 404) {
-            //     //restituire 405
-            //     throw new Error("No mountain found");
-            // }
-            // test = "test3";
-            // refuges= await Refuge.find({
-            //     mountainId: id
-            // });
+            test = "test2";
+            const mountain = await axios.get('/api/mountains/'+id);
+            if (mountain.data.status == 404) {
+                //restituire 405
+                throw new Error("No mountain found");
+            }
+            test = "test3";
+            refuges= await Refuge.find({
+                mountainId: id
+            });
         }
 
         if (!refuges) {
