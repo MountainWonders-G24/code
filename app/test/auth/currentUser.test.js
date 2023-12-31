@@ -40,9 +40,9 @@ describe("GET /api/auth/currentUser", () => {
         expect((await res.json()).status).toEqual(200);
     });
 
-    test("POST with valid login parameters", async () => {
+    test("GET with invalid login parameters", async () => {
         const res = await fetch(url, {
-            method: 'POST',
+            method: 'GET',
         });
         
         expect((await res.json()).status).toEqual(404);
