@@ -23,7 +23,8 @@ export async function GET(request: NextRequest, { params }: { params: Params }) 
             });
         }else{
             test = "test2";
-            const mountain = await axios.get('/api/mountains/' + mountainId);
+            const mountain = await axios.get('/api/mountains/3');
+
             if (mountain.data.status == 404) {
                 //restituire 405
                 throw new Error("No mountain found");
