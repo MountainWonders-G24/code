@@ -11,7 +11,7 @@ import { cookies } from "next/headers";
 connectDB();
 
 export async function GET(request: NextRequest) {
-  let test; 
+    let test;
   try {
       const cookieStore = cookies();
       console.log(cookieStore);

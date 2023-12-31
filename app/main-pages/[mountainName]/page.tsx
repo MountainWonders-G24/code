@@ -31,7 +31,7 @@ import { log } from 'console';
 
 const { TextArea } = Input;
 
-let idValue = "0";
+let mountainId = "0";
 type Mountain = {
     id: string;
     name: string;
@@ -145,16 +145,16 @@ function Refuges() {
             if (!Array.isArray(responseData)) {
                 const queryString = window.location.search;
                 const params = new URLSearchParams(queryString);
-                idValue = params.get("mountainId") || "0";
-                fetchRefuges('/api/refuges/' + idValue);
+                mountainId = params.get("mountainId") || "0";
+                fetchRefuges('/api/refuges/' + mountainId);
                 return;
             } 
             if (responseData.length==0|| responseData.length==undefined){
                 message.error("No refuges founded");
                 const queryString = window.location.search;
                 const params = new URLSearchParams(queryString);
-                idValue = params.get("mountainId") || "0";
-                fetchRefuges('/api/refuges/' + idValue);
+                mountainId = params.get("mountainId") || "0";
+                fetchRefuges('/api/refuges/' + mountainId);
                 return;
             }
             else  {
@@ -204,13 +204,13 @@ function Refuges() {
     useEffect(() => {
         const queryString = window.location.search;
         const params = new URLSearchParams(queryString);
-        idValue = params.get("mountainId") || "0";
+        mountainId = params.get("mountainId") || "0";
 
         displayAddButton(false);
         displayDeleteButton(false);
 
         fetchUser();
-        fetchRefuges('/api/refuges/' + idValue);
+        fetchRefuges('/api/refuges/' + mountainId);
 
         if (typeof window !== 'undefined') {
             window.onscroll = function () {
@@ -218,8 +218,8 @@ function Refuges() {
             };
         }
         displayAddButton(true);
-        if (idValue != "0") {
-            fetchMountain('/api/mountains/' + idValue);
+        if (mountainId != "0") {
+            fetchMountain('/api/mountains/' + mountainId);
         } else {
             (document.getElementById("mountain-name") as HTMLElement).innerHTML = "Rifugi del Trentino";
         }
@@ -237,7 +237,7 @@ function Refuges() {
             } else {
                 message.error(data.message)
             }
-            fetchRefuges('/api/refuges/' + idValue);
+            fetchRefuges('/api/refuges/' + mountainId);
         } catch (error: any) {
             message.error(error.response.data.message);
         } finally {

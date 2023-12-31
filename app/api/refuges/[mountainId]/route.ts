@@ -10,14 +10,17 @@ connectDB();
 export async function GET(request: NextRequest, { params }: { params: Params }) {
     let test= "test0";
     try {
+        test= "test1";
+        test= params.mountainId;
         const id = params.mountainId;
         let refuges;
         if (id=="0") {
-            let test= "test1";
+            test= "test1";
             refuges= await Refuge.find({
                 __v: id
             });
         }else{
+            test = "test2";
             const mountain = await axios.get('/api/mountains/'+id);
             if (mountain.data.status == 404) {
                 //restituire 405

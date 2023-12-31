@@ -9,9 +9,7 @@ connectDB();
 export async function GET(request: NextRequest, { params }: { params: Params }) {
     let test;
     try {
-        test = "test0";
         const mountainId = params.mountainId;
-        test = "test1";
         const mountain = await Mountain.findOne({
             id: mountainId
         });
