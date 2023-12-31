@@ -9,16 +9,17 @@ connectDB();
 export async function GET(request: NextRequest, { params }: { params: Params }) {
     let test;
     try {
+        console.log("Montagna: " + params.mountainId);
         const mountainId = params.mountainId;
         const mountain = await Mountain.findOne({
             id: mountainId
         });
         
-        test = "test2";
-        if (!mountain) {
+        
+        if (mountain.length == 0) {
             throw new Error("No mountain found")
         }
-        test = "test3";
+        console.log("test3000000");
         return NextResponse.json({
             message: "Mountain retrieved!",
             data: mountain,

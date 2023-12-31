@@ -7,29 +7,24 @@ interface Params {
     mountainId: string;
 }
 connectDB();
-export async function GET(request: NextRequest, { params }: { params: Params }) {
-    let test= "test0";
-    test = "ciao";
+export async function GET(requestdf: NextRequest, { params }: { params: Params }) {
+    
     try {
-        test =
-        test= "test1";
-        test= params.mountainId;
+        
         const mountainId = params.mountainId;
         let refuges;
+        console.log("mountainId: " + mountainId);
         if (mountainId=="0") {
-            test= "test1";
+        
             refuges= await Refuge.find({
                 __v: mountainId
             });
         }else{
-            test = "test2";
-            const mountain = await axios.get('/api/mountains/3');
-
+            const mountain = await (axios.get('https://mountainwonders-fawn.vercel.app/api/mountains/'+mountainId));
+            console.log(mountain);
             if (mountain.data.status == 404) {
-                //restituire 405
-                throw new Error("No mountain found");
+                throw new Error("No mountain found")
             }
-            test = "test3";
             refuges= await Refuge.find({
                 mountainId: mountainId
             });
@@ -48,7 +43,6 @@ export async function GET(request: NextRequest, { params }: { params: Params }) 
         console.log(error.message);
         return NextResponse.json({
             message: error.message,
-            data: test,
             status: 404
         });
     }

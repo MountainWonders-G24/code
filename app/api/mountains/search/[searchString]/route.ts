@@ -16,7 +16,7 @@ export async function GET(request: NextRequest, { params }: { params: Params }) 
         });
 
 
-        if (!mountains||mountains.length == 0) {
+        if (!mountains || mountains.length == 0) {
             throw new Error("No Mountain found");
         }
         return NextResponse.json({
