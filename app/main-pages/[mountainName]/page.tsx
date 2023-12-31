@@ -64,11 +64,8 @@ const fetchUser = async () => {
                 }
             }
         } else {
-            console.log("currentUser.data.status: " + currentUser.data.status);
-            console.log("currentUser.data.data: " + currentUser.data.data);
-            console.log("currentUser.data.message: " + currentUser.data.message);
             displayAddButton(false);
-            displayDeleteButton(false);
+            setTimeout(()=>displayDeleteButton(false), 1000);
             console.log("No user");
         }
     } catch (error: any) {
@@ -78,7 +75,8 @@ const fetchUser = async () => {
 
 const validateImageUrl = (_: any, value: string) => {
     const lowerCaseValue = value.toLowerCase();
-    if (lowerCaseValue.startsWith('http') && (lowerCaseValue.endsWith('.png') || lowerCaseValue.endsWith('.jpg'))) {
+    if (lowerCaseValue.startsWith('http') && (lowerCaseValue.endsWith('.png') || lowerCaseValue.endsWith('.jpeg') 
+    ||lowerCaseValue.endsWith('.webp') || lowerCaseValue.endsWith('.jpg'))) {
         return Promise.resolve();
     }
     return Promise.reject('Please enter a valid URL ending with .png or .jpg');
@@ -199,31 +197,6 @@ function Refuges() {
         }
     };
 
-    // useEffect(() => {
-    //     displayAddButton(false);
-    //     displayDeleteButton(false);
-    //     const queryString = window.location.search;
-    //     const params = new URLSearchParams(queryString);
-    //     idValue = params.get("mountainId") || "0";
-
-    //     fetchRefuges('/api/refuges/' + idValue);
-
-    //     if (typeof window !== 'undefined') {
-    //         window.onscroll = function () {
-    //             scrollFunction();
-    //         };
-    //     }
-        
-        
-    //     if (idValue != "0") {
-    //         fetchMountain('/api/mountains/' + idValue);
-    //     } else {
-    //         (document.getElementById("mountain-name") as HTMLElement).innerHTML = "Rifugi del Trentino";
-    //     }
-    //     fetchUser();
-    //     logout();
-    // }, []);
-
     useEffect(() => {
         const queryString = window.location.search;
         const params = new URLSearchParams(queryString);
@@ -253,7 +226,7 @@ function Refuges() {
     const deleteRefuge = async (id: string) => {
         try {
             setLoading(true);
-            const { data } = await axios.delete("/api/delete/" + id);
+            const { data } = await axios.delete("/api/refuges/delete/" + id);
             if (data.status == "200") {
                 message.success(data.message);
                 //window.location.reload();
@@ -283,7 +256,7 @@ function Refuges() {
                 id = Number(mountain?.id);
                 values.mountainId = Number(mountain?.id);
             }
-            const { data } = await axios.post("/api/" + id + "/addRefuge", values);
+            const { data } = await axios.post("/api/refuges/addRefuge/" + id, values);
 
             if (data.status == "201") {
                 values._id = data.data;
@@ -423,7 +396,7 @@ function Refuges() {
                 </div>
                 <div id="refuges">
                     {refuges.map((refuge) => (
-                        <div className="refuge" id={refuge._id} key={String(refuge._id)} /*onClick={() => { fetchUser(); }}*/>
+                        <div className="refuge" id={refuge._id} key={String(refuge._id)} >
                             <div className="refuge-image" style={{ backgroundImage: `url(${refuge.image})` }}>
                             </div>
                             <div className="info-refuge">

@@ -1,5 +1,5 @@
 const { describe, before } = require("node:test");
-const url = "http://localhost:3000/api/";
+const url = "http://localhost:3000/api/refuges/addRefuge/";
 const correctMountain = 2;
 const wrongMountain = 5;
 const mongoose = require('mongoose');
@@ -7,8 +7,7 @@ const jwt = require("jsonwebtoken");
 const { ObjectId } = mongoose.Types;
 const _id= new ObjectId();
 require("dotenv").config();
-
-describe("POST /api/[mountainId]/addRefuge", () => {
+describe("POST /api/refuges/addRefuge/[mountainId]", () => {
     beforeAll(async () => {
         
         const timeout = 10000;
@@ -33,7 +32,7 @@ describe("POST /api/[mountainId]/addRefuge", () => {
     //admin no good
     test("POST add refuge with valid incredential", async () => {
         var email = jwt.sign({email: 'admin@admin.mw'}, process.env.jwt_secret, {expiresIn: "7d"});
-        const res = await fetch("http://localhost:3000/api/2/addRefuge", {
+        const res = await fetch("http://localhost:3000/api/refuges/addRefuge/2", {
             method: 'POST',
             headers: ({
                 cookie: `email=${email}`
@@ -56,7 +55,8 @@ describe("POST /api/[mountainId]/addRefuge", () => {
     test("POST add refuge with valid credential", async () => {
         
         var email = jwt.sign({email: 'account@prova.it'}, process.env.jwt_secret , {expiresIn: "7d"});
-        const res = await fetch(url+"2/addRefuge", {
+        const mountainId = correctMountain;
+        const res = await fetch(url+mountainId, {
             method: 'POST',
             headers: ({
                 cookie: `email=${email}`
@@ -76,7 +76,7 @@ describe("POST /api/[mountainId]/addRefuge", () => {
     //not logged
     test("POST add refuge without credential", async () => {
         const mountainId = correctMountain;
-        const res = await fetch(url+mountainId+"/addRefuge", {
+        const res = await fetch(url+mountainId, {
             method: 'POST',
             body: JSON.stringify({
             name: "Rifugio Test"+Math.random()*10000,
@@ -92,7 +92,7 @@ describe("POST /api/[mountainId]/addRefuge", () => {
     test("POST add refuge with not valid mountain", async () => {
         var email = jwt.sign({email: 'account@prova.it'}, process.env.jwt_secret, {expiresIn: "7d"});
         const mountainId = wrongMountain;
-        const res = await fetch(url+mountainId+"/addRefuge", {
+        const res = await fetch(url+mountainId, {
             method: 'POST',
             headers: ({
                 cookie: `email=${email}`
@@ -111,7 +111,7 @@ describe("POST /api/[mountainId]/addRefuge", () => {
     test("POST add refuge already existing inside a mountain", async () => {
         var email = jwt.sign({email: 'account@prova.it'}, process.env.jwt_secret, {expiresIn: "7d"});
         const mountainId = 3;
-        const res = await fetch(url+ mountainId+"/addRefuge", {
+        const res = await fetch(url+ mountainId, {
             method: 'POST',
             headers: ({
                 cookie: `email=${email}`

@@ -44,7 +44,7 @@ function Mountains() {
                 return;
             } 
             if (responseData.length==0|| responseData.length==undefined){
-                message.error("No refuges founded");
+                message.error("No mountain founded");
                 fetchMountains();
                 return;
             }
@@ -124,7 +124,7 @@ function Mountains() {
                             </div>
                             <div className="info-mountain">
                                 <h3> {mountain.name} </h3>
-                                <p>Descrizione: </p>
+                                <p>Descrizione: {mountain.description}</p>
                             </div>
                         </div>
                     ))}

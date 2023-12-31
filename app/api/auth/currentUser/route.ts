@@ -10,9 +10,8 @@ import { cookies } from "next/headers";
 
 connectDB();
 
-export async function GET(request: NextRequest) {
+export async function GET() {
     try {
-        
       const cookieStore = cookies();
       console.log(cookieStore);
       let token = cookieStore.get('email');

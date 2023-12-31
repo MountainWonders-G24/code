@@ -1,11 +1,8 @@
 //schema di un user
 import mongoose from "mongoose";
+
 export const userSchema = new mongoose.Schema(
     {
-        /*_id: {
-            type: String,
-            required: false,
-        },*/
         name: {
             type: String,
             required: true,
@@ -17,11 +14,6 @@ export const userSchema = new mongoose.Schema(
         password: {
             type: String,
             required: true
-        },
-        deliveryAddresses: {
-            type: Array,
-            default: [],
-            required: false,
         },
         isActive: {
             type: Boolean,

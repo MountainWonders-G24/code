@@ -15,8 +15,6 @@ export const refugeSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        // Reviews
-        // Position
         mountainId: {
             type: Number,
             required: false,
@@ -25,7 +23,7 @@ export const refugeSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        __v: {// 
+        __v: {
             type: Number,
             default: 0,
             required: false,

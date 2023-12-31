@@ -1,5 +1,5 @@
 const { describe, before } = require("node:test");
-const url = "http://localhost:3000/api/delete/";
+const url = "http://localhost:3000/api/refuges/delete/";
 const noResultString = "5"; //String not in database, empty response expected
 const resultString = "3"; //String in database, non-empty response expected (at least one result)
 const mongoose = require('mongoose');
@@ -26,7 +26,7 @@ describe('GET api/refuges/[mountainId]', () => {
             });
         });
         var email = jwt.sign({email: 'account@prova.it'}, process.env.jwt_secret , {expiresIn: "7d"});
-        const res = await fetch("http://localhost:3000/api/2/addRefuge", {
+        const res = await fetch("http://localhost:3000/api/refuges/addRefuge/2", {
             method: 'POST',
             headers: ({
                 cookie: `email=${email}`

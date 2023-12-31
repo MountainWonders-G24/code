@@ -6,7 +6,7 @@ interface Params {
     mountainId: string;
 }
 connectDB();
-export async function GET(request: NextRequest, { params }: { params: Params }) {
+export async function GET({ params }: { params: Params }) {
     try {
         
         const mountainId = params.mountainId;

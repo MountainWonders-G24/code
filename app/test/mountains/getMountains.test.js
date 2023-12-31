@@ -31,6 +31,7 @@ require("dotenv").config();
         var response = await fetch(url, {
             method: 'GET'
         });
+
         expect((await response.json()).status).toEqual(200);
     });
 

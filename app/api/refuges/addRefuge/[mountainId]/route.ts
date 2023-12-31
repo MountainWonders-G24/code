@@ -42,10 +42,6 @@ export async function POST(request: NextRequest, { params }: { params: Params })
                 status: 403
             });
         }
-        
-
-        
-
 
         const mountainId = params.mountainId; 
         console.log(mountainId);
