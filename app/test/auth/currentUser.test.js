@@ -6,7 +6,7 @@ const wrongPSW = "accountprovola"; // String in the database, non-empty response
 const mongoose = require('mongoose');
 require("dotenv").config();
 
-describe("POST /api/auth/currentUser", () => {
+describe("GET /api/auth/currentUser", () => {
     beforeAll(async () => {
         
         const timeout = 10000;
@@ -27,7 +27,7 @@ describe("POST /api/auth/currentUser", () => {
     afterAll(async () => {
         await mongoose.connection.close(true);
     });
-    test("POST with valid login parameters", async () => {
+    test("GET with valid login parameters", async () => {
         
         var email = jwt.sign({email: 'account@prova.it'}, process.env.jwt_secret, {expiresIn: "7d"});
         const res = await fetch(url, {
@@ -40,9 +40,9 @@ describe("POST /api/auth/currentUser", () => {
         expect((await res.json()).status).toEqual(200);
     });
 
-    test("GET with valid login parameters", async () => {
+    test("POST with valid login parameters", async () => {
         const res = await fetch(url, {
-            method: 'GET',
+            method: 'POST',
         });
         
         expect((await res.json()).status).toEqual(404);

@@ -106,6 +106,7 @@ function Refuges() {
             const responseData = response.data.data;
             if (response.data.status == "404") {
                 console.error('Invalid API response structure:', responseData);
+                
                 throw new Error("Mountain not found");
             }
             if (Array.isArray(responseData)) {

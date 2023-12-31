@@ -20,7 +20,11 @@ export async function GET(request: NextRequest, { params }: { params: Params }) 
             test= 'api/mountains/'+id;
             const mountain = await axios.get('api/mountains/'+id);
             if (mountain.data.status == 404) {
-                throw new Error("No mountain found")
+                return NextResponse.json({
+                    message: mountain.data.message,
+                    data: mountain.data.mesage,
+                    status: 404
+                });
             }
             refuges= await Refuge.find({
                 mountainId: id
