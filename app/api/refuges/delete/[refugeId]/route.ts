@@ -14,7 +14,7 @@ interface Params {
 export async function DELETE(request: NextRequest, { params }: { params: Params }) {
     try {
         
-        console.log("DELETE refuge API called");
+        
         const cookieStore = cookies();
         let token = cookieStore.get('email');
         let cookieEmail;
