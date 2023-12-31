@@ -10,9 +10,7 @@ interface Params {
 connectDB();
 export async function GET(request: NextRequest, { params }: { params: Params }) {
     try {
-        console.log(params);
         const refugeName = params.searchString;
-        console.log("Refuge name: " + refugeName);
 
 
         const refuges = await Refuge.find({
@@ -24,8 +22,7 @@ export async function GET(request: NextRequest, { params }: { params: Params }) 
             throw new Error("No refuges found")
         }
         
-        console.log(refuges);
-
+        
         return NextResponse.json({
             message: "Refuges retrieved!",
             data: refuges,

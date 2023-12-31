@@ -7,11 +7,9 @@ import jwt from "jsonwebtoken";
 connectDB();
 
 export async function POST(request: NextRequest) {
-    let emaildf= "notEnteeìr";
     try {
         
         const reqBody = await request.json();
-        emaildf= reqBody.email;
         const user = await User.findOne({ email: { $regex: new RegExp(reqBody.email, 'i') } });
         
         
@@ -38,11 +36,11 @@ export async function POST(request: NextRequest) {
         });
 
         response.cookies.set("token", token, {
-            httpOnly: false,
+            httpOnly: true,
             path: "/",
         });
         response.cookies.set("email", email, {
-            httpOnly: false,
+            httpOnly: true,
             
             path: "/",
 
@@ -52,7 +50,6 @@ export async function POST(request: NextRequest) {
     } catch (error: any) {
         return NextResponse.json({
             message: error.message,
-            data: emaildf,
             status: 401
         });
     }

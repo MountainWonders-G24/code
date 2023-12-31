@@ -13,12 +13,11 @@ connectDB();
 export async function GET() {
     try {
       const cookieStore = cookies();
-      console.log(cookieStore);
       let token = cookieStore.get('email');
       
         //const user = await User.findOne({ id: new ObjectId('658c345409d3ed8ea82f26c8'),});
         let email1;        
-        let test;
+        
         
         try {
           const jwtsecret= (process.env.jwt_secret!);
@@ -26,14 +25,13 @@ export async function GET() {
             throw new Error("No token found");
           }
           
-          test = token.value;
+          
           const decryptedToken:any = jwt.verify(token.value, jwtsecret);
           email1 = decryptedToken.email;
           
         } catch (error: any) {
           return NextResponse.json({
             message: error.message,
-            data: test,
             status: 404,
           });
         }
@@ -50,7 +48,6 @@ export async function GET() {
     } catch (error: any) {
         return NextResponse.json({
             message: error.message,
-            data: cookies().get('token'),
             status: 404
         });
     }

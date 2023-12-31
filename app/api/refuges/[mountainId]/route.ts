@@ -10,7 +10,6 @@ connectDB();
 export async function GET(request: NextRequest, { params }: { params: Params }) {
     try {
         const id = params.mountainId;
-        console.log("moutnaiD: " + id);
         let refuges;
         if (id=="0") {
             refuges= await Refuge.find({
