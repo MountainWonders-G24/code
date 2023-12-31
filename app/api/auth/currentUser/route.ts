@@ -3,29 +3,30 @@ import Refuge from "@/app/models/refugeModel";
 import User from "@/app/models/userModel";
 import { validateJWT } from "@/app/helpers/validateJWT";
 import { connectDB } from "@/configs/dbConfig";
-const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 
-export const dynamic = 'force-dynamic';
+//export const dynamic = 'force-dynamic';
 
 connectDB();
 
 export async function GET(request: NextRequest) {
-    let test;
-  try {
+    try {
+        
       const cookieStore = cookies();
-      
+      console.log(cookieStore);
       let token = cookieStore.get('email');
+      
         //const user = await User.findOne({ id: new ObjectId('658c345409d3ed8ea82f26c8'),});
         let email1;        
-        test = cookieStore;
+        let test;
+        
         try {
           const jwtsecret= (process.env.jwt_secret!);
+          
           if (!token) {
             throw new Error("No token found");
           }
-          
-          test = token.value;
           const decryptedToken:any = jwt.verify(token.value, jwtsecret);
           email1 = decryptedToken.email;
           
@@ -33,11 +34,9 @@ export async function GET(request: NextRequest) {
           return NextResponse.json({
             message: error.message,
             data: test,
-            status: 404,
+            status: 500, // or any appropriate status code
           });
         }
-        
-        test = email1;
         console.log("email1");
         const user= await User.findOne({ email: email1,}).select("-password");
 
@@ -50,6 +49,7 @@ export async function GET(request: NextRequest) {
     } catch (error: any) {
         return NextResponse.json({
             message: error.message,
+            data: cookies().get('token'),
             status: 404
         });
     }

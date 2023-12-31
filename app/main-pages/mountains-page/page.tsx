@@ -6,8 +6,8 @@ import './mountains.css'
 import 'app/globals.css'
 import { topFunction, open_sidebar, close_sidebar } from './script.tsx'
 import { useEffect, useState } from 'react';
-import { logout } from "@/app/script.tsx";
-import message from 'antd/es/message';
+import { cookies } from "next/headers";
+import { logout } from "@/app/script.tsx"
 interface userType {
     name: string;
     surname: string;
@@ -27,66 +27,26 @@ interface Mountain {
 const apiResponse: Mountain[] = [];
 
 function Mountains() {
-    let [mountains = [], setMountains] = useState<Mountain[]>([]);
-
-    const fetchSearchMountain = async () => {
-
-        try {
-            const searchString= (document.getElementById("research-input") as HTMLInputElement).value ;
-            console.log("Elemento ricercato: " + searchString);
-            const response = await axios.get('/api/mountains/search/'+ searchString);
-            const responseData = response.data.data;
-            console.log("Fetch search response: " + responseData);
-            console.log("E' array: " + Array.isArray(responseData));
-            
-            if (!Array.isArray(responseData)) {
-                fetchMountains();
-                return;
-            } 
-            if (responseData.length==0|| responseData.length==undefined){
-                message.error("No mountain founded");
-                fetchMountains();
-                return;
-            }
-            else  {
-                console.log(responseData[0].name);
-                mountains = new Array<Mountain>();
-                for (let i = 0; i < responseData.length; i++) {
-                    const q: Mountain = {
-                        id: responseData[i].id,
-                        name: responseData[i].name,
-                        description: responseData[i].description,
-                        image: responseData[i].image
-                    };
-                    mountains.push(q);
-                }
-                setMountains(mountains);
-            }
-        } catch (error) {
-            console.error('Error fetching refuge:', error);
-        }
-        
-    };
-    const fetchMountains = async () => {
-        try {
-            const response = await axios.get('/api/mountains/getMountains');
-            const responseData = response.data.data;
-
-            if (Array.isArray(responseData)) {
-                // Assuming the API response is an array of mountains
-                setMountains(responseData);
-            } else {
-                console.error('Invalid API response structure:', responseData);
-            }
-        } catch (error) {
-            console.error('Error fetching mountains:', error);
-        }
-    };
+    const [mountains = [], setMountains] = useState<Mountain[]>([]);
+    
     useEffect(() => {
         logout();
-        
-        fetchMountains();
+        const fetchMountains = async () => {
+            try {
+                const response = await axios.get('/api/mountains');
+                const responseData = response.data.data;
 
+                if (Array.isArray(responseData)) {
+                    // Assuming the API response is an array of mountains
+                    setMountains(responseData);
+                } else {
+                    console.error('Invalid API response structure:', responseData);
+                }
+            } catch (error) {
+                console.error('Error fetching mountains:', error);
+            }
+        };
+        fetchMountains();
     }, []);
     return (
         <div>
@@ -108,11 +68,11 @@ function Mountains() {
                         <div id="make-search">
                             <div id="search-bar">
                                 <input id="research-input" type="text" placeholder="Research" />
-                                <Button id="search-button" onClick={fetchSearchMountain}>
+                                <Button id="search-button">
                                     <input type="image"
                                         src="https://cdn.iconscout.com/icon/free/png-256/free-search-1291-434390.png"
                                         alt="Search button" />
-                                </Button >
+                                </Button>
                             </div>
                         </div>
                     </div>
