@@ -152,7 +152,7 @@ paths:
       parameters:
         - name: searchString
           in: path
-          description: Name of the mountains to found
+          description: Name of mountains to found
           required: true
           schema:
             type: string
@@ -172,6 +172,131 @@ paths:
                   $ref: '#/components/schemas/Mountain'   
         '404':
           description: Mountains not found
+  /refuges/{mountainId}:
+    get:
+      tags:
+        - refuges
+      summary: Find refuges by mountain
+      description: Find refuges of a mountain 
+      parameters:
+        - name: mountainId
+          in: path
+          description: ID of mountain
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Refuge'    
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Refuge'   
+        '404':
+          description: No refuges found
+  /refuges/delete/{refugeId}:
+    delete:
+      tags:
+        - refuges
+      summary: Delete a refuge 
+      description: Delete a refuge by ID 
+      parameters:
+        - name: refugeId
+          in: path
+          description: ID of refuge
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Refuge'    
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Refuge'   
+        '404':
+          description: Refuge not found
+        '401':
+          description: You need to login and be admin to use this API
+        '403':
+          description: Onyl admin can use this API
+  /refuges/addRefuge/{mountainId}:
+    post:
+      tags:
+        - refuges
+      summary: Add a refuge 
+      description: Add a refuge to a mountain
+      parameters:
+        - name: mountainId
+          in: path
+          description: ID of mountain
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: refugeName
+          in: query
+          description: Name of the refuge
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Refuge'    
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Refuge'   
+        '404':
+          description: No refuges found
+  /refuges/search/{searchString}:
+    get:
+      tags:
+        - refuges
+      summary: Find refuges by name
+      description: Returns the corrisponding mountains
+      parameters:
+        - name: searchString
+          in: path
+          description: Name of refuges to found
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Refuge'    
+            application/xml:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Refuge'   
+        '404':
+          description: Refuges not found
 components:
   schemas:
     User:
