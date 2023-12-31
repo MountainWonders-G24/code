@@ -275,7 +275,7 @@ function Refuges() {
                 mountainId = Number(mountain?.id);
                 values.mountainId = Number(mountain?.id);
             }
-            const { data } = await axios.post("/api/refuges/addRefuge"+ mountainId, values);
+            const { data } = await axios.post("/api/refuges/addRefuge/"+ mountainId, values);
 
             if (data.status == "201") {
                 values._id = data.data;
