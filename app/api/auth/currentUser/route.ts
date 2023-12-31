@@ -16,11 +16,9 @@ export async function GET(request: NextRequest) {
       const cookieStore = cookies();
       console.log(cookieStore);
       let token = cookieStore.get('email');
-      console.log("")
         //const user = await User.findOne({ id: new ObjectId('658c345409d3ed8ea82f26c8'),});
         let email1;        
         let test;
-        
         try {
           const jwtsecret= (process.env.jwt_secret!);
           if (!token) {

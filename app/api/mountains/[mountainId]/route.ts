@@ -7,19 +7,20 @@ interface Params {
 }
 connectDB();
 export async function GET(request: NextRequest, { params }: { params: Params }) {
+    let test;
     try {
-        
+        test = "test0";
         const mountainId = params.mountainId;
-        
+        test = "test1";
         const mountain = await Mountain.findOne({
             id: mountainId
         });
         
-        
+        test = "test2";
         if (!mountain) {
             throw new Error("No mountain found")
         }
-        
+        test = "test3";
         return NextResponse.json({
             message: "Mountain retrieved!",
             data: mountain,
@@ -28,7 +29,7 @@ export async function GET(request: NextRequest, { params }: { params: Params }) 
     } catch (error: any) {
         console.log(error.message);
         return NextResponse.json({
-            message: error.message,
+            message: test,
             status: 404
         });
     }
