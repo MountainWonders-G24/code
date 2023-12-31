@@ -5,5 +5,4 @@ export const getAntdFieldRequiredRule = (message: string) => {
             message,
         }
     ]
-    sdkdsdddd
 }
