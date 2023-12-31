@@ -6,7 +6,7 @@ import { connectDB } from "@/configs/dbConfig";
 const jwt = require("jsonwebtoken");
 import { cookies } from "next/headers";
 
-//export const dynamic = 'force-dynamic';
+export const dynamic = 'force-dynamic';
 
 connectDB();
 
@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
     let test;
   try {
       const cookieStore = cookies();
-
+      
       let token = cookieStore.get('email');
         //const user = await User.findOne({ id: new ObjectId('658c345409d3ed8ea82f26c8'),});
         let email1;        

@@ -21,6 +21,7 @@ export async function GET(requestdf: NextRequest, { params }: { params: Params }
             });
         }else{
             const mountain = await (axios.get('https://mountainwonders-fawn.vercel.app/api/mountains/'+mountainId));
+            
             console.log(mountain);
             if (mountain.data.status == 404) {
                 throw new Error("No mountain found")

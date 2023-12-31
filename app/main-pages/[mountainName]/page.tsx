@@ -65,7 +65,7 @@ const fetchUser = async () => {
             }
         } else {
             displayAddButton(false);
-            setTimeout(()=>displayDeleteButton(false), 1000);
+            displayDeleteButton(false);
             console.log("No user");
         }
     } catch (error: any) {
