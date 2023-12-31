@@ -4,30 +4,32 @@ const noResultString = "Sngiewngissbmdp"; //String not in database, empty respon
 const resultString = "Casa%20di%20maria"; //String in database, non-empty response expected (at least one result)
 const mongoose = require('mongoose');
 
+require("dotenv").config();
+
+
 describe('GET api/refuges/search', () => {
-    // beforeAll(async () => {
+    beforeAll(async () => {
         
-    //     const timeout = 10000;
-    //     // Promise to connect to MongoDB
-    //     const connectPromise = new Promise((resolve, reject) => {
-    //         const timeoutId = setTimeout(() => {
-    //             reject(new Error(`Timed out after ${timeout}ms while connecting to MongoDB`));
-    //         }, timeout);
-    //         console.log(process.env); 
-    //         mongoose.connect("mongodb+srv://SpaghettiMan:9X4ftZaXcjJgiSNi@sofwareengdb.ryzb4be.mongodb.net/?retryWrites=true&w=majority").then(() => {
-    //             clearTimeout(timeoutId);
-    //             resolve();
-    //         }).catch((error) => {
-    //             clearTimeout(timeoutId);
-    //             reject(error);
-    //         });
-    //     });
-    // });
-    // afterAll(async () => {
-    //     await mongoose.disconnect();
-    // });
+        const timeout = 10000;
+        // Promise to connect to MongoDB
+        const connectPromise = new Promise((resolve, reject) => {
+            const timeoutId = setTimeout(() => {
+                reject(new Error(`Timed out after ${timeout}ms while connecting to MongoDB`));
+            }, timeout);
+            mongoose.connect(process.env.ATLAS_URI).then(() => {
+                clearTimeout(timeoutId);
+                resolve();
+            }).catch((error) => {
+                clearTimeout(timeoutId);
+                reject(error);
+            });
+        });
+    });
+    afterAll(async () => {
+        await mongoose.connection.close(true);
+    });
     console.log("Connected to MongoDB");
-    test('GET with non-empty result', async () => {
+    test('GET search refuges given searchstring with non-empty result', async () => {
         console.log(url+ resultString);
         var response = await fetch(url+ resultString, {
             method: 'GET'
@@ -36,7 +38,7 @@ describe('GET api/refuges/search', () => {
         expect((await response.json()).status).toEqual(200);
     });
 
-    test('GET with non-empty result', async () => {
+    test('GET search refuges given search string with empty result', async () => {
         var response = await fetch(url+noResultString, {
             method: 'GET'
         });

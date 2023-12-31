@@ -3,7 +3,7 @@ import Refuge from "@/app/models/refugeModel";
 import User from "@/app/models/userModel";
 import { validateJWT } from "@/app/helpers/validateJWT";
 import { connectDB } from "@/configs/dbConfig";
-import jwt from "jsonwebtoken";
+const jwt = require("jsonwebtoken");
 import { cookies } from "next/headers";
 
 //export const dynamic = 'force-dynamic';
@@ -23,10 +23,11 @@ export async function GET(request: NextRequest) {
         
         try {
           const jwtsecret= (process.env.jwt_secret!);
-          
           if (!token) {
             throw new Error("No token found");
           }
+          
+          test = token.value;
           const decryptedToken:any = jwt.verify(token.value, jwtsecret);
           email1 = decryptedToken.email;
           
@@ -34,9 +35,10 @@ export async function GET(request: NextRequest) {
           return NextResponse.json({
             message: error.message,
             data: test,
-            status: 500, // or any appropriate status code
+            status: 404,
           });
         }
+        
         console.log("email1");
         const user= await User.findOne({ email: email1,}).select("-password");
 

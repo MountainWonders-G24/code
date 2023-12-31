@@ -5,6 +5,7 @@ import Form from 'antd/es/form';
 import message from 'antd/es/message';
 import axios from 'axios';
 import React from 'react';
+import { notFound } from 'next/navigation'
 import { Select, Space } from 'antd';
 import { Input } from 'antd';
 import { NextRequest, NextResponse } from "next/server";
@@ -105,7 +106,9 @@ function Refuges() {
         try {
             const response = await axios.get(path);
             const responseData = response.data.data;
-
+            if (response.data.status == "404") {
+                throw new Error("Mountain not found");
+            }
             if (Array.isArray(responseData)) {
                 let array: Refuge[] = [];
                 refuges = new Array<Refuge>();
@@ -131,10 +134,8 @@ function Refuges() {
 
     const fetchSearchRefuge = async () => {
         try {
-            let id = "ciao";
             const searchString= (document.getElementById("research-input") as HTMLInputElement).value ;
             console.log("Elemento ricercato: " + searchString);
-            console.log('/api/refuges/search/'+ id);
             const response = await axios.get('/api/refuges/search/'+ searchString);
             console.log("Elemento ricercato: " + (document.getElementById("research-input") as HTMLInputElement).value );
             const responseData = response.data.data;
@@ -177,9 +178,15 @@ function Refuges() {
     };
 
     const fetchMountain = async (path: string) => {
+        console.log("Path: " + path);
         try {
             const response = await axios.get(path, { timeout: 10000 });
             const responseData = response.data.data;
+            console.log("Fetch mountain response: " + response.data.status);
+            console.log(response.data.status == "404")
+            if (response.data.status == "404") {
+                throw new Error("Mountain not found");
+            }
             if ((responseData)) {
                 setMountain(responseData);
                 (document.getElementById("mountain-name") as HTMLElement).innerHTML = responseData.name;
@@ -249,7 +256,7 @@ function Refuges() {
             const { data } = await axios.delete("/api/delete/" + id);
             if (data.status == "200") {
                 message.success(data.message);
-                window.location.reload();
+                //window.location.reload();
             } else {
                 message.error(data.message)
             }

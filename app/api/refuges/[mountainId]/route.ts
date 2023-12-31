@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Refuge from "@/app/models/refugeModel";
 import { connectDB } from "@/configs/dbConfig";
+import axios from "axios";
 
 interface Params {
     mountainId: string;
@@ -16,6 +17,10 @@ export async function GET(request: NextRequest, { params }: { params: Params }) 
                 __v: id
             });
         }else{
+            const mountain = await axios.get(`http://localhost:3000/api/mountains/${id}`);
+            if (mountain.data.status == 404) {
+                throw new Error("No mountain found")
+            }
             refuges= await Refuge.find({
                 mountainId: id
             });

@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest"
+    "test": "jest --coverage --detectOpenHandles "
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
@@ -24,6 +24,7 @@
     "redux": "^4.2.1"
   },
   "devDependencies": {
+    "@types/babel__generator": "^7.6.8",
     "@types/bcryptjs": "^2.4.6",
     "@types/jsonwebtoken": "^9.0.5",
     "@types/node": "^20",
