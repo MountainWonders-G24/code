@@ -38,7 +38,7 @@ export async function DELETE(request: NextRequest, { params }: { params: Params 
         if (!user.isAdmin) {
             return NextResponse.json({
                 message: "You need to be an Admin to use this API!",
-                status: 401
+                status: 403
             });
         }
         const refugeId = params.refugeId;
@@ -62,7 +62,7 @@ export async function DELETE(request: NextRequest, { params }: { params: Params 
     } catch (error: any) {
         return NextResponse.json({
             message: error.message,
-            status: error.status||500,
+            status: error.status,
         });
     }
     

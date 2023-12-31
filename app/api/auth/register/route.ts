@@ -14,7 +14,10 @@ export async function POST(request: NextRequest) {
         });
 
         if (userExists) {
-            throw new Error("User already exists")
+            return NextResponse.json({
+                message: "Conflict: User already exists",
+                status: 409
+            });
         }
 
         const salt = await bcrypt.genSalt(10);

@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
         const user = await User.findOne({ email: reqBody.email });
         
         if (!user) {
-            throw new Error("User does not exist");
+            throw new Error("Invalid credentials");
         }
 
         const passwordMatch = await bcrypt.compare(reqBody.password, user.password);
@@ -40,7 +40,6 @@ export async function POST(request: NextRequest) {
         });
         response.cookies.set("email", email, {
             httpOnly: false,
-            
             path: "/",
 
         });

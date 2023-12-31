@@ -15,12 +15,11 @@ export async function GET(requestdf: NextRequest, { params }: { params: Params }
         let refuges;
         console.log("mountainId: " + mountainId);
         if (mountainId=="0") {
-        
             refuges= await Refuge.find({
                 __v: mountainId
             });
         }else{
-            const mountain = await (axios.get('https://mountainwonders-fawn.vercel.app/api/mountains/'+mountainId));
+            const mountain = await (axios.get('https://mountain-wonders.vercel.app/api/mountains/'+mountainId));
             
             console.log(mountain);
             if (mountain.data.status == 404) {

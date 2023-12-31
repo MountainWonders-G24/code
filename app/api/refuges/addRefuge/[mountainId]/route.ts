@@ -56,6 +56,17 @@ export async function POST(request: NextRequest, { params }: { params: Params })
         const refuge = new Refuge(reqBody);
         refuge.relativeId = 0;
         console.log(refuge.relativeId);
+        const lowerCaseValue: any = refuge.image;
+        if (!(lowerCaseValue.endsWith('.png') || lowerCaseValue.endsWith('.jpg'))){
+            return NextResponse.json({
+                message: "Unsupported Media Type",
+                status: 415
+            });
+        }
+
+
+
+
         const existingData = await Refuge.findOne({ 
             mountainId: mountainId,
             name: refuge.name,
