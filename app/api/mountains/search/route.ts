@@ -8,8 +8,8 @@ export async function GET(request: NextRequest) {
     try {
         const reqBody = await request.json();
 
-        const mountains = await Mountain.findOne({
-            name: reqBody.name
+        const mountains = await Mountain.find({
+            name: { $regex: reqBody.name, $options: "i" } // "i" case-insensitive
         });
 
         if (!mountains) {
