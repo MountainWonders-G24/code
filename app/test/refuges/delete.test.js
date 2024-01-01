@@ -91,14 +91,14 @@ describe('GET api/refuges/[mountainId]', () => {
         });
     
         
-        test('GET with non-empty result', async () => {
+        test('GET with non-empty result 2', async () => {
             var email = jwt.sign({email: 'admin@admin.mw'}, process.env.jwt_secret, {expiresIn: "7d"});
-            var response = await fetch(url + '1', {
+            var response = await fetch(url + '7510232a0e8587080224cd10', {
                 method: 'DELETE',
                 headers: ({
                     cookie: `email=${email}`
                 }),
             });
-            expect((await response.json()).status).toEqual(500);
+            expect((await response.json()).status).toEqual(404);
         });
     });

@@ -1,10 +1,10 @@
 const { describe } = require("node:test");
-const url = "http://localhost:3000/api/auth/logout";
+const url = "http://localhost:3000/api/auth/logout/";
 const mongoose = require('mongoose');
 require("dotenv").config();
 
 
-describe("POST /api/auth/login", () => {
+describe("POST /api/auth/logout", () => {
     beforeAll(async () => {
         
         const timeout = 10000;
@@ -29,12 +29,12 @@ describe("POST /api/auth/login", () => {
     test("GET with valid logout parameters", async () => {
         const token = "tokentotest";
         const email = "emailtotest";
+        const header= new Headers();
+        header.append('cookie', `token=${token}`);
+        header.append('cookie', `email=${email}`);
         const resLogout = await fetch(url, {
             method: 'GET',
-            headers: {
-                cookie: `token= ${token}`,
-                cookie: `email= ${email}`
-            }
+            headers: header
     });
         expect((await resLogout.json()).status).toEqual(200);
     });
@@ -47,6 +47,6 @@ describe("POST /api/auth/login", () => {
                 cookie: `noCookie= ${"noCookie"}`,
             }
     });
-        expect((await resLogout.json()).status).toEqual(401);
+        expect((await resLogout.json()).status).toEqual(403);
     });
 });

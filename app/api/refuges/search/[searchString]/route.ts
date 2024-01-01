@@ -23,7 +23,7 @@ export async function GET(request: NextRequest, { params }: { params: Params }) 
         //     name: reqBody.name
         // });
 
-        if (!refuges) {
+        if (!refuges || (refuges.length == 0)) {
             throw new Error("No refuges found")
         }
         console.log(refuges);

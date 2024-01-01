@@ -44,7 +44,7 @@ describe('GET api/refuges/[mountainId]', () => {
             method: 'GET'
         });
 
-        //expect((await response.json()).status).toEqual(404);
+        expect((await response.json()).status).toEqual(404);
         //expect(response.message).toBe(200);
 
     });

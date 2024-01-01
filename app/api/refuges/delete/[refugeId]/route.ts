@@ -43,6 +43,8 @@ export async function DELETE(request: NextRequest, { params }: { params: Params 
         }
         const refugeId = params.refugeId;
 
+            
+
             const refuge = await Refuge.findOneAndDelete({
                 _id: refugeId
             });

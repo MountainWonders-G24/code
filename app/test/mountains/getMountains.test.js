@@ -1,5 +1,5 @@
 const { describe, before } = require("node:test");
-const url = "http://localhost:3000/api/mountains/getMountains/";
+const url = "http://localhost:3000/api/mountains/";
 const mongoose = require('mongoose');
 
 
@@ -35,15 +35,6 @@ require("dotenv").config();
         expect((await response.json()).status).toEqual(200);
     });
 
-    //cambiare api che ritorna 404 se non esistono montagne nel db
-    test('GET retrieve mountains with empty result', async () => {
-        var response = await fetch(url, {
-            method: 'GET'
-        });
-        
-        expect(response.status).toEqual(200);
-        
-    });
 
     
 

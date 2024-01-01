@@ -7,7 +7,7 @@ connectDB();
 export async function GET() {
     try {
         const mountains = await Mountain.find({});
-
+        
         return NextResponse.json({
             message: "Mountains retrieved!",
             data: mountains,

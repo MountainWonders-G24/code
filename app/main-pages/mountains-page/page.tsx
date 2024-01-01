@@ -8,6 +8,7 @@ import { topFunction, open_sidebar, close_sidebar } from './script.tsx'
 import { useEffect, useState } from 'react';
 import { cookies } from "next/headers";
 import { logout } from "@/app/script.tsx"
+import { message } from 'antd';
 interface userType {
     name: string;
     surname: string;
@@ -27,11 +28,8 @@ interface Mountain {
 const apiResponse: Mountain[] = [];
 
 function Mountains() {
-    const [mountains = [], setMountains] = useState<Mountain[]>([]);
-    
-    useEffect(() => {
-        logout();
-        const fetchMountains = async () => {
+    var [mountains = [], setMountains] = useState<Mountain[]>([]);
+    const fetchMountains = async () => {
             try {
                 const response = await axios.get('/api/mountains');
                 const responseData = response.data.data;
@@ -46,6 +44,46 @@ function Mountains() {
                 console.error('Error fetching mountains:', error);
             }
         };
+
+
+    const fetchSearchMountain = async () => {
+
+            try {
+                const searchString= String((document.getElementById("research-input") as HTMLInputElement).value) ;
+                
+                console.log("Elemento ricercato: " + searchString);
+                const response = await axios.get('/api/mountains/search/'+searchString);
+                const responseData = response.data.data;
+                console.log("Fetch search response: " + responseData);
+                console.log("E' array: " + Array.isArray(responseData));
+                
+                if (!Array.isArray(responseData)||responseData.length==0|| responseData.length==undefined){
+                    throw new Error("No mountain founded");
+                }
+                else  {
+                    console.log(responseData[0].name);
+                    mountains = new Array<Mountain>();
+                    for (let i = 0; i < responseData.length; i++) {
+                        const q: Mountain = {
+                            id: responseData[i].id,
+                            name: responseData[i].name,
+                            description: responseData[i].description,
+                            image: responseData[i].image
+                        };
+                        mountains.push(q);
+                    }
+                    setMountains(mountains);
+                }
+            } catch (error) {
+                message.error("No mountain founded");
+                fetchMountains();
+                console.error('Error fetching mountains:', error);
+            }
+            
+        };
+    useEffect(() => {
+        logout();
+        
         fetchMountains();
     }, []);
     return (
@@ -67,7 +105,7 @@ function Mountains() {
                     <div id="research">
                         <div id="make-search">
                             <div id="search-bar">
-                                <input id="research-input" type="text" placeholder="Research" />
+                                <input id="research-input" type="text" placeholder="Research" onClick={fetchSearchMountain} />
                                 <Button id="search-button">
                                     <input type="image"
                                         src="https://cdn.iconscout.com/icon/free/png-256/free-search-1291-434390.png"

@@ -28,10 +28,13 @@ describe('GET api/refuges/search', () => {
     afterAll(async () => {
         await mongoose.connection.close(true);
     });
+
+
     console.log("Connected to MongoDB");
+    console.log(url+noResultString);
+    const searchString= resultString
     test('GET search refuges given searchstring with non-empty result', async () => {
-        console.log(url+ resultString);
-        var response = await fetch(url+ resultString, {
+        var response = await fetch(url+ searchString, {
             method: 'GET'
         });
 
@@ -39,7 +42,7 @@ describe('GET api/refuges/search', () => {
     });
 
     test('GET search refuges given search string with empty result', async () => {
-        var response = await fetch(url+noResultString, {
+        var response = await fetch(url+"gsuhsughsuhgiuoshngiuosngiuoniogniofnisnisng", {
             method: 'GET'
         });
 

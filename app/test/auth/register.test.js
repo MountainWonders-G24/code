@@ -4,6 +4,7 @@ const correctPSW = "accountprova"; // String not in the database, empty response
 const wrongPSW = "accountprovola"; // String in the database, non-empty response expected (at least one result)
 const mongoose = require('mongoose');
 require("dotenv").config();
+import User from "@/app/models/userModel";
 
 describe("POST /api/auth/register", () => {
     beforeAll(async () => {
@@ -24,6 +25,7 @@ describe("POST /api/auth/register", () => {
         });
     });
     afterAll(async () => {
+        User.findOneAndDelete({name: "Giacomo"});
         await mongoose.connection.close(true);
     });
 

@@ -34,7 +34,7 @@ export async function POST(request: NextRequest, { params }: { params: Params })
         if (user.isAdmin) {
             return NextResponse.json({
                 message: "You need to be an User to use this API!",
-                status: 401
+                status: 403
             });
         }
         
@@ -63,9 +63,6 @@ export async function POST(request: NextRequest, { params }: { params: Params })
                 status: 415
             });
         }
-
-
-
 
         const existingData = await Refuge.findOne({ 
             mountainId: mountainId,

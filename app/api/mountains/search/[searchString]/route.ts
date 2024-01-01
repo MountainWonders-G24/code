@@ -3,21 +3,24 @@ import Mountain from "@/app/models/mountainModel";
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/configs/dbConfig";
 
-connectDB();
-export async function GET(request: NextRequest) {
-    try {
-        const reqBody = await request.json();
+interface Params {
+    searchString: string;
+}
 
+connectDB();
+export async function GET(request: NextRequest, { params }: { params: Params }) {
+    try {
+        const mountainName = params.searchString;
         const mountains = await Mountain.find({
-            name: { $regex: reqBody.name, $options: "i" } // "i" case-insensitive
+            name: { $regex: mountainName, $options: "i" } // "i" case-insensitive
         });
 
-        if (!mountains) {
-            throw new Error("No mountains found")
-        }
 
+        if (!mountains || mountains.length == 0) {
+            throw new Error("No Mountain found");
+        }
         return NextResponse.json({
-            message: "Mountains retrieved!",
+            message: "Mountain retrieved!",
             data: mountains,
             status: 200
         })
