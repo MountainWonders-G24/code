@@ -106,15 +106,17 @@ h3 {
     padding: 2rem 0 5rem 0;
     margin-bottom: 4rem;
     background-repeat: no-repeat;
-    background-image: url("https://images.unsplash.com/photo-1589802829985-817e51171b92?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8NXx8fGVufDB8fHx8fA%3D%3D");
+    background-image: url("https://cdn.sanity.io/images/24oxpx4s/prod/08ae6020f64bae8c76238c5afdb0047e50d9416b-6016x4016.jpg");
     background-size: cover;
     background-position: center;
 }
 
 #mountain h1 {
-    font-size: 3em;
+    font-size: 4em;
     margin: 3rem 0 2rem 0;
-    -webkit-text-stroke: 1px lightgray;
+    color: white;
+    -webkit-text-stroke: 0.5px gray;
+    
 }
 
 #up-button, #add-refuge-btn {
