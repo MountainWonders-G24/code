@@ -159,6 +159,6 @@ describe("POST /api/refuges/addRefuge/[mountainId]", () => {
             mountainId: 3,
             image: "https://w0.peakpx.com/wallpaper/345/769/HD-wallpaper-heaven-paradise-glory-sky-god.jpg",
         }),});
-        expect((await res.json()).status).toEqual(405);
+        expect((await res.json()).status).toEqual(409);
     });
 });

@@ -1,7 +1,7 @@
 const { describe, before } = require("node:test");
 const url = "http://localhost:3000/api/refuges/search/";
 const noResultString = "Sngiewngissbmdp"; //String not in database, empty response expected
-const resultString = "3/Casa%20di%20maria"; //String in database, non-empty response expected (at least one result)
+const resultString = "/Casa%20di%20maria"; //String in database, non-empty response expected (at least one result)
 const mongoose = require('mongoose');
 
 require("dotenv").config();
@@ -34,15 +34,32 @@ describe('GET api/refuges/search', () => {
     console.log(url+noResultString);
     const searchString= resultString
     test('GET search refuges given searchstring with non-empty result', async () => {
-        var response = await fetch(url+ searchString, {
+        var response = await fetch(url+"3"+ searchString, {
             method: 'GET'
         });
 
         expect((await response.json()).status).toEqual(200);
     });
 
-    test('GET search refuges given search string with empty result', async () => {
-        var response = await fetch(url+"gsuhsughsuhgiuoshngiuosngiuoniogniofnisnisng", {
+    test('GET search refuges given wrong mountain but valid search string', async () => {
+        var response = await fetch(url+"2"+ searchString, {
+            method: 'GET'
+        });
+
+        expect((await response.json()).status).toEqual(404);
+    });
+
+
+    test('GET search refuges given string with empty result cause of unexisting  searchString', async () => {
+        var response = await fetch(url+"0/gsuhsughsuhgiuoshngiuosngiuoniogniofnisnisng", {
+            method: 'GET'
+        });
+
+        expect((await response.json()).status).toEqual(404);
+    });
+
+    test('GET search refuges given invalid mountain but valid search string', async () => {
+        var response = await fetch(url+"10000"+ searchString, {
             method: 'GET'
         });
 

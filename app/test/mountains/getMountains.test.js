@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 
 require("dotenv").config();
 
-    describe('GET api/mountains/getMountains', () => {
+    describe('GET api/mountains/', () => {
         beforeAll(async () => {
         
             const timeout = 10000;

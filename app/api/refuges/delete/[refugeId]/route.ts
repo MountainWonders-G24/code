@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Refuge from "@/app/models/refugeModel";
 import User from "@/app/models/userModel";
-import { validateJWT } from "@/app/helpers/validateJWT";
 import { connectDB } from "@/configs/dbConfig";
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
