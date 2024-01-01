@@ -75,7 +75,7 @@ export async function POST(request: NextRequest, { params }: { params: Params })
             console.log("Data already exists in the database.");
             return NextResponse.json({
                 message: "existingData",
-                status: 405
+                status: 409
             }); // or handle the case appropriately
         }else{
             await refuge.save();
