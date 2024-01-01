@@ -4,7 +4,6 @@ const correctPSW = "accountprova"; // String not in the database, empty response
 const wrongPSW = "accountprovola"; // String in the database, non-empty response expected (at least one result)
 const mongoose = require('mongoose');
 require("dotenv").config();
-import User from "@/app/models/userModel";
 
 describe("POST /api/auth/register", () => {
     beforeAll(async () => {
@@ -25,7 +24,6 @@ describe("POST /api/auth/register", () => {
         });
     });
     afterAll(async () => {
-        User.findOneAndDelete({name: "Giacomo"});
         await mongoose.connection.close(true);
     });
 
@@ -47,11 +45,25 @@ describe("POST /api/auth/register", () => {
         const res = await fetch(url, {
             method: 'POST',
             body: JSON.stringify({
-                email: 'accountprovola@prova.it',
+                email: 'gnong@prova.it',
                 //password: wrongPSW
             }),
         });
         
         expect((await res.json()).status).toEqual(401);
+    });
+
+    test("POST register with already exist email", async () => {
+        const res = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify({
+                name: 'Giacomo',
+                surname: 'Rossi',
+                email: 'accountprovola@prova.it',
+                password: wrongPSW
+            }),
+        });
+        
+        expect((await res.json()).status).toEqual(409);
     });
 });

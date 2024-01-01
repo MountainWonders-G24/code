@@ -28,16 +28,7 @@ describe('GET api/refuges/[mountainId]', () => {
         await mongoose.connection.close(true);
     });
     console.log("Connected to MongoDB");
-    test('GET retrieve refuges given an existing mountain', async () => {
-        console.log(url+ resultString);
-        var response = await fetch(url+ resultString, {
-            method: 'GET'
-        });
-
-        expect((await response.json()).status).toEqual(200);
-        //expect(response.status).toBe(200);
-
-    });
+    
 
     test('GET retrieve refuges given an undefined mountain', async () => {
         var response = await fetch(url+noResultString, {
@@ -45,7 +36,16 @@ describe('GET api/refuges/[mountainId]', () => {
         });
 
         expect((await response.json()).status).toEqual(404);
-        //expect(response.message).toBe(200);
+        
+
+    });
+    test('GET retrieve refuges given an undefined mountain', async () => {
+        var response = await fetch(url+resultString, {
+            method: 'GET'
+        });
+
+        expect((await response.json()).status).toEqual(200);
+        
 
     });
 
