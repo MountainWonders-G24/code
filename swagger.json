@@ -136,6 +136,9 @@
             "description": "Successful operation, user created"
           },
           "401": {
+            "description": "not authorized"
+          },
+          "409": {
             "description": "User with that email already exists"
           }
         }
@@ -152,8 +155,8 @@
           "200": {
             "description": "successful operation"
           },
-          "401": {
-            "description": "invalid credentials"
+          "403": {
+            "description": "forbidden"
           }
         }
       }
@@ -221,6 +224,9 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "Mountains not found"
           }
         }
       }
@@ -391,11 +397,29 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "description": "Description of the refuge",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "image",
+            "in": "query",
+            "description": "Image url of the refuge",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
-          "200": {
-            "description": "successful operation",
+          "201": {
+            "description": "refuge created",
             "content": {
               "application/json": {
                 "schema": {
@@ -416,12 +440,24 @@
             }
           },
           "404": {
-            "description": "No refuges found"
+            "description": "No mountain found"
+          },
+          "401": {
+            "description": "You need to login to use API"
+          },
+          "403": {
+            "description": "You need to be user to use this API"
+          },
+          "409": {
+            "description": "Data already exists in the database"
+          },
+          "415": {
+            "description": "Unsupported Media Type"
           }
         }
       }
     },
-    "/refuges/search/{searchString}": {
+    "/refuges/search/{mountainId}/{searchString}": {
       "get": {
         "tags": [
           "refuges"
@@ -429,6 +465,15 @@
         "summary": "Find refuges by name",
         "description": "Returns the corrisponding mountains",
         "parameters": [
+          {
+            "name": "mountainId",
+            "in": "path",
+            "description": "Mountain id to seach refuges in",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "name": "searchString",
             "in": "path",
