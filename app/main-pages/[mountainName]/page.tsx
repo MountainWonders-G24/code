@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from "next/navigation";
 import { ref } from 'firebase/database';
 import { logout } from "@/app/script.tsx"
-import 'app/globals.css'
+import '@/app/globals.css'
 import './refuges.css'
 import {
     scrollFunction,
@@ -128,12 +128,11 @@ function Refuges() {
 
     const fetchSearchRefuge = async () => {
         try {
-            let id = "ciao";
+            
             const searchString= (document.getElementById("research-input") as HTMLInputElement).value ;
             console.log("Elemento ricercato: " + searchString);
-            console.log('/api/refuges/search/'+ id);
             const response = await axios.get('/api/refuges/search/'+ searchString);
-            console.log("Elemento ricercato: " + (document.getElementById("research-input") as HTMLInputElement).value );
+            
             const responseData = response.data.data;
             console.log("Fetch search response: " + responseData);
             console.log("E' array: " + Array.isArray(responseData));
