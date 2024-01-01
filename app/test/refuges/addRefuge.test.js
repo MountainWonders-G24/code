@@ -5,7 +5,6 @@ const wrongMountain = 5;
 const mongoose = require('mongoose');
 const jwt = require("jsonwebtoken");
 const { ObjectId } = mongoose.Types;
-const _id= new ObjectId();
 require("dotenv").config();
 describe("POST /api/refuges/addRefuge/[mountainId]", () => {
     var refugesId = [];
@@ -27,15 +26,48 @@ describe("POST /api/refuges/addRefuge/[mountainId]", () => {
         });
     });
     afterAll(async () => {
-        await mongoose.connection.close(true);
         var email = jwt.sign({email: 'admin@admin.mw'}, process.env.jwt_secret, {expiresIn: "7d"});
-            var response = await fetch(url + '6510232a0e8587080224cd19', {
+            var response = await fetch(url + id, {
                 method: 'DELETE',
                 headers: ({
                     cookie: `email=${email}`
                 }),
             });
+            console.log
+        await mongoose.connection.close(true);
+        
     });
+
+    
+
+
+    
+
+    //good
+    test("POST add refuge with valid credential", async () => {
+        
+        var email = jwt.sign({email: 'account@prova.it'}, process.env.jwt_secret , {expiresIn: "7d"});
+        const mountainId = correctMountain;
+        const res = await fetch(url+mountainId, {
+            method: 'POST',
+            headers: ({
+                cookie: `email=${email}`
+            }),
+            body: JSON.stringify({
+                
+                name: "Rifugio Test"+Math.random()*1000,
+                description: "Rifugio Test",
+                avgRating: 0,
+                mountainId: 2,
+                image: "image.jpg",
+                __v: 0,
+        }),});
+        let test= (await res.json());
+        id= test.data;
+        
+        expect((test).status).toEqual(201);
+    });
+    
 
     //admin no good
     test("POST add refuge with valid incredential", async () => {
@@ -56,34 +88,6 @@ describe("POST /api/refuges/addRefuge/[mountainId]", () => {
         });
         expect((await res.json()).status).toEqual(403);
     });
-
-
-    
-
-    //good
-    test("POST add refuge with valid credential", async () => {
-        
-        var email = jwt.sign({email: 'account@prova.it'}, process.env.jwt_secret , {expiresIn: "7d"});
-        const mountainId = correctMountain;
-        const res = await fetch(url+mountainId, {
-            method: 'POST',
-            headers: ({
-                cookie: `email=${email}`
-            }),
-            body: JSON.stringify({
-            
-                name: "Rifugio Test"+Math.random()*1000,
-                description: "Rifugio Test",
-                avgRating: 0,
-                mountainId: 2,
-                image: "image.jpg",
-                __v: 0,
-        }),});
-        let test= (await res.json());
-        refugesId.push(test.data);
-        expect((test).status).toEqual(201);
-    });
-    
 
     test("POST add refuge with valid credential", async () => {
         

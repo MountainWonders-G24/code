@@ -3,7 +3,7 @@ import Button from 'antd/es/button';
 import axios from 'axios';
 import React, { Ref } from 'react'
 import './mountains.css'
-import 'app/globals.css'
+import '@/app/globals.css'
 import { topFunction, open_sidebar, close_sidebar } from './script.tsx'
 import { useEffect, useState } from 'react';
 import { cookies } from "next/headers";
@@ -58,7 +58,9 @@ function Mountains() {
                 console.log("E' array: " + Array.isArray(responseData));
                 
                 if (!Array.isArray(responseData)||responseData.length==0|| responseData.length==undefined){
-                    throw new Error("No mountain founded");
+                    message.error("No mountain founded");
+                    fetchMountains();
+                    console.error("No mountain founded");
                 }
                 else  {
                     console.log(responseData[0].name);
@@ -75,8 +77,8 @@ function Mountains() {
                     setMountains(mountains);
                 }
             } catch (error) {
-                message.error("No mountain founded");
-                fetchMountains();
+                
+                
                 console.error('Error fetching mountains:', error);
             }
             
@@ -105,11 +107,12 @@ function Mountains() {
                     <div id="research">
                         <div id="make-search">
                             <div id="search-bar">
-                                <input id="research-input" type="text" placeholder="Research" onClick={fetchSearchMountain} />
+                                <input id="research-input" type="text" placeholder="Research"  />
                                 <Button id="search-button">
                                     <input type="image"
                                         src="https://cdn.iconscout.com/icon/free/png-256/free-search-1291-434390.png"
-                                        alt="Search button" />
+                                        alt="Search button" 
+                                        onClick={fetchSearchMountain}/>
                                 </Button>
                             </div>
                         </div>

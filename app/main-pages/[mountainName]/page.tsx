@@ -128,26 +128,23 @@ function Refuges() {
 
     const fetchSearchRefuge = async () => {
         try {
-            
+            const queryString = window.location.search;
+            const params = new URLSearchParams(queryString);
+            idValue = params.get("mountainId") || "0";
             const searchString= (document.getElementById("research-input") as HTMLInputElement).value ;
             console.log("Elemento ricercato: " + searchString);
-            const response = await axios.get('/api/refuges/search/'+ searchString);
+            const response = await axios.get('/api/refuges/search/'+idValue+'/'+ searchString);
             
             const responseData = response.data.data;
             console.log("Fetch search response: " + responseData);
             console.log("E' array: " + Array.isArray(responseData));
             if (!Array.isArray(responseData)) {
-                const queryString = window.location.search;
-                const params = new URLSearchParams(queryString);
-                idValue = params.get("mountainId") || "0";
+                message.error("No refuges founded, display all refuges");
                 fetchRefuges('/api/refuges/' + idValue);
                 return;
             } 
             if (responseData.length==0|| responseData.length==undefined){
-                message.error("No refuges founded");
-                const queryString = window.location.search;
-                const params = new URLSearchParams(queryString);
-                idValue = params.get("mountainId") || "0";
+                message.error("No refuges founded, display all refuges");
                 fetchRefuges('/api/refuges/' + idValue);
                 return;
             }

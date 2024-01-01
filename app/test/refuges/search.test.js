@@ -1,7 +1,7 @@
 const { describe, before } = require("node:test");
 const url = "http://localhost:3000/api/refuges/search/";
 const noResultString = "Sngiewngissbmdp"; //String not in database, empty response expected
-const resultString = "Casa%20di%20maria"; //String in database, non-empty response expected (at least one result)
+const resultString = "3/Casa%20di%20maria"; //String in database, non-empty response expected (at least one result)
 const mongoose = require('mongoose');
 
 require("dotenv").config();
