@@ -18,11 +18,6 @@ export const userSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        deliveryAddresses: {
-            type: Array,
-            default: [],
-            required: false,
-        },
         isActive: {
             type: Boolean,
             default: true,
