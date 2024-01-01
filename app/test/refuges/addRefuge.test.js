@@ -38,11 +38,6 @@ describe("POST /api/refuges/addRefuge/[mountainId]", () => {
         
     });
 
-    
-
-
-    
-
     //good
     test("POST add refuge with valid credential", async () => {
         

@@ -5,10 +5,8 @@ const wrongPSW = "accountprovola"; // String in the database, non-empty response
 const mongoose = require('mongoose');
 require("dotenv").config();
 
-
 describe("POST /api/auth/login", () => {
     beforeAll(async () => {
-        
         const timeout = 10000;
         // Promise to connect to MongoDB
         const connectPromise = new Promise((resolve, reject) => {
