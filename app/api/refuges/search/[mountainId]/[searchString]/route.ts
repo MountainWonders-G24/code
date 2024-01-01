@@ -4,22 +4,23 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/configs/dbConfig";
 
 interface Params {
+    mountainId: string;
     searchString: string;
-
 }
 
 connectDB();
 export async function GET(request: NextRequest, { params }: { params: Params }) {
     try {
+        
         console.log(params);
+        console.log(params.mountainId);
         const refugeName = params.searchString;
         console.log("Refuge name: " + refugeName);
-        const reqBody = await request.json();
-        console.log(reqBody);
-        console.log(reqBody.mountainId);
+        
 
         const refuges = await Refuge.find({
-            name: { $regex: refugeName, $options: "i" } // "i" case-insensitive
+            name: { $regex: refugeName, $options: "i" },
+            mountainId:  params.mountainId// "i" case-insensitive
         });
 
         // const refuges = await Refuge.find({
