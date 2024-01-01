@@ -1,4 +1,12 @@
 openapi: 3.0.3
+
+swagger: '2.0'
+schemes:
+- http
+host: localhost:3000/api
+# host: mountain-vonders.vercel --> se accesso da local
+basePath: /login
+
 info:
   title: Mountains Wonders - OpenAPI 3.0
   description: |- 
