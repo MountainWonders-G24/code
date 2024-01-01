@@ -2,6 +2,7 @@
 import Mountain from "@/app/models/mountainModel";
 import { NextResponse } from "next/server";
 import { connectDB } from "@/configs/dbConfig";
+export const dynamic = 'force-dynamic';
 
 connectDB();
 export async function GET() {

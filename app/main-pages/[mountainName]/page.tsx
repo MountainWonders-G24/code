@@ -1,20 +1,17 @@
 'use client'
-import { getAntdFieldRequiredRule } from '@/app/helpers/validation';
 import Button from 'antd/es/button';
 import Form from 'antd/es/form';
 import message from 'antd/es/message';
 import axios from 'axios';
 import React from 'react';
-import { Select, Space } from 'antd';
 import { Input } from 'antd';
-import { NextRequest, NextResponse } from "next/server";
-import { disconnectDB } from "@/configs/dbConfig";
 import { useEffect, useState } from 'react';
 import { useRouter } from "next/navigation";
-import { ref } from 'firebase/database';
 import { logout } from "@/app/script.tsx"
 import '@/app/globals.css'
 import './refuges.css'
+
+
 import {
     scrollFunction,
     topFunction,
@@ -25,12 +22,9 @@ import {
     avg_rating,
     setRating
 } from './script.tsx'
-import { log } from 'console';
 
 
-const { TextArea } = Input;
 
-let idValue = "0";
 type Mountain = {
     id: string;
     name: string;
@@ -44,8 +38,11 @@ type Refuge = {
     avgRating: number;
     description: String;
     mountainId: Number;
-    image: String; //nel diagramma delle classi un rifugio non ha un'immagine mentre qui gliela mettiamo???????
+    image: String; 
 }
+
+const { TextArea } = Input;
+let idValue = "0";
 
 const fetchUser = async () => {
     try {
@@ -64,7 +61,8 @@ const fetchUser = async () => {
             }
         } else {
             displayAddButton(false);
-            displayDeleteButton(false);
+            setTimeout(()=> displayDeleteButton(false), 1000);
+            
             console.log("No user");
         }
     } catch (error: any) {
