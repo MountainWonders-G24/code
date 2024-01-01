@@ -202,7 +202,7 @@
         }
       }
     },
-    "/mountains/getMountains": {
+    "/mountains": {
       "get": {
         "tags": [
           "mountains"
@@ -521,6 +521,10 @@
           "name": {
             "type": "string",
             "example": "giorgio"
+          },
+          "surname": {
+            "type": "string",
+            "example": "rossi"
           },
           "email": {
             "type": "string",
