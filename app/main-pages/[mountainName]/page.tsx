@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { logout } from "@/app/script.tsx"
 import '@/app/globals.css'
 import './refuges.css'
-
+import { Spin } from 'antd';
 
 import {
     scrollFunction,
@@ -43,7 +43,6 @@ type Refuge = {
 
 const { TextArea } = Input;
 let idValue = "0";
-
 const fetchUser = async () => {
     try {
         const currentUser = await axios.get('/api/auth/currentUser');
@@ -61,8 +60,7 @@ const fetchUser = async () => {
             }
         } else {
             displayAddButton(false);
-            setTimeout(()=> displayDeleteButton(false), 1000);
-            
+            displayDeleteButton(false);
             console.log("No user");
         }
     } catch (error: any) {
@@ -80,8 +78,11 @@ const validateImageUrl = (_: any, value: string) => {
 
 function Refuges() {
     const [mountain, setMountain] = useState<Mountain | null>();
-    const [loading, setLoading] = React.useState(false);
+    const [loading, setLoading] = useState(true); // Stato per il caricamento
+
+    
     let [refuges = [], setRefuges] = useState<Refuge[]>([]);
+
 
     
 
@@ -121,7 +122,7 @@ function Refuges() {
             }
         } catch (error) {
             console.error('Error fetching refuge:', error);
-        }
+        } 
     };
 
     const fetchSearchRefuge = async () => {
@@ -178,47 +179,24 @@ function Refuges() {
             } else {
                 console.error('Invalid API response structure:', responseData);
             }
+            
         } catch (error) {
             console.error('Error fetching mountain:', error);
         }
     };
 
-    // useEffect(() => {
-    //     displayAddButton(false);
-    //     displayDeleteButton(false);
-    //     const queryString = window.location.search;
-    //     const params = new URLSearchParams(queryString);
-    //     idValue = params.get("mountainId") || "0";
-
-    //     fetchRefuges('/api/refuges/' + idValue);
-
-    //     if (typeof window !== 'undefined') {
-    //         window.onscroll = function () {
-    //             scrollFunction();
-    //         };
-    //     }
-        
-        
-    //     if (idValue != "0") {
-    //         fetchMountain('/api/mountains/' + idValue);
-    //     } else {
-    //         (document.getElementById("mountain-name") as HTMLElement).innerHTML = "Rifugi del Trentino";
-    //     }
-    //     fetchUser();
-    //     logout();
-    // }, []);
+    
+    
 
     useEffect(() => {
         try{
-            setLoading(true);
             const queryString = window.location.search;
             const params = new URLSearchParams(queryString);
             idValue = params.get("mountainId") || "0";
 
-            displayAddButton(false);
-            displayDeleteButton(false);
+            
 
-            fetchUser();
+            
             fetchRefuges('/api/refuges/' + idValue);
 
             if (typeof window !== 'undefined') {
@@ -226,28 +204,37 @@ function Refuges() {
                     scrollFunction();
                 };
             }
-            displayAddButton(true);
-            if (idValue != "0") {
-                fetchMountain('/api/mountains/' + idValue);
-            } else {
-                (document.getElementById("mountain-name") as HTMLElement).innerHTML = "Rifugi del Trentino";
-            }
-            logout();
-        }catch (error: any) {
-            console.error('Error fetching data:', error);
-        }finally {
-            // Set loading to false once data is fetched (regardless of success or failure)
-            setLoading(false);
-        }
-
+            
+        if (idValue != "0") {
+            fetchMountain('/api/mountains/' + idValue);
+        } 
+        logout();
         
+        }catch(error){
+            console.error('Error fetching mountain:', error);
+        } finally{
+            const queryString = window.location.search;
+            const params = new URLSearchParams(queryString);
+            idValue = params.get("mountainId") || "0";
+            fetchUser();
+            setLoading(false);
+            
+        }
+        
+        
+    }, []);
+
+    if (loading) {
+        // centra l'indicatore di caricamento
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <Spin size="large" />
+            </div>
+        );  
     }
-    , []);
-    
 
     const deleteRefuge = async (id: string) => {
         try {
-            setLoading(true);
             const { data } = await axios.delete("/api/refuges/delete/" + id);
             if (data.status == "200") {
                 message.success(data.message);
@@ -257,8 +244,6 @@ function Refuges() {
             fetchRefuges('/api/refuges/' + idValue);
         } catch (error: any) {
             message.error(error.response.data.message);
-        } finally {
-            setLoading(false);
         }
     };
 
@@ -368,7 +353,7 @@ function Refuges() {
                             alt="Top" />
                     </Button>
 
-                    <h1 id="mountain-name"></h1>
+                    <h1 id="mountain-name">Rifugi del Trentino</h1>
                     <div id="research">
                         <div id="make-search">
                             <div id="search-bar">
@@ -428,7 +413,7 @@ function Refuges() {
                                     <span style={{ cursor: 'default' }} key={index} className={`fa fa-star${index < refuge.avgRating ? ' checked' : ''}`}></span>
                                 ))}</div>
                             </div>
-                            <Button onClick={() => deleteRefuge(refuge._id)} className="delete-refuge-btn" title="Delete refuge">
+                            <Button onClick={() => deleteRefuge(refuge._id)} className="delete-refuge-btn" style={{display: "None"}} title="Delete refuge">
                                 <input type="image"
                                     src="https://static-00.iconduck.com/assets.00/trash-icon-462x512-njvey5nf.png"
                                     alt="Delete" />
