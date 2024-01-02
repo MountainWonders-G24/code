@@ -209,29 +209,40 @@ function Refuges() {
     // }, []);
 
     useEffect(() => {
-        const queryString = window.location.search;
-        const params = new URLSearchParams(queryString);
-        idValue = params.get("mountainId") || "0";
+        try{
+            setLoading(true);
+            const queryString = window.location.search;
+            const params = new URLSearchParams(queryString);
+            idValue = params.get("mountainId") || "0";
 
-        displayAddButton(false);
-        displayDeleteButton(false);
+            displayAddButton(false);
+            displayDeleteButton(false);
 
-        fetchUser();
-        fetchRefuges('/api/refuges/' + idValue);
+            fetchUser();
+            fetchRefuges('/api/refuges/' + idValue);
 
-        if (typeof window !== 'undefined') {
-            window.onscroll = function () {
-                scrollFunction();
-            };
+            if (typeof window !== 'undefined') {
+                window.onscroll = function () {
+                    scrollFunction();
+                };
+            }
+            displayAddButton(true);
+            if (idValue != "0") {
+                fetchMountain('/api/mountains/' + idValue);
+            } else {
+                (document.getElementById("mountain-name") as HTMLElement).innerHTML = "Rifugi del Trentino";
+            }
+            logout();
+        }catch (error: any) {
+            console.error('Error fetching data:', error);
+        }finally {
+            // Set loading to false once data is fetched (regardless of success or failure)
+            setLoading(false);
         }
-        displayAddButton(true);
-        if (idValue != "0") {
-            fetchMountain('/api/mountains/' + idValue);
-        } else {
-            (document.getElementById("mountain-name") as HTMLElement).innerHTML = "Rifugi del Trentino";
-        }
-        logout();
-    }, []);
+
+        
+    }
+    , []);
     
 
     const deleteRefuge = async (id: string) => {

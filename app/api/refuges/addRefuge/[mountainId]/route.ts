@@ -42,6 +42,9 @@ export async function POST(request: NextRequest, { params }: { params: Params })
 
         const mountainId = params.mountainId; 
         console.log(mountainId);
+        if (mountainId == "0") {
+            throw new Error("No mountainId provided")
+        }
         const mountain = await Mountain.findOne({
             id: mountainId
         });
