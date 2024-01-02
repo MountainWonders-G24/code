@@ -250,7 +250,7 @@ function Refuges() {
     const addRefuge = async (values: Refuge) => {
 
         try {
-            setLoading(true);
+            
             values.avgRating = avg_rating <= 0 ? 1 : avg_rating;
 
             var mountainId;
@@ -273,9 +273,7 @@ function Refuges() {
             }
         } catch (error: any) {
             message.error("Error: " + error);
-        } finally {
-            setLoading(false);
-        }
+        } 
     }
 
     return (
